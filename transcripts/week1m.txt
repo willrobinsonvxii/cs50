@@ -1,0 +1,296 @@
+DAVID J. MALAN: All right. This is CS50, and this is the start of week two. So let us begin today with a bug. A bug, of course, is a mistake in a program, and you'll get very familiar with this concept if you've never programmed before. pset0 and now pset1. But let's consider something a little simple at first. This program here that I threw together in advance, and I claim that this should print 10 stars on the screen using printf, but it's apparently buggy in some way. 
+
+Given that specification that it should print 10 stars, but it doesn't apparently, what would you claim is the bug? Yeah? So it's an off by one error, and what do you mean by that? OK. Excellent. So we've specified a start value of zero for i, and we've specified an n value of 10, but we've used less than or equal to. And the reason that this is two characters and not just one symbol, like in a math book, is that you don't have a way of expressing the one character equivalent. 
+
+So that means less than, but if you start counting at zero, but you count all the way up through and equal to 10, you're of course going to count 11 things in total. And so you're going to print 11 stars. So what might be a fix for this? Yeah? 
+
+So just adjust the less than or equal to just be less than, and there's, I claim, perhaps another solution, too. What might else you do? Yeah? 
+
+So start equaling it to 1, and leave the less than or equal to. And frankly I would claim that, for a typical human, this is probably more straightforward. Start counting at 1 and count up through 10. Essentially do what you mean. 
+
+But the reality is in programming, as we've seen, computer scientists and programmers generally do start counting at zero. And so that's fine once you get used to it. Your condition will generally be something like less than. So simply a logical error that we could now fix and ultimately recompile this and get just 10. 
+
+Well how about this bug here? Here, again, I claim that I have a goal of printing 10 stars-- one per line this time, but it doesn't. Before we propose what the fix is, what does this print visually if I were to compile and run this program do you think? Yeah? 
+
+Star. So all the stars on the same line is what I heard, and then the new line character. So let's try that. So make buggy-1, enter, and I see the clang command that we talked about last time. ./buggy-1, and indeed I see all 10 stars on the same line even though I claim in my specification just a comment atop the code that I intended to do one per line. But this looks right. 
+
+Now line 15 it looks like I'm printing a star, and then line 16 it looks like I'm printing a new line character, and they're both indented so I'm inside of the loop clearly. So shouldn't I be doing star, new line, star, new line, star, new line? Yes? 
+
+Yeah, unlike a language like Python, if you're familiar, indentation doesn't matter to the computer. It only matters to the human. So whereas here I've invented lines 15 and 16-- that looks beautiful, but the computer doesn't care. The computer cares about actually having curly braces around these lines of code. 
+
+So that it's clear-- just like in Scratch-- that those two lines of code should be executed. Like one of those yellow Scratch puzzle pieces again and again and again. 
+
+So now if I re-run this program-- ./buggy-2-- Hm. I have an error now. What did I forget to do? Yeah, so I didn't compile it. So make buggy-2. No such file because I didn't actually compile the second version. So now interesting undeclared variable-- not 2. We're doing 1. Make buggy-1-- ./buggy-1-- and now each of them is on the same line. 
+
+Now there is an exception to this supposed claim of mine that you need these curly braces. When is it actually OK-- if you've noticed in section or textbooks-- to omit the curly braces? Yeah? 
+
+Exactly. When there's only one line of code that you want to be associated with the loop as in our first example. It is perfectly legitimate to omit the curly braces just as sort of a convenience from the compiler to you. Yeah? Good question. Would it be considered a style error? We would promote-- as in CS50 style guide, the URL for which is in pset1-- that always use the curly braces. Certainly if you're new to programming. The reality is we're not going to prohibit you from doing these conveniences. But if you're just getting into the swing of things, absolutely just always use the curly braces until you get the hang of it. Good question. 
+
+All right. So that then was a bug. At least in something fairly simple. And yet you might think this is fairly rudimentary, right? This is sort of the first week of looking at the language like, see your bugs therein. But the reality these are actually representative of some pretty frightening problems that can arise in the real world. 
+
+So some of you might recall if you follow tech news, or maybe even caught wind of this in February of this past year that Apple had made a bit of a mistake in both iOS, the operating system on their phones, and also Mac OS, the operating system on their desktops and laptops. And you saw such headlines as this. And thereafter, Apple promised to fix this bug, and very quickly did fix it in iOS, but then ultimately fixed it in Mac OS as well. 
+
+Now none of these headlines alone really reveal what the underlying problem was, but the bug was ultimately reduced to a bug in SSL, secure sockets layer. And long story short, this is the software that our browsers and other software used to do what? 
+
+If I said that SSL is involved, whenever you visit a URL that starts with HTTPS, what then might SSL be related to? Encryption. So we'll talk about this in the coming days. Encryption, the art of scrambling information. 
+
+But long story short, Apple sometime ago had made a mistake in their implementation of SSL, the software that ultimately implements URLs like HTTPS or max connections there too. The result of which is that your connections could potentially be intercepted. And your connections were not necessarily encrypted if you had some bad guy in between you and the destination website who knew how to take advantage of this. 
+
+Now Apple ultimately posted a fix for this finally, and the description of their fix was this. Secure transport failed to validate the authenticity of the connection. The issue was addressed by restoring missing validation steps. 
+
+So this is a very hand wavy explanation for simply saying that we screwed up. There is literally one line of code that was buggy in their implementation of SSL, and if you go online and search for this you can actually find the original source code. For instance, this is a screen shot of just a portion of a fairly large file, but this is a function apparently called SSL verify sign server key exchange. And it takes a bunch of arguments and inputs. And we're not going to focus too much on the minutia there, but if you focus on the code inside of that topmost function-- let's zoom in on that. You might already suspect what the error might be even if you have no idea ultimately what you're looking at. There's kind of an anomaly here, which is what? 
+
+Yeah, I don't really like the look of two goto fails. Frankly, I don't really know what goto fail means, but having two of them back to back. That just kind of rubs me intellectually the wrong way, and indeed if we zoom in on just those lines, this is C. 
+
+So a lot of Apple's code is itself written in C, and this apparently is really equivalent-- not to that pretty indentation version, but if you recognize the fact that there's no curly braces, what Apple really wrote was code that looks like this. So I've zoomed out and I just fixed the indentation in the sense that if there's no curly braces, that second goto fail that's in yellow is going to execute no matter what. It's not associated with the if condition above it. 
+
+So even again, if you don't quite understand what this could possibly be doing, know that each of these conditions-- each of these lines is a very important step in the process of checking if your data is in fact encrypted. So skipping one of these steps, not the best idea. 
+
+But because we have this second goto fail in yellow, and because once we sort of aesthetically move it to the left where it logically is at the moment, what does this mean for the line of code below that second goto fail would you think? It's always going to be skipped. So gotos are generally frowned upon for reasons we won't really go into, and indeed in CS50 we tend not to teach this statement goto, but you can think of goto fail as meaning go jump to some other part of the code. 
+
+In other words jump over this last line altogether, and so the result of this stupid simple mistake that was just a result of probably someone copying and pasting one too many times was that the entire security of iOS and Mac OS was vulnerable to interception by bad guys for quite some time. Until Apple finally fixed this. 
+
+Now if some of you are actually running old versions of iOS or Mac OS, you can go to gotofail.com which is a website that someone set up to essentially determine programmatically if your computer is still vulnerable. And frankly, if it is, it's probably a good idea to update your phone or your Mac at this point. But there, just testament to just how an appreciation of these lower level details and fairly simple ideas can really translate into decisions and problems that affected-- in this case-- millions of people. 
+
+Now a word on administration. Section will start this coming Sunday. You will receive an email by the weekend about section, at which point the resectioning process will begin if you've realized you now have some new conflicts. So this happens every year, and we will accommodate in the days to come. 
+
+Office hours-- do keep an eye on this schedule here. Changes a little bit this week, particularly the start time and the location, so do consult that before heading to office hours any of the next four nights. And now a word on assessment, particularly as you dive into problem sets one and beyond. 
+
+So per the specification, these are generally the axes along which we evaluate your work. Scope refers to what extent your code implements the features required by our specification. In other words, how much of a piece set did you bite off. Did you do a third of it, a half of it, 100% of it. Even if it's not correct, how much did you attempt? So that captures the level of effort and the amount to which you bit off the problem set's problems. 
+
+Correctness-- this one, to what extent, is your code consistent with our specifications and free of bugs. So does it work correctly? If we give it some input, does it give us the output that we expect? Design-- now this is the first of the particularly qualitative ones, or the ones that require human judgment. And indeed, this is why we have a staff of so many teaching fellows and course assistants. To what extent is your code written well? 
+
+And again this is a very qualitative assessment that will work with you on bi-directionally in the weeks to come. So that when you get not only numeric scores, but also a written scores, or typed feedback, or written feedback in English words. That's what we'll use to drive you toward actually writing better code. And in lecture and section, we'll try to point out-- as often as we can-- what makes a program not only correct and functionally good, but also well designed. The most efficient it could be, or even the most beautiful it can be. 
+
+Which leads us to style. Style ultimately is an aesthetic judgment. Did you choose good names for your variables? Have you indented your code properly? Does it look good, and therefore, is it easy for another human being to read your respective of its correctness. 
+
+Now generally per the syllabus, we score these things on a five point scale. And let me hammer home the point that a three is indeed good. Very quickly do folks start doing arithmetic. When they get a three out of five on correctness for some pset and they think damn, I going to 60% which is essentially a D or an E. 
+
+That's not the way we think of these numbers. A three is indeed good, and what we generally expect at the beginning of the term is that if you're getting a bunch of three's-- maybe a couple of fairs, a couple of fours-- or a couple twos, a couple of fours-- that's a good place to start. And so long as we see an upward trajectory over time, you're in a particularly good place. 
+
+The formula we use to weight things is essentially this per the syllabus, which just means that we give more weight to correctness. Because it's very often correctness that takes the most time. Trust me now. You will find-- at least in one pset-- that you spend 90% of your time working on 10% of the problem. 
+
+And everything sort of works except for one or two bugs, and those are the bugs that keep you up late at night. Those are the ones that sort of escape you. But after sleeping on it, or attending office hours or asking questions online, is when you get to that 100% goal, and that's why we weight correctness the most. Design a little less, and style a little less than that. But keep in mind-- style is perhaps the easiest of these to bite off as per the style guide. 
+
+And now, a more serious note on academic honesty. CS50 has the unfortunate distinction of being the largest producer of Ad Board cases almost every year historically. This is not because students cheat in CS50 any more so than any other class, but because by nature of the work, the fact that it's electronic, the fact that we look for it, and the fact we are computer scientists, I can say we are unfortunately very good at detecting it. 
+
+So what does this mean in real terms? So it, per the syllabus, the course's philosophy really does boil down to be reasonable. There is this line between doing one's work on your own and getting a little bit of reasonable help from a friend, and outright doing that work for your friend, or sending him or her your code so that he or she can simply take or borrow it out right. And that crosses the line that we drawn in the class. 
+
+See, the syllabus ultimately for the lines that we draw as being reasonable and unreasonable behavior, but it really does boil down to the essence of your work needing to be your own in the end. Now with that said, there is a heuristic. Because as you might imagine-- from office hours and the visuals and the videos we've shown thus far-- CS50 is indeed meant to be as collaborative and as cooperative and as social as possible. As collaborative as it is rigorous. 
+
+But with this said, the heuristic, as you'll see in the syllabus, is that when you're having some problem. You have some bug in your code that you can't solve, it is reasonable for you to show your code to someone else. A friend even in the class, a friend sitting next to you at office hours, or a member of the staff. But they may not show their code to you. 
+
+In other words, an answer to your question-- I need help-- is not oh, here's my code. Take a look at this and deduce from it what you will. Now, of course, there's a way clearly to game this system whereby I'll show you my code before having a question. You show me my your code before having a question. But see the syllabus again for the finer details of where this line is. 
+
+Just to now paint the picture and share as transparently as possible where we are at in recent years, this is the number of Ad Board cases that CS50 has had over the past seven years. With 14 cases this most recent fall. In terms of the students involved, it was 20 some odd students this past fall. There was a peak of 33 students some years ago. Many of whom are unfortunately no longer here on campus. 
+
+Students involved as a percentage of the class has historically ranged from 0% to 5.3%, which is only to say this is annually a challenge. And toward that end, what we want to do is convey one that we dd-- just FYI-- compare at a fairness to those students who are following the line accordingly. We do compare all current submissions against all past missions from the past many years. 
+
+We know too how to Google around and find code repositories online, discussion forums online, job sites online. If a student can find it, we can surely find it as much as we regretfully do. So what you'll see in the syllabus though is this regret clause. I can certainly appreciate, and we all has staff having done the course like this, or this one itself over time, certainly know what it's like when life gets in the way when you have some late night deadline-- not only in this class, but another-- when you're completely exhausted, stressed out, have an inordinate number of other things to do. You will make at some point in life certainly a bad, perhaps late night decision. 
+
+So per the syllabus, there is this clause, such that if within 72 hours of making some poor decision, you own up to it and reach out to me and one of the course's heads and we will have a conversation. We will handle things internally in hopes of it becoming more of a teaching moment or life lesson, and not something with particularly drastic ramifications as you might see on these charts here. 
+
+So that's a very serious tone. Let us pause for just a few seconds to break the tension. 
+
+
+
+DAVID J. MALAN: All right, so how was that for a segue? To today's primary topics. The first of which is abstraction. Another of which is going to be the representation of data, which frankly is a really dry way of saying how can we go about solving problems and thinking about solving problems? So you've seen in Scratch, and you've seen perhaps already in pset1 with C that you not only can use functions, like printf, that other people in years past wrote for you. You can also write your own functions. 
+
+And even though you might not have done this in C, and frankly in pset1 you don't really need to write your own function because the problem-- while perhaps daunting at first glance-- you'll see can ultimately be solved with not all that many lines of code. But with that said, in terms of writing your own function, realize that C does give you this capability. 
+
+I'm going to go in today's source code, which is available already online, and I'm going to go ahead and open up a program called function 0.C, and in function zero we'll see a few things. In first lines 18 through 23 is my main function. And now that we're beginning to read code that we're not writing on the fly, but instead I've written in advance or that you in a problem set might receive having been written in advance. A good way to start reading someone else's code is look for the main function. Figure out where that entry point is to running the program, and then follow it logically from there. 
+
+So this program apparently prints your name followed by a colon. We then use GetString from the CS50 library to get a string, or a word or phrase from the user at the keyboard. And then there's this thing here-- PrintName. 
+
+Now PrintName is not a function that comes with C. It's not in standard io.h. It's not in CS50.h. It's rather in the same file. Notice if I scroll down a bit-- lines 25 to 27-- it's just a pretty way of commenting your code using the stars and slashes. This is a multi-line comment, and this is just my description in blue of what this function does. 
+
+Because in lines 28 through 31, I've written a super simple function whose name is PrintName. It takes how many arguments would you say? So one argument-- because there's one argument listed inside the parentheses. The type of which is String. Which is to say PrintName is like this black box or function that takes as input a string. 
+
+And the name of that String conveniently will be Name. Not S, not N, but Name. So what does PrintName do? It's nice simple. Just as one line of code for the printf, but apparently it prints out "Hello," so and so. Where the so and so comes from the argument. 
+
+Now this is not a huge innovation here. Really, I've taken a program that could have been written with one line of code by putting this up here, and changed it to something that involves some six or seven or so lines of code all the way down here. 
+
+But it's the practicing of a principle known as abstraction. Kind of encapsulating inside of a new function that has a name, and better yet that name literally says what it does. I mean printf-- that's not particularly descriptive. If I want to create a puzzle piece, or if I want to create a function that prints someone's name, the beauty of doing this is that I can actually give that function a name that describes what it does. 
+
+Now it takes in an input that I've arbitrarily called name, but that too is wonderfully descriptive instead of being a little more generic like S. And void, for now, just means that this function doesn't hand me back anything. It's not like GetString that literally hands me back a string like we did with the pieces of paper with your classmates last week, but rather it just has a side effect. It prints something to the screen. 
+
+So at the end of the day, if I do make function-0, ./function-0, we'll see that it asks for my name. I type David, and it types out my name. If I do it again with Rob, it's going to say "Hello, Rob." So a simple idea, but perhaps extrapolate from this mentally that as your programs get a little more complicated, and you want to write a chunk of code and call that code-- invoke that code-- by some descriptive name like PrintName, C does afford us this capability. 
+
+Here's another simple example. For instance, if I open up a file from today called return.c, notice what I've done here. Most of this main function is printf. I first arbitrarily initialize a variable called x to the number 2. I then print out "x is now %i" passing in the value of x. So I'm just saying what it is. 
+
+Now I'm just boldly claiming with printf. I am cubing that value x, and I'm doing so by calling a function called cube passing in x as the argument, and then saving the output in the variable itself, x. So I'm clobbering the value of x. I'm overriding the value of x with whatever the result of calling this cube function is. And then I just print out some fluffy stuff here saying what I did. 
+
+So what then is cube? Notice what's fundamentally different here. I've given the function a name as before. I've specified a name for an argument. This time it's called n instead of name, but I could call it anything I want. But this is different. This thing on the left. Previously it was what keyword? Boys. Now it's obviously int. 
+
+So what's perhaps the take away? Whereas void signifies sort of nothingness, and that was the case. PrintName returned nothing. It did something, but it didn't hand me back something that I could put on the left hand side of an equal sign like I've done here on line 22. 
+
+So if I say into on line 30, what's that probably implying about what cube does for me? Yeah? It returns an integer. So it hands me back, for instance, a piece of paper on which it has written the answer. 2 cubed, or 3 cubed, or 4 cubed-- whatever I passed in, and how did I implement this? Well, just n times n times n is how I might cube a value. So again, super simple idea, but demonstrative now how we can write functions that actually had us back values that might be of interest. 
+
+Let's look at one last example here called function one. In this example, it starts to get more compelling. So in function one, this program-- notice ultimately calls a function called GetPositiveInt. GetPositiveInt is not a function in the CS50 library, but we decided we would like it to exist. 
+
+So if we scroll down later in the file, notice how I went about implementing get positive int, and I say it's more compelling because this is a decent number of lines of code. It's not just a silly little toy program. It's actually got some error checking and doing something more useful. 
+
+So if you've not seen the walkthrough videos that we have embedded in pset1, know that this is a type of loop in C, similar in spirit to the kinds of things Scratch can do. And do says do this. Print this out. Then go ahead and get n-- get an int and store it in n, and keep doing this again and again and again so long as n is less than one. 
+
+So n is going to be less than one only if the human's not cooperating. If he or she is typing in 0 or -1 or -50, this loop is going to keep executing again and again. And ultimately notice, I simply return the value. So now we have a function that would've been nice if CS50 would implement in CS50.h and CS50.c for you, but here we can now implement this ourselves. 
+
+But two comments on some key details. One-- why did I declare int n, do you think, on line 29 instead of just doing this here, which is more consistent with what we did last week? Yeah? A good thought. So if we were to put it here, it's as though we keep declaring it again and again. That in and of itself is not problematic, per se, because we only need the value once and then we're going to get a new one anyway. But a good thought. Yeah? 
+
+Close. So because I've declared n on line 29 outside of the loop, it's accessible throughout this entire function. Not the other functions because n is still inside of these curly braces here. So-- sure. 
+
+Exactly. So this is even more to the point. If we instead declared n right here on line 32, it's problematic because guess where else I need to access it? On line 34, and the simple rule of thumb is that you can only use a variable inside of the most recent curly braces in which you declared it. 
+
+Unfortunately, line 34 is one line too late, because I've already closed the curly brace on line 33 that corresponds to the curly brace on line 30. And so this is a way of saying that this variable int is scoped, so to speak, to only inside of those curly braces. It just doesn't exist outside of them. 
+
+So indeed, if I do this wrong, let me save the code as it is-- incorrectly written. Let me go ahead and do make function-1, and notice-- error. Use of undeclared identifier n on line 35, which is right here. And if we scroll up further, another one. Use of undeclared identifier n on line 34. 
+
+So the compiler, Clang, is noticing that it just doesn't exist even though clearly it's there visually. So a simple fix is declaring it there. 
+
+Now let me scroll to the top of the file. What jumps out at you as being a little different from the stuff we looked at last week? Not only do I have name, not only do I have some sharp includes up top, I have something I'm calling a prototype. Now that looks awfully similar to what we just saw a moment ago on line 27. 
+
+So let's infer from a different error message why I've done this. Let me go ahead and delete these lines there. And so we know nothing about prototype. Remake this file. Make function one. And now, damn, four errors. Let's scroll up to the first one. 
+
+Implicit declaration of function get positive int is invalid in C99. C99 just means the 1999 version of the language C, which is what we're indeed using. So what does this mean? Well C-- and more specifically C compilers-- are pretty dumb programs. They only know what you've told them, and that's actually thematic from last week. 
+
+The problem is that if I go about implementing name up here, and I call a function called GetPositiveInt here on line 20, that function technically doesn't exist until the compiler sees line 27. Unfortunately, the compiler is doing things top, down, left, right, so because it has not seen the implementation of GetPositiveInt, but it sees you trying to use it up here, it's just going to bail-- yell at you with an error message-- perhaps cryptic, and not actually compile the file. 
+
+So a so-called prototype up here is admittedly redundant. Literally, I went down here and I copied and pasted this, and I put it up here. Void would be more proper, so we'll literally copy and paste it this time. I literally copied and pasted it. Really just as like a bread crumb. 
+
+A little clue to the compiler. I don't know what this does yet, but I'm promising to you that it will exist eventually. And that's why this line-- in line 16-- ends with a semicolon. It is redundant by design. Yes? 
+
+If you didn't link your library to the-- oh, good question. Sharp includes header file inclusions. Need to be-- should almost always be at the very top of the file for a similar-- for exactly the same reason, yes. Because in standard io.h is literally a line like this, but with the word printf, and with its arguments and its return type. And so by doing sharp include up here, what you're literally doing is copying and pasting the contents of someone else wrote up top. Thereby cluing your code in to the fact that those functions do exist. Yeah? 
+
+Absolutely. So a very clever and correct solution would be, you know what? I don't know what a prototype is, but I know if I understand that C is just dumb and rethinks top to bottom. Well let's give it what it wants. Let's cut that code, paste it up top, and now push main down below. This too would solve the problem. 
+
+But you could very easily come up with a scenario in which A need to call B, and maybe B calls back to A. This is something called recursion, and we'll come back to that. And it may or may not be a good thing, but you can definitely break this solution. 
+
+And moreover, I would claim stylistically, especially when your programs become this long and this long, it's just super convenient to put main at the top because it's the thing most programmers are going to care about. And so it's a little cleaner, arguably, to do it the way I originally did it with a prototype even though it looks a little redundant at first glance. Yeah? Sorry, can you say it louder? 
+
+If you switch the locations of the implementation and the prototype? So that's a good question. If you re-declare this down here, let's see what happens. So if I put this down here, you're saying. Oh, sorry. Louder? Even louder. Oh, good question. Would it invalidate the function? You know, after all these years, I have never put a prototype afterwards. So let's do make function-1 after doing that. 
+
+DAVID J. MALAN: Oh, wait. We still have to put everything up top. So let's do this up here, if I'm understanding your question correctly. I'm putting everything, including the prototype above main, but I'm putting the prototype below the implementation. 
+
+So if I make one, I'm getting back an error-- unused variable n. Oh, there. Thank you. Let's see, we get rid of this. That's a different bug, so let's ignore that. Let's really quickly remake this. 
+
+OK, so data argument not used by format String n-- oh, that's because I changed to these here. All right, we know what the answer is going to-- all right, here we go. Ah, thanks for the positive. All right, I will fix this code after-- ignore this particular bug since this was-- it works is the answer. 
+
+So it doesn't overwrite what you've just done. I suspect the compiler is written in such a way that it is ignoring your prototype because the body, so to speak, of the function has already been implemented higher up. I would have to actually consult the manual of the compiler to understand if there's any other implication, but at first glance just by trying and experimenting, there seems to be no impact. Good question. 
+
+So let's forge ahead now, moving away from side effects which are functions that do something like visually on the screen with printf, but don't return a value. And functions that have return values like we just saw a few of. We already saw this notion of scope, and we'll see this again and again. But for now, again, use the rule of thumb that a variable can only be used inside of the most recently opened and closed curly braces as we saw in that particular example. 
+
+And as you pointed out, there is an ability-- you could solve some of these problems by putting a variable globally at the very top of a file. But in almost all cases we would frown upon that, and indeed not even go into that solution for now. So for now, the takeaway is that variables have this notion of scope. 
+
+But now let's look at another dry way of actually looking at some pretty interesting implementation details. How we might represent information. And we already looked at this in the first week of the class. Looking at binaries, and reminding ourselves of decimal. 
+
+But recall from last week that C has different data types and bunches more, but the most useful ones for now might be these. A char, or character, which happens to be one byte, or eight bits total. And that's to say that the size of a char is just one byte. A byte is eight bits, so this means that we can represent how many characters. How many letters or symbols on the keyboard if we have one byte or eight bits. Think back to week zero. If you have eight bits, how many total values can you represent with patterns of zeros and ones? One-- more than that. So 256 total if you start counting from zero. So if you have eight bits-- so if we had our binary bulbs up here again, we could turn those light bulbs on and off in any of 256 unique patterns. 
+
+Now this is a bit problematic. Not so much for English and romance languages, but certainly when you introduce, for instance, Asian languages, which have far more symbols than like 26 letters of the alphabet. We actually might need more than one byte. And thankfully in recent years has society adopted other standards that use more than one byte per charge. 
+
+But for now in C, the default is just one byte or eight bits. An integer, meanwhile, is four bytes, otherwise known as 32 bits. Which means what's the largest possible number we can represent with an int apparently? With a billion. So it's four billion give or take. 2 to the 32th power, if we assume no negative numbers and just use all positive numbers, it's four billion give or take possibilities. A float, meanwhile, is a different type of data type in C. It's still a number, but it's a real number. Something with a decimal point. And it turns out that C also uses four bytes to represent floating point values. 
+
+Unfortunately how many floating point values are there in the world? How many real numbers are there? There's an infinite number, and for that matter there's an infinite number of integers. So we're already kind of digging ourselves a hole here. Whereby apparently in computers-- at least programs written in C on them-- can only count as high as four billion give or take, and floating point values can only apparently have some finite amount of precision. Only so many digits after their decimal point. 
+
+Because, of course, if you only have 32 bits, I don't know how we're going to go about representing real numbers-- probably with different types of patterns. But there's surely a finite number of such patterns, so here, too, this is problematic. 
+
+Now we can avoid the problem slightly. If you don't use a float, you could use a double in C, which gives you eight bytes, which is way more possible patterns of zeros and ones. But it's still finite, which is going to be problematic if you write software for graphics or for fancy mathematical formulas. So you might actually want to count up bigger than that. A long long-- stupidly named-- is also eight bytes, or 64 bits, and this is twice as long as an int, and it's for a long integer value. 
+
+Fun fact-- if an int is four bytes, how long is a long in C typically? Also four bytes, but a long long is eight bytes, and this is for historical reasons. 
+
+But the takeaway now is just that data has to be represented in a computer-- that's a physical device with electricity, it's generally driving those zeros and ones-- with finite amounts of precision. So what's the problem then? 
+
+Well there's a problem of integer overflow. Not just in C, but in computers in general. For instance, if this is a byte worth a bit-- so if this is eight bit-- all of which are the number one. What number is this representing if we assume it's all positive values in binary? 
+
+255, and it's not 256, because zero is the lowest number. So 255 is the highest one, but the problem is suppose that I wanted to increment this variable that is using eight bits total if I want to increment it. 
+
+Well as soon as I add a one to all of these ones, you can perhaps imagine visually-- just like carrying the one using decimals-- something's going to flow to the left. And indeed, if I add the number one to this, what happens in binary is that it overflows back to zero. 
+
+So if you only use-- not an int, but a single byte to count integers in a program, by default-- as soon as you get to 250, 251, 252, 253, 254, 255-- 0 comes after 255, which is probably not what a user is going to expect. 
+
+Now meanwhile in floating point world, you also have a similar problem. Not so much with the largest number-- although that's still an issue. But with the amount of precision that you can represent. So let's take a look at this example here also from today's source code-- float-0.c. 
+
+And notice it's a super simple program that should apparently print out what value? What do you wager this is going to print even though there's a bit of new syntax here? So hopefully 0.1. So the equivalent of one-tenth because I'm doing 1 divided by 10. I'm storing the answer in a variable called f. That variable is of type float, which is a keyword I just proposed existed. 
+
+We've not seen this before, but this is kind of a neat way in printf to specify how many digits you want to see after a decimal point. So this notation just means that here's a placeholder. It's for a floating point value, and oh, by the way, show it with the decimal point with one number after the decimal point. So that's the number of significant digits, so to speak, that you might want. 
+
+So let me go ahead and do make float-0, ./float-0, and apparently 1 divided by 10 is 0.0. Now why is this? 
+
+Well again, the computer is taking me literally, and I have written 1 and I written 10, and take a guess what is the assumed data type for those two values? An int, it's technically something a little different. It's typically a long, but it's ultimately an integral value. Not a floating point value. 
+
+Which is to say that if this is an int and this is an int, the problem is that the computer doesn't have the ability to even store that decimal point. So when you do 1 divided by 10 using integers for both the numerator and the denominator, the answer should be 0.1. But the computer-- because those are integers-- doesn't know what to do with the 0.1. 
+
+So what is it clearly doing? It's just throwing it away, and what I'm seeing ultimately is 0.0 only because I insisted that printf show me one decimal point. But the problem is that if you divide an integer by an integer, you will get-- by definition of C-- an integer. And it's not going to do something nice and conveniently like round it up to the nearest one up or down. It's going to truncate everything after the decimal. 
+
+So just intuitively, what's probably a fix? What's the simplest fix here? Yeah? Exactly. Why don't we just treat these as floating point values effectively turning them into floats or doubles. And now if I do make floats-0, or if I compile floats-1, which is identical to what was just proposed. And now I do floats-0, now I get my 0.1. 
+
+Now this is amazing. But now I'm going to do something a little different. I'm curious to see what's really going on underneath the hood, and I'm going to print this out to 28 decimal places. I want to really see 0.1000-- an infinite-- 
+
+[INAUDIBLE] 27 zeros after that 0.1. 
+
+Well let's see if that's what I indeed get. Make floats-0 same file. ./floats-0. Let's zoom in on the dramatic answer. All this time, you've been thinking 1 divided by 10 is 10%, or 0.1. It's not. At least so far as the computer's concerned. 
+
+Now why-- OK, that's complete lie 1 divided by 10 is 0.1. But why-- that is not the takeaway today. So why does the computer think, unlike all of us in the room, that 1 divided by 10 is actually that crazy value? What's the computer doing apparently? What's that? 
+
+It's not overflow, per se. Overflow is typically when you wrap around a value. It's this issue of imprecision in a floating point value where you only have 32 or maybe even 64 bit. But if there's an infinite number of real numbers-- numbers with decimal points and numbers thereafter-- surely you can't represent all of them. So the computer has given us the closest match to the value it can represent using that many bits to the value I actually want, which is 0.1. 
+
+Unfortunately, if you start doing math, or you start involving these kinds of floating point values in important programs-- financial software, military software-- anything where perception is probably pretty important. And you start adding numbers like this, and start running that software with really large inputs or for lots of hours or lots of days or lots of years, these tiny little mistakes surely can add up over time. 
+
+Now as an aside, if you've ever seen Superman 3 or Office Space and you might recall how those guys stole a lot of money from their computer by using floating point values and adding up the little remainders, hopefully that movie now makes more sense. This is what they were alluding to in that movie. The fact that most companies wouldn't look after a certain number of decimal places, but those are fractions of cents. So you start adding them up, you start to make a lot of money in your bank account. So that's Office Space explained. 
+
+Now unfortunately beyond Office Space, there are some legitimately troubling and significant impacts of these kinds of underlying design decisions, and indeed one of the reasons we use C in the course is so that you really have this ground up understanding of how computers work, how software works, and don't take anything for granted. 
+
+And indeed unfortunately, even with that fundamental understanding, we humans make mistakes. And what I thought I'd share is this eight minute video here taken from a Modern Marvels episode, which is an educational show on how things work that paints two pictures of when an improper use and understanding of floating point values led to some significant unfortunate results. Let's take a look. 
+
+[VIDEO PLAYBACK] -We now return to "Engineering Disasters" on Modern Marvels. Computers. We've all come to accept the often frustrating problems that got with them-- bugs, viruses, and software glitches-- for small prices to pay for the convenience. But in high tech and high speed military and space program applications, the smallest problem can be magnified into disaster. 
+
+On June 4, 1996, scientists prepared to launch an unmanned Ariane 5 rocket. It was carrying scientific satellites designed to establish precisely how the Earth's magnetic field interacts with solar winds. The rocket was built for the European Space Agency, and lifted off from its facility on the coast of French Guiana. 
+
+At about 37 seconds into the flight, they first noticed something was going wrong. That the nozzles were swiveling in a way they really shouldn't. Around 40 seconds into the flight, clearly the vehicle was in trouble, and that's when they made the decision to destroy it. The range safety officer, with tremendous guts, pressed the button and blew up the rocket before it could become a hazard to public safety. 
+
+This was the maiden voyage of the Ariane 5, and its destruction took place because of the flaw embedded in the rocket's software. -The problem on the Ariane was that there was a number that required 64 bits to express, and they wanted to convert it to a 16-bit number. They assumed that the number was never going to be very big. That most of those digits in the 64-bit number were zeros. They were wrong. 
+
+The inability of one software program to accept the kind of number generated by another was at the root of the failure. Software development had become a very costly part of new technology. The Ariane 4 rocket had been very successful. So much of the software created for it was also used in the Ariane 5. 
+
+The basic problem was that the Ariane 5. Was faster-- accelerated faster, and the software hadn't accounted for that. 
+
+The destruction of the rocket was a huge financial disaster. All due to a minute software error. But this wasn't the first time data conversion problems had plagued modern rocket technology. 
+
+In 1991 with the start of the first Gulf War, the Patriot missile experienced a similar kind of a number conversion problem. And as a result 28 people-- 28 American soldiers-- were killed, and about a hundred others wounded. When the Patriot, which was supposed to protect against incoming Scuds, failed to fire a missile. 
+
+When Iraq invaded Kuwait, and America launched Desert Storm in early 1991, Patriot missile batteries were deployed to protect Saudi Arabia and Israel from Iraqi Scud missile attacks. The Patriot is a US medium-range surface-to-air system manufactured by the Raytheon company. 
+
+The size of the Patriot interceptor itself-- it's about roughly 20 feet long, and it weighs about 2,000 pounds. And it carries a warhead of about, I think it's roughly 150 pounds. And the warhead itself is a high explosive, which has fragments around him. So the casing of the warhead is designed to act like a buckshot. 
+
+The missiles are carried four per container, and are transported by a semi trailer. 
+
+The Patriot anti-missile system goes back at least 20 years now. It was originally designed as an air defense missile to shoot down enemy airplanes. In the first Gulf War when that war came on, the Army wanted to use it to shoot down Scuds, not airplanes. The Iraqi Air Force was not so much of a problem, but the Army was worried about Scuds. And so they tried to upgrade the Patriot. 
+
+Intercepting an enemy missile traveling at Mach 5 was going to be challenging enough. But when the Patriot was rushed into service, the Army was not aware of an Iraqi modification that made their scuds nearly impossible to it. 
+
+What happened is the Scuds that were coming in were unstable. They were wobbly. The reason for this was the Iraqis-- in order to get 600 kilometers out of a 300-kilometer range missile-- took weight out of the front warhead, and made the warhead lighter. So now the Patriot's trying to come at the Scud, and most of the time-- the overwhelming majority of the time-- it would just fly by the Scud. 
+
+Once the Patriot system operators realized the Patriot missed its target, they detonated the Patriot's warhead to avoid possible casualties if it was allowed to fall to the ground. 
+
+That was what most people saw as big fireballs in the sky, and misunderstood as intercepts of Scud warheads. 
+
+Although in the night skies, Patriots appeared to be successfully destroying Scuds, at Dhahran there could be no mistake about its performance. There the Patriot's radar system lost track of an incoming Scud and never launched due to a software flaw. 
+
+It was the Israelis who first discovered that the longer the system was on, the greater the time discrepancy became. Due to a clock embedded in the system's computer. 
+
+About two weeks before the tragedy in Dhahran, the Israelis reported to the Defense Department that the system was losing time. After about eight hours of running, they noticed that the system's becoming noticeably less accurate. The Defense Department responded by telling all of the Patriot batteries to not leave the systems on for a long time. They never said what a long time was. 8 hours, 10 hours, a thousand hours. Nobody knew. 
+
+The Patriot battery stationed at the barracks at Dhahran and its flawed internal clock had been on for over 100 hours on the night of February 25. 
+
+It tracked time to an accuracy of about a tenth of a second. Now a tenth of a second is an interesting number because it can't be expressed in binary exactly, which means it can't be expressed exactly in any modern digital computer. It's hard to believe, but use this as an example. 
+
+Let's take the number one third. One third cannot be expressed in decimal exactly. One third is 0.333 going on for infinity. There's no way to do that with absolute accuracy in a decimal. That's exactly the kind of problem that happened in the Patriot. The longer the system ran, the worse the time error became. 
+
+After 100 hours of operation, the error in time was only about one third of a second. But in terms of targeting a missile traveling at Mach 5, it resulted in a tracking error of over 600 meters. It would be a fatal error for the soldiers at Dhahran. 
+
+What happened is a Scud launch was detected by early warning satellites, and they knew a Scud was coming in their general direction. They didn't know where it was coming. It was now up to the radar component of the Patriot system defending Dhahran to locate and keep track of the incoming enemy missile. 
+
+The radar was very smart. It would actually track the position of the Scud and then predict where it probably would be the next time the radar sent a pulse out. That was called the range gate. 
+
+Then once the Patriot decides enough time has passed to go back and check the next location for this detected object it goes back. So when it went back to the wrong place, it then sees no object. And it decides that there was no object. That there was a false detection and it drops the track. 
+
+The incoming Scud disappeared from the radar screen, and seconds later, it slammed into the barracks. The Scud killed 28. It was the last one fired during the first Gulf War. Tragically, the updated software arrived at dawn on the following day. The software flaw had been fixed, closing one chapter in the troubled history of the Patriot missile. 
+
