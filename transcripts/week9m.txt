@@ -1,0 +1,945 @@
+>> [MUSIC PLAYING]
+
+>> DAVID MALAN: This is CS 50, and this is the start of week nine.
+And what we thought we'd do today is not only close the chapter on last week's
+material where we focused on server side web programming with PHP and SQL,
+some database stuff.
+We'll talk about a bit of security today and then
+transition to a client side programming language known as JavaScript.
+But first, some redemption.
+>> You may recall that on Wednesday, I set out
+to write a website that took in user's input
+by an HTML form that then stored that user input names, phone
+numbers, and cellphone carriers in the database.
+And then I had a little command line script written in PHP
+that was supposed to iterate over the rows in the database
+and send out text messages.
+Despite several, several attempts, we didn't get that working by the end.
+>> So I spent this entire week working on that code to get us past the point
+where we left off, whereby all I got by the end of Wednesday
+was this text message from Margo as I struggled,
+followed by a text message from another classmate, You've got this David.
+Followed by this one, wonderfully encouraging.
+Kept on going, very heartening.
+I almost got it until then-- and that's the note we ended on Wednesday.
+And then actually perhaps my favorite, a moment later, this came in.
+Damn Live Stream.
+>> So today, we fix this with a quick look at what I've done since.
+So all of this code is available online from last week's, week eight,
+source code.
+And you'll see that I went through, and I actually cleaned up things a bit.
+I introduced a couple other features of an SQL database.
+For instance, rather than just make carrier of var char
+as I think I did on the fly last week.
+I instead defined it as what's called an enum.
+>> And some of you might have seen this as we explored C. Enum is actually
+a feature of C where you can enumerate a whole bunch of constants
+and assign them automatic values, like one, two, three, four
+without having to hard code numbers.
+So SQL supports the same, whereby if you have a database field that you only
+want to take on one of finite values, you can literally specify it
+as I have done there for four popular US cellphone carriers.
+>> So I did that.
+And I made a number of changes as well, the most important of which
+was to get email working because recall, that this program relied on which
+generally called an email to SMS gateway, which is just
+a fancy way of saying that Verizon, and AT&T, and other folks support a server,
+whereby if it receives email, it converts it to SMS
+and sends out a text message to someone's phone.
+So if I did this correctly, here is a new and improved form
+that is going to talk to new and improved code, which
+you can play with online.
+And it will hopefully make my phone beep in just a moment.
+>> So first, I'm going to type in my name.
+Second, I'm not going to do this this time.
+I'm going to do Inspect Element.
+And this is just a little thing so I don't
+create hours of post production work as I did last time.
+There now is my phone number.
+>> I'll select Verizon.
+And here, let's turn on this microphone here, and aim this at my phone here.
+I'm going to click Register, which should hopefully
+put it into the database.
+Now I'm going to go to the command line program, which
+recall was called dot slash text, and cross your fingers.
+
+Here we go.
+>> [PHONE DINGS]
+>> [APPLAUSE]
+
+DAVID MALAN: So more fun than this-- it's fun, of course, if I get into it.
+But it's more fun, I thought, if we created one of those movie moments
+where like something really bad has happened in the world,
+and like all the NSA people's cellphones start beeping
+with text messages alerting them to this fact.
+So I thought we would try to recreate the same here,
+whereby not using a database, I instead in advance
+wrote a program that looks like this.
+>> This is an index.php-- and I put this code online
+as well-- that apparently just renders form.php,
+using an MVC style paradigm that we talk about in more detail in problem set
+seven.
+That form is pretty simple.
+It's going to submit to a file called here.php via post.
+And it's apparently going to ask for a name, and a phone number,
+and then via of so-called Select menu, it's
+going to give you at least four popular US cellphone carriers,
+and then allow you to effectively take attendance by clicking here.
+>> And here, meanwhile, is going to borrow some of the code from last time.
+And if you just skim this, you'll see that there's
+a whole bunch of error checking.
+But the beauty at the end is that we're not writing to a database today.
+We're keeping it simple and just sending out hopefully
+a text message via function I wrote over the past few days call
+Text, which is in Functions. php, which is again available online.
+>> So if you would like to partake in this.
+We're not going to be storing anything.
+Go to this URL here in real time.
+Don't submit it just yet, but let's see if we can have one of these movie
+moments where everyone's cellphone starts beeping, hopefully just
+once this year unlike in 2011 where this went horribly awry.
+And once you go to that address, you should see a super simple form
+that if you have a name, a cell phone number, and a cellphone carrier that
+matches the list there, go ahead and fill out the form.
+But don't hit submit just yet.
+>> The form's going to look like this.
+Go ahead and type in your name, phone number.
+Oop, someone's going ahead of the curve.
+It's OK.
+OK, everyone's filled out the form.
+This should work on a phone, too, if you want.
+All right, on your marks, get set, go.
+Hit Here.
+
+What?
+
+No.
+
+I swear to God, I tested this multiple times today.
+You got it?
+>> [INTERPOSING VOICES]
+
+>> DAVID MALAN: OK, user error perhaps.
+That's two.
+It worked for two out of a few hundred, three, four.
+OK, that's good.
+Four out of five for correctness how about.
+>> So what just happened?
+So presumably, without seeing your screens, why might it have errored?
+It's probably that we were just trying to make too many connections
+to Harvard's mail server all at once from the same IP address.
+I'm just guessing since I didn't have the luxury of testing
+this code with some 300 people in advance
+but for now realize that that at least should
+have gotten the job done this time.
+>> All right, so why is this all the more germane to what's going on?
+Well first, a quick couple of announcements.
+So one, if you'd like to join Chang, and Nick, and others at lunch this Friday,
+do RSVP at the usual URL there.
+If you are thinking of concentrating in or doing a secondary in CS,
+whether you're a sophomore, or freshman, or even junior or senior at this point
+and can still squeeze in the courses, realize that the engineering school
+is gathering for free Ben and Jerry's ice cream and advice
+this Wednesday shortly after class at 4:00 PM in the CS building
+at Maxwell Dworkin.
+If this is too fast on the screen, just go
+to cs50.harvard.edu for a link to the Facebook event
+where you can see more details.
+>> Meanwhile, I thought I would correct one other thing I goofed on Wednesday.
+Turns out that Mark's ID on Facebook wasn't three.
+It was four.
+Turns out he had more test accounts than I recall.
+But what this felt like an opportunity to do is to pull up a URL like this.
+>> So it turns out that Facebook has an API, Application Programming Interface,
+which is a mechanism whereby you can request data programmatically
+at Facebook and get back machine readable information, not web pages
+but just raw text, something called JavaScript Object Notation.
+And in fact, if I visit this URL, and zoom in, by default,
+this is Mark's publicly accessible information.
+>> And the interesting detail here is just that his ID
+is indeed, number four, which I realized as soon as I did this.
+You can do this yourself if you know your Facebook username if you have one.
+Just type it up top there.
+And none of this is private.
+I'm just doing this even in the incognito mode.
+So I'm not even logged in.
+And you're seeing that I apparently was user number 6,454
+on Facebook, which isn't too bad these days.
+So anyhow, you'll also see additional information there.
+>> And the useful aspect of that is that you
+could write your own software that somehow integrates data like this
+into your own application.
+You can empower users to log into your website,
+not using their own custom username and password but maybe their Facebook login
+and get information even about their friends,
+if they approve such, or similar.
+So note that CS50, too, has some of its own APIs,
+one for the course catalog data, some for the hugs menus in the dining
+halls, all of the buildings and locations
+on campus we have an API for as well that you can query similarly and get
+back textual data that you can integrate into a PHP, or JavaScript, or even,
+though less commonly, a C based final project.
+>> Indeed ahead for the final project are a few milestones.
+You got an email from us the other day.
+Realize that the proposal is due this coming Monday.
+It's not necessarily binding, but you do need to receive your teaching fellows
+approval before making any changes thereafter.
+And then ahead are a number of other milestones.
+>> So to tease you, too, with some possibilities,
+we have a bunch of these hue light bulbs.
+And some of you guys now have some of these in your dorm room as well.
+And they too have an API.
+So recall those binary bulbs weeks ago that Dan Bradley and Ansel
+Duff created for us.
+They used a software interface to this light bulb, which at the moment
+is plugged into electricity and then via wireless
+is connected to a little thing called the Bridge down here,
+like a little router proprietary to this particular device.
+>> But it turns out if I know how to send HTTP messages, as we all now do,
+I can send a message like this to this light bulb to turn it on or off
+or do any number of other operations on it.
+Notice that it's not get, it's not post.
+There's another one called put.
+There's actually a few other such verbs.
+But notice there's a path there, slash API, slash new developer,
+slash light, slash one, slash state.
+>> That's apparently just the path that the company, Philips,
+decided you have to hit with an HTTP request
+if you want to change the state of the bulb using HTTP 1.1.
+Then notice the blank line.
+And then lastly what looks like kind of an array of some sort,
+this again is going to be called JavaScript Object Notation, or Jason.
+And what you see here is that there are three key value pairs.
+>> One key is called on.
+And its value apparently is going to be true.
+Brightness is 128, which is some kind of int.
+And then transition time is zero, which is apparently
+how long it's going to take to turn this thing on.
+>> So right now this light bulb is off.
+But if I do exactly this-- let me go to a little cheat sheet
+that Dan set up in advance-- and I'm going
+to go ahead and copy the following command.
+Curl, as some of you might have gleaned on CS50
+Discuss is a utility like Telnet such that you can simulate HTTP requests,
+specifically puts.
+I can send this data, specifically what we just
+saw a moment ago specifically to this URL over here.
+And then Curl is going to handle all of the requisite headers
+and parsing there of.
+>> So all I have to do is copy this into a terminal window and then hit Enter.
+And the light bulb goes on.
+And this is all going through my computer wirelessly
+somehow down to the bridge, which is then talking to this light bulb.
+I can do something else.
+I can make this thing go red for instance.
+I can for instance make this thing go green.
+I can make it go blue.
+>> And notice in each of these instances, all that I'm changing
+is the so-called hue value to actually give it some color.
+So let me paste this one in as well.
+Now it's blue.
+>> And you can do even fancier things where-- let's go to green.
+And I could do this of course with my own code.
+But even the API itself supports funky operations
+like this, which will now bother us for the next 30 seconds.
+>> So that's one taste of what you might do with an API, this one involving
+light bulbs.
+Note that CS50 has a couple pairs of Google Glass if you'd
+like to tackle something along those lines, Arduino Unos, which
+are tiny little computers, essentially, on a little circuit board
+that you can connect wires and other things
+to and actually control your real world environment.
+And then there are a couple of new toys that we have.
+This one literally just arrived the other day by mail, a Myo Armband.
+And I thought it's a way to get you excited about projects
+that you might use with this hardware would
+be to play this short clip that they use to tease folks
+that we're now living in the future.
+
+>> [MUSIC PLAYING]
+
+>> DAVID MALAN: So in just a few weeks, you too can be that cool at the CS50 fair.
+Another device that we have a bunch of that we're
+happy to loan out for projects is called a motion controller.
+This is a little USB device you connect to a computer that
+allows you to interact with your laptop, Mac or PC,
+as though you had like an Xbox Kinect and actually make physical motions much
+like we see in this vision of the future.
+>> [MUSIC PLAYING]
+
+>> DAVID MALAN: So even if you have no idea how something like that
+could possibly be invented or work on a hardware level, no matter.
+Even after just a few months of CS50, and an understanding of programming
+more generally, and web programming more recently, and then also APIs, and HTTP,
+you'll have access via software APIs if you
+do want to borrow one of these devices to actually talk to it
+and not have to worry about the underlying implementation
+details, which is completely consistent with this notion of layering
+an abstraction that we've seen throughout the semester.
+>> So also over the weekend, saw a couple pieces of news.
+Go first, go to seminars if you would like to learn something
+more on any number of topics.
+See the URL there.
+And this one was sent to me by Chang, who you know,
+who's printing our army of elephants.
+And it was a headline as follows.
+I'm terrified of my new TV.
+Why I'm scared to turn this thing on and you'd be too.
+So we're now at the point in the semester,
+too, where even if you have the slightest of understanding
+of how the web works, and HTTP, and security, things like this
+should start to catch your eye.
+But also, you'll understand whether these things are or are not
+actual threats.
+>> So I took a few excerpts from this article here.
+And the story is as follows.
+I'm now the owner of a new smart TV, which
+promises to deliver streaming multimedia content, games, app,
+social media, and internet browsing, oh and TV too.
+The only problem is that I'm now afraid to use it, says the author.
+You would be, too, if you read through the 46 page privacy policy for your TV.
+The amount of data this thing collects is staggering.
+It logs where, when, how, and for how long you use the TV.
+It sets tracking cookies, as we've discussed,
+and beacons designed to detect when you have
+viewed particular content or a particular email message
+if you want to check email on your TV.
+It records the apps you use, the websites you visit,
+and how you interact with content, doing all of that via your smart TV.
+It also, creepier yet-- that's my addition--
+has a built in camera with facial recognition.
+>> The purpose is to provide gesture control for the TV
+and enable you to log in to personalized account using your face.
+On the upside, the images are saved on the TV instead of uploaded
+to a corporate server.
+On the downside, the internet connection makes the whole TV
+vulnerable to hackers who have demonstrated the ability
+to take complete control of the machine.
+>> More troubling, as if that wasn't smart enough, is the microphone.
+The TV boasts a voice recognition feature
+that allows viewers to control the screen with voice commands.
+But the service comes with a rather ominous warning.
+Please be aware that if your spoken words include
+personal or other sensitive information, that information
+will be among the data captured and transmitted to a third party.
+Got that?
+Don't say personal or sensitive stuff in front of your TV.
+>> So this is actually for real.
+And it's hard not to see if you go to Best Buy or the like for TVs
+these days.
+They're all smart in some way.
+And they're getting smarter and creepier.
+And they're simply collecting data in ways that we've talked about
+and then uploading it via HTTP or some other protocol to some server.
+>> So this was of a fun article in this online website
+here, which talked about a particular bug or mistaken code
+that we can actually tie into last week's discussion.
+So this headline was as follows, the story goes here,
+Josh Breckman worked for a company that landed a contract
+to develop a content management system, or CMS as they're called,
+for a fairly large government website.
+Much of the project involved developing a content management system
+so that employees would be able to build and maintain
+the ever changing content for their site.
+Things went pretty well for a few days after going live.
+But on day six, things went not so well.
+All of the content on the website had completely vanished.
+And all pages led to the default, please enter content web page.
+Whoops.
+Josh was called in to investigate and noticed
+that one particularly troublesome external IP address had
+gone in and deleted all of the content on the system.
+>> The IP address did not belong to some overseas hacker bent
+on destroying helpful government information.
+It resolved to googlebot.com, Google's very own web crawling spider.
+Whoops.
+After a bit of research and scrambling around to find a noncorrupt backup,
+Josh found the problem.
+>> A user had copied and pasted some content from one
+page to another, including an Edit Hyperlink
+to edit the content on the page.
+Normally this wouldn't be an issue since an outside user would
+need to enter a name and password, but the CMS authentication system,
+the login system, didn't take into account
+sophisticated hacking techniques of Google Spider.
+Whoops.
+>> As it turns out, Google Spider doesn't use
+cookies, which means that it can easily bypass a check for the
+is logged on cookie set to be false.
+It also doesn't pay attention to JavaScript, which would normally
+prompt and redirect users who are not logged in.
+It does however follow every hyperlink on every page it finds,
+including those with Delete Page in the title.
+Whoops.
+>> So what does this mean in more technical but fairly accessible terms?
+It just means that throughout their website,
+they had URLs not unlike this one that you might see in problem set seven.
+Recall in problem set seven or know in problem set seven
+that you're challenged, among other things,
+to sell stocks on behalf of users.
+But implementing that feature by way of get via hyperlinks in your user
+interface, probably not the smartest idea
+because if your site is somehow accessible either by a human
+who's clicking around or buy a bot like Google's or a Spider
+as they're called that's just crawling the web trying to index
+the web as a search engine, they could very easily
+hit via get this kind of URL.
+And that's functionally equivalent to, in this case,
+selling all shares of Google.
+>> Now frankly, it's completely asinine that the CMS
+used JavaScript and cookies to implement its login system
+and not doing that server side, as you guys do and will in PSet 7--
+there's a login.php file-- always, always,
+always security should be done on the server side,
+not on the client side because, as this article suggests and you might yourself
+see at some point, it is trivial for a user, good or bad,
+to just turn off JavaScript not to mention cookies.
+So that is your daily WTF.
+>> There's one more, which is just kind of scary,
+so I'll mention it if only as a life lesson.
+Whenever you use an application called like Snapchat or the like
+that says these photos only last for five seconds, ten seconds, or whatnot.
+They're ephemeral That is absolutely not the case.
+Like there is no way, digitally, to implement some form of video,
+or image, or textual sharing such that a recipient on the other end
+can't somehow save the data.
+>> In the most naive way, someone could take their phone.
+And they have a 10 second window while looking at some snap
+to just take some other phone and photograph it, obviously.
+So you can preserve something digitally that way.
+Some of you know how to take screenshots on your phone.
+In fact, if you don't know this, realize that at least Snapchat,
+and I think other applications these days,
+at least tell you if the recipient has actually
+taken a screenshot of your image.
+>> But worse yet, this was the snappening, as someone coined it recently,
+where some 100,000 snaps had been released
+in what's called a torrent file on various websites ultimately.
+And these contained a whole bunch of private messages and posts.
+It turns out most of them benign, so not what you might expect.
+But because people had used a third party website,
+logging in with their Snapchat username and password and then
+saving all of their snaps on this third party website.
+And it was that third party website that was hacked,
+which just meant someone figured out how to get all 100,000 plus of those images
+into their own hard drive for subsequent sharing.
+Frankly, here too, it's sort of asinine that Snapchat
+is implemented in such a way that a third party can sort of intercept
+the data and that it's not tied to your own application running on the phone.
+But here, too, realize that these things should not catch you by surprise,
+or at least there should be a life lesson in here.
+If you'd like the technical details, go to that URL there
+that's in today's slides.
+All right, any questions on today's life lessons in CS?
+Turn that off.
+Anything at all?
+Anything at all?
+I've got a lot of people checking their Snapchat or something now.
+>> All right, so SQL, Structured Query Language.
+Let's wrap this.
+And also, even though we're just scratching
+the surface of this language, we'll give you
+enough of the language in the form of PSet 7
+so that you can tackle some fairly common functionality.
+But realize there are a couple things we don't require of you,
+but they're going to be important come final projects
+and certainly come making actual websites with actual users
+is this design decision.
+>> It turns out that in a MySQL database, you
+have bunches of choices like the data types for your columns
+and other things, but you also have the choice of a so-called storage
+engine for all of your data, the sort of file system,
+if you're familiar, for all of your data.
+What format is it ultimately stored in?
+And the most common, perhaps, has been MyiSAM and InnoDB, technical terms
+that we'll care about only to the extent that one has
+and one doesn't have the following feature.
+>> Suppose that you have a little dorm fridge.
+And suppose that you and your roommate, who share this fridge,
+are really fond of say milk.
+And this is, in fact, how the story was told to me way back
+in the day when I took a course called CS 161 Operating Systems, which
+similarly explores this topic.
+So you've got this fridge.
+You're out of milk.
+And you come home, your roommate's still at class or whatever,
+and you decide I'm going to go out and get some milk.
+So you close the fridge, lockup the dorm room, go across the street
+to CVS or wherever, and get in line to buy some milk.
+>> Meanwhile, your roommate gets home from class, gets into the dorm room,
+opens the fridge, also realizes ooph, we're out of milk.
+So he or she closes the fridge and then happens
+to go to the other CVS, which happens to be
+one block away from the other CVS in the square, and gets in line
+there to get some milk.
+Now, of course, a few minutes later, you both get back,
+and the worst of all possible outcomes has happened.
+Both of you have milk.
+And you don't really like milk that much.
+So one of them is just going to sour at some point.
+So now you have an excessive amount of milk in the fridge all because why?
+>> [INAUDIBLE]
+DAVID MALAN: Yeah, you didn't somehow communicate with each other
+that you were getting milk.
+So in the simplest of ways in the human world,
+how might you avoid this silly scenario from happening such
+that you only end up with one.
+Text them, yes good.
+But how else?
+Post-it notes.
+DAVID MALAN: A Post-it note.
+Any form of communication that tells your roommate
+don't go into the fridge for milk.
+I'm going to go restock on my own.
+So you somehow need to lock this resource.
+So we can make this-- we can kind of ruin the story and turn into a CS story
+whereby think of this as just like a variable, which is storing some value.
+And right now, the value of milk is zero,
+which you don't want your roommate to inspect that variable
+and then make a decision him or herself based on the state of that variable
+if you're in the process of changing the state of that variable.
+>> So one of the lines of SQL that we give you in PSet 7 specification
+is this one here.
+And we don't spend a huge amount of time talking about it.
+But it turns out, if you are trying to buy some stock in CS50 finance
+that you already have some shares of, you
+want to be able to do a number of things instantly together.
+You want to be able to effectively, on a high level,
+check all right, if I want to buy more shares of Free,
+the penny stock we talk about in the spec,
+I want to first check how many shares I have.
+And suppose it's five.
+And suppose I want to buy 10 more, I ultimately
+want to have 15 shares of stock.
+So I have to ask two questions.
+What's the state of the variable?
+What's the state of the row?
+How many shares do I currently have?
+Then you want to go ahead and update it.
+So that's the analog to the milk in that you check the row,
+and then you want to update it because if you want to buy 10 shares,
+you don't want to change the row to 10, you
+want to change it to 5 plus 10 or, of course, 15.
+>> This line of code ensures that those two conceptual ideas
+happen together or not at all.
+No one, including some other user who's logged into the same website,
+can somehow interrupt the checking of the row
+and the updating of the row, the select and the update if you will.
+And the syntax isn't super obvious, but this one line, long is it is,
+ensures that those two operations check the variable or check the row
+and update the row happen atomically.
+>> Oh here we go again.
+Text message on my phone.
+So let's make this a little more concrete.
+Suppose that you're not implementing a refrigerator,
+and you're not implementing PSet 7 but an actual bank,
+or an ATM, an Automated Teller Machine, whereby you somehow
+want to be able to empower users to transfer money
+from one account to another.
+OK, hang on.
+I'm going to mute this now, thank you.
+So we want to move money from one account number
+into a different account number, specifically $100.
+So this is kind of an arbitrary example, whereby you, the ATM,
+might want to execute two SQL queries, subtract from one account,
+and add to the other account.
+But you want to ensure that these two lines both happen or not at all.
+You don't want something getting interrupted.
+You don't some smart bad guy somehow standing at Bank of America
+with two ATMs in front of him and somehow
+sort of typing in the commands at the same time,
+hopefully trying to deduct $200 instead of $100 and only having $100 credited.
+In short, you want this to behave exactly as you expect.
+>> And the way you do this in SQL database is
+you wrap it in what's called a transaction.
+Literally in SQL, you can call CS50's query function with quote unquote start
+transaction.
+Then you can execute any number of subsequent SQL queries,
+but none of them take effect on the database
+until you call query quote unquote commit, if again using PHP.
+And in this way, you can ensure that even if you have 1,000 users all
+hitting your database at the same time, SQL
+will promise that these two queries will be
+implemented one right after the other.
+So you don't end up with excess of milk or the wrong amount, ultimately,
+of money.
+>> So keep this in mind, not so much for PSet 7
+but for final projects if you're actually
+trying to move data around across tables as you might here.
+But perhaps even simpler and more obvious to understand with an example
+is this one here.
+And someone emailed us about this just the other day
+when he saw something similar online.
+>> So to my knowledge, the pin system is not vulnerable to this attack.
+And I have no idea if it even uses the SQL database underneath the hood.
+But let's use it for the sake of discussion.
+Here's the screen that Harvard folks tend
+to see when logging in with their Harvard ID number and their pin.
+And suppose that the pin system were implemented in PHP and with a MySQL
+database, the code that someone might have written years ago
+might look like this.
+First, declare a variable called username.
+And just get that from the POST superglobal.
+Then get another variable called password and do the same.
+And then just execute this long query here,
+select star from users where username equals such and such
+and password equals such and such.
+>> Notice that the curly braces I've used here
+just mean to PHP, go ahead and substitute
+the value of those two variables right there.
+They're not strictly necessary, but they tend to avoid subtle syntax errors.
+So this looks completely correct at first glance.
+And it is.
+You could implement the pin system in this way.
+>> But suppose that a super smart and malicious student
+input this as his or her pin.
+So I've removed the bullet signs here in the mock up,
+and I've actually revealed what he or she might be typing.
+And it's a little strange.
+But what jumps out at you at potentially worrisome about the user's input,
+even if you have no idea what a SQL injection attack means.
+Why does this look a little fishy?
+What's that?
+[INAUDIBLE]
+DAVID MALAN: The or is a little suspicious.
+In fact, that's a keyword from SQL.
+So that doesn't bode well.
+The fact that there's all these single quotes
+there-- in fact, one of the easiest ways to break some databases
+is by typing in a name like O'Reilly that has an apostrophe in it
+because if the human who wrote the code behind the scenes
+doesn't take into account that there might be single quotes in a user's
+input, and he or she is using single quotes in their code,
+bad things can happen.
+>> In fact, worse yet, consider this.
+If this was again the code that someone at Harvard years
+ago wrote for the pin system, notice what's
+about to get substituted for username and password
+if the user types in again skroob as their username
+and then one, two, three, four, five, quote or quote unquote one equals
+quote one.
+And notice what's key here is the user has not
+started their password or their pin with a quote.
+And they haven't ended it with a quote because he or she
+is assuming that if the programmer wasn't so sharp,
+they are going to have those single quotes in their code.
+>> So here's the code.
+And the substitution that might now happen is this.
+And I've underlined what the user has typed in.
+So before, after.
+And notice what's mildly worrisome now about the right half of this SQL code?
+It's a little more complex, admittedly, than the queries we've seen.
+But this can't possibly be a good thing if you're
+saying select star, which is select everything from the user's table
+where username equals skroob and password equals one, two, three, four,
+five or one equals one.
+What's the logical implication of that last clause presumably?
+It's just always true.
+>> And because we have sort of guessed or figured out by trial and error
+that the programmer who wrote this code did not
+anticipate a human or bad person typing in single quotes as well,
+we can syntactically complete the SQL query
+with something nonsensical but something that
+is syntactically incorrect that always evaluates to true.
+So if this code is being used to answer the question true or false should
+this user be allowed to pass, the answer is always apparently going
+to be true because this is always going to select something from the database
+because one of course always equals one.
+>> So what's the solution?
+Well in PSet 7, we actually avoid this all together.
+We give you a query function, and we encourage you to use question marks
+as placeholders, similar in spirit to printf's %s,
+but what's key about the question marks here is if you actually read through
+functions.php, where our query function is implemented,
+those question marks are escaped, whereby anything potentially dangerous
+like a single quote is turned into an escaped single quote.
+>> So this is what's really happening if you
+use CS50's query function or any number of third party free libraries that
+do the same.
+Doesn't matter in this case, in green, if the user has typed in a single quote
+because the query function that we wrote is
+going to add backslashes before any such dangerous quote.
+So this is not, in fact, going to be legit.
+This is like typing in a crazy looking password that's, of course, not going
+to be skroob's actual password.
+>> So the takeaway for CS50 is one, absolutely always use something
+like CS50's query function or the underlying library,
+which happens to be called PDO.
+But never, never, never do code like this
+without escaping or scrubbing as they say your inputs.
+And you will at some point probably come across some website like this.
+In fact, it seems to be the case like at airports and hotels in places
+where they have free Wi-Fi access that you have to login to,
+these websites are always horribly implemented.
+And so a sort of fun at home exercise, not for malicious purposes or more
+of a fun on the road exercise, is to just type
+an apostrophe, a single quote, into a form on some website
+and see what happens.
+And if the server crashes or gives you some kind of error message,
+it may very well be that someone hasn't anticipated this.
+And then you should alert the proper authorities and proceed no further.
+>> So now you guys should hopefully understand a bit more geek humor here.
+>> [LAUGHTER]
+
+DAVID MALAN: You know you're a geek.
+For the next several years, you will remember
+who little Bobby Tables is because of this cartoon here.
+So keep that in mind as we context switch one last time
+today to JavaScript.
+We've spent relatively little time on the syntax of PHP
+because it's actually super similar to C.
+And nicely enough, JavaScript too is super similar to C's syntax
+as well as we'll see in just a moment and as we'll
+see later this week in particular.
+What you can do with this language, though, is all the more powerful,
+especially with APIs.
+>> But first a quick tour.
+So one, in JavaScript, there's no main function, which is nice.
+As with PHP, you can just write code.
+Conditions look like this.
+And Boolean expressions might look like this or like this.
+Switches exist, and they might look like this.
+Four loops look like this.
+While loops look like this.
+Do whiles look like this.
+And then arrays look like this, very similar to PHP.
+But notice, that in JavaScript you declare a variable not with a dollar
+sign, not with a data type but literally by saying var for variable before it.
+It too is loosely typed in that it has types,
+but you don't explicitly declare them.
+And then a string, for instance, might look
+like this, that string being called s in this case.
+And then an object.
+And these we'll see more before long.
+And an object is perhaps one of the most commonly seen data structures
+in a JavaScript based program because it allows
+you to associate arbitrary key value pairs just
+like PHP's associative arrays and just like your own hash table
+or try as we implemented a few weeks back.
+So let's actually see what we can do with JavaScript.
+And in particular, this is a laundry list of features
+that browsers have that allow us to hook JavaScript
+into a website in the following way.
+JavaScript is often used as a client side scripting language.
+It's not compiled.
+It too is interpreted.
+But unlike PHP, which has been running on the server, in the web server,
+or deep inside of the clients, JavaScript
+is different in that it usually runs in the browser.
+>> So any JavaScript code you start writing for PSet 8, or your final project,
+or in the real world is generally going to be saved on the server, absolutely
+in a dot HTML or dot JS for JavaScript file.
+But the browser is going to download that JavaScript
+code to your own instance of Chrome, or IE, or Firefox, or whatever.
+And the code is actually going to get executed inside of your own browser.
+Just to make this more real, let's see this in concrete form.
+>> We have no idea what this code does without really reading through it.
+But let me go to Facebook.com without logging in.
+Let me go to Inspect Element and go to, let's say, Network and Reload the Page.
+And we'll see-- let me shift Reload the Page to get all the requests to new.
+And the very first file I see is CSS, CSS.
+Here's the first JavaScript file, and I have
+no idea what this does, but here is some of the JavaScript code
+that drives Facebook.
+It's not even really that revealing to zoom in.
+It's still just as nonsensical.
+>> But you'll see even down below, there's even more of these JavaScript files.
+Whoops.
+That's a ping.
+Let's go down a little further, further, further.
+There's one.
+There's one.
+There's one.
+>> So even though Facebook, behind the scenes, is written in part in PHP
+and Facebook's own version thereof, there's a huge amount of JavaScript.
+In fact, any of the chatting you do on Facebook,
+any of the inline timeline updates that happen in real time, all of that
+is driven by JavaScript.
+Yeah?
+>> AUDIENCE: I'm not sure if this is Facebook,
+but I thought that Facebook developed their own in-house code language?
+DAVID MALAN: They did.
+So that's why I say a variance of PHP called Hip Hop that they actually
+added features to such that when Mark first implemented Facebook,
+it was written in PHP.
+And that sort of has remained the sort of front end language
+that they use for much of their coding, but it
+hasn't been a language that's scales particularly well to billions
+of people.
+And so they have added their own improvements behind the scenes.
+And they use any number of other languages
+for various pieces of their infrastructure.
+So yes, it's a variance of what we now know as PHP.
+>> So let's take a look at a couple of examples
+of how we might use JavaScript here.
+In today's source code, we have a bunch of files, the first of which,
+let's called DOM zero.
+So DOM zero looks as follows.
+Let me go into this directory and open up domzero.html,
+the top of which has a doc type declaration, saying here comes HTML 5.
+And now here's an HTML tag.
+Here's the head tag.
+And here's what's new today.
+>> We now have a script tag inside of the head of the page.
+And this apparently does very little, but notice
+that I've defined a script, a JavaScript.
+And as an aside, since this is a common misconception,
+JavaScript has absolutely nothing to do with Java, the language
+that some of you might have learned in APCS.
+It was more of a marketing thing than anything,
+riding the coattails of Java years ago.
+But JavaScript, nothing to do with Java, just similarly, and annoyingly,
+confusingly named.
+>> So here is how you declare a function in JavaScript, literally say function,
+then the name of the function, then any arguments it might take,
+just like in PHP.
+Turns out in JavaScript, one of the most annoying functions that exist is Alert.
+This is a little window that will pop up and alert you
+to some piece of information.
+It's generally frowned upon.
+But we'll use it as our first exercise here.
+>> Notice a few features of JavaScript.
+Single quotes and double quotes don't actually matter anymore.
+Single quotes and double quotes can be interchanged,
+whereas in C, you have to use double quotes for strings,
+and you have two single quotes for chars.
+In the JavaScript world, many people, most people
+use single quotes around strings just because it's a stylistic thing.
+But what's the plus operator here, which we haven't seen before?
+>> AUDIENCE: Concatenation.
+DAVID MALAN: Concatenation.
+So C does not even have this.
+PHP has the dot operator, which does this.
+JavaScript has the plus operator, which confusingly is just like Java.
+Now what's going on here?
+>> So here's where a basic understanding of that picture
+we threw up a couple days ago comes into play.
+Remember when we had a simple version of an HTML page--
+it just said, hello world.
+And then we drew a tree to the right, which
+had a bunch of rectangles and lines connecting them like a family tree.
+So that's the so-called DOM or Document Object Model.
+And it turns out that you can access rectangles in that tree with syntax
+like the following.
+You literally say document, which is a special global variable in a JavaScript
+program that has a function associated with it that you can access
+similar to a struct, but you simply say dot and then the function's name,
+get element by ID.
+>> The element I want to get is apparently quote unquote name.
+And then I want to get its value.
+Now we're getting ahead of ourselves.
+I'm not even sure what all this is about.
+Let's fast forward to the HTML on the page, which is super simple.
+>> Notice that I've defined a form down here.
+Notice I've given it a unique ID, even though we've not used
+this attribute before.
+But this exists in HTML.
+You can uniquely identify some chunk of HTML with an identifier like this.
+>> Notice now this-- turns out HTML supports, per that laundry list
+a moment ago, a whole bunch of event handlers.
+And this event handler says on submit.
+On the user submission of this form, call the following code.
+And the code that's going to be called or executed
+is exactly this, the Greek function followed by return false.
+Everything else should be pretty familiar.
+>> Here is an input of type text, whose ID, in this case, is going to be name.
+We don't have an actual name attribute this time-- and a submit button.
+So the resulting page looks like this.
+And the resulting behavior, you'll see, looks like this.
+The page it local hosts says, hello David, hardly an aesthetically pleasing
+way to greet a user.
+But what's actually going on?
+>> Well, consider what this is.
+This is a text field.
+And according to the HTML here, I've given it
+a unique identifier called quote unquote name.
+Meanwhile, I've said when the user submits this form
+by hitting Enter or clicking the Submit button, call the function called Greet
+and then return False.
+Let's consider those in reverse.
+Notice when I click Submit, the URL of this page does not change.
+The browser's icon didn't start spinning.
+I didn't go anywhere, and that's literally because I said return False.
+Return False short circuits or stops the default behavior of a form.
+So that then leaves us with this one final question.
+What does Greet do?
+Well, Greet apparently calls a function called
+Alert, passes in one long argument that's
+the result of concatenating together a bunch of substrings, hello comma space,
+then whatever this returns.
+So document is like a global variable to that root of that tree,
+calling a special function, otherwise now known as a method.
+A function that's inside of a variable is
+called a method instead of a function.
+>> So get element by ID.
+What element do you want to get by its ID?
+Quote unquote name and then specifically value.
+So in other words, that code simply finds the text field whose ID is name
+and then gets its value.
+So if I were to change this and say Davin instead of David,
+and click Submit, now we have a greeting for Davin.
+>> All right, so all fine and good.
+But let's see if we can make this a little cleaner since just
+writing code like this is generally going to be frowned upon.
+This is going to look scarier.
+But what's the first difference that you note here
+in this version besides the name changing to DOM one?
+What structurally looks different about this versus the other?
+Yeah?
+AUDIENCE: Is the form on top of the script now?
+DAVID MALAN: Yeah, the form is on top of the script for some curious reason.
+So that's the first thing that jumps out at me, too.
+And thankfully at least, this part is identical.
+So the only thing that seems to be different is this.
+>> So here's what's neat about JavaScript 2.
+And it makes it hard to understand at first glance,
+especially for final projects if you're looking at sample code online,
+but it boils down to some basic syntactic features.
+Here again is that global variable document.
+Here again is that method or function that says get the element by ID.
+This time I want to get the ID called demo.
+Where is that?
+That's apparently right here, the form itself.
+>> And now notice that apparently if I get back that node from the tree that
+represents the form itself, not a text field,
+it turns out that form, that node or rectangle from the tree,
+has what we'll call a property, very, very, very similar
+in spirit to a struct in C. It's just a data member inside of this rectangle.
+>> So I've got the form here, and I'm attaching,
+or I'm assigning, to its On Submit handler or rather On Submit property
+the following function.
+And this is, by far, the craziest thing thus far syntactically.
+It turns out in JavaScript and in PHP, and frankly for that matter in C,
+even though we don't do it, you can add nameless, anonymous, or AKA lambda
+functions that don't have a name but can be called nonetheless.
+>> So what I'm doing here is I'm assigning this On Submit property, which
+is inside of this node of my DOM tree, a function, function pointer if you will.
+That function has no name, but that doesn't
+matter because we'll see in a moment how to call it.
+When this function is called, this code gets executed, then
+false is returned just like before.
+>> But notice what I've done.
+At this point in the story, I have a form.
+It's got a unique ID called demo.
+Down here, I have a script tag that executes the following code.
+It attaches to that node in the tree to it's On Submit
+property this function here.
+And just by nature of how browsers work, when I now click Submit or hit Enter,
+that function is going to get called.
+It doesn't need a name because who the heck cares what it's called.
+The only time it's ever going to get called is when I submit the form.
+There's no need for me, the human developer,
+to actually call it anywhere else.
+>> Now just as a teaser, as if that weren't mind bending enough,
+we can even make this look more cryptic using
+a super popular library called jQuery.
+In fact jQuery and JavaScript are often conflated.
+And what we'll do on Wednesday is start using this language and these libraries
+to build increasingly asynchronous and dynamic applications
+like map getting applications, applications
+that update the webpage in real time, much like Facebook or Gchat
+do, and no longer confine ourselves to hitting Submit by a get or just post
+alone.
+So I will see you on Wednesday.
+
+>> [MUSIC PLAYING]

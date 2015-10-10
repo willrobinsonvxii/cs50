@@ -1,0 +1,895 @@
+
+>> [MUSIC PLAYING]
+
+>> [AUDIENCE CHEERING AND APPLAUDING]
+
+>> DAVID J. MALAN: This is CS50, Harvard University's introduction
+to the intellectual enterprises of computer science
+and the art of programming.
+We are so excited to have an amazing alum here with us today.
+He was a member of the Harvard class of 1977.
+He concentrated in applied math economics.
+And he was a resident of Currier House.
+>> [AUDIENCE CHEERING]
+>> He was manager of the Harvard football team,
+advertising manager of the Crimson, and publisher of the Harvard Advocate.
+And upon graduation, he headed off for a to Stanford's business school,
+but didn't stay long, as he was quickly recruited by a friend of his
+to a little company we all know now as Microsoft, where he served first
+as business manager, later as CEO, and is now the owner of the LA Clippers.
+>> [AUDIENCE CHEERING]
+>> CS50, this is Steve Ballmer.
+>> [CHEERING AND APPLAUSE]
+
+>> STEVE BALLMER: Well, thanks.
+I'm honored to have a chance to be here with you today.
+When I first talked to David about this, he said,
+I'd really like you to come on in and give an advanced lecture
+in machine learning and computational thinking.
+We didn't dwell on that idea very long.
+>> So I thought I'd give you a little talk--
+if I can figure out which space bar I'm hitting--
+what do we need to do to change?
+I won't touch that one.
+This one I won't touch.
+There we go.
+OK.
+>> I thought I'd give you a little-- you've got to be a competitor in business.
+Anyway, I thought we'd talk a little bit today,
+just a few thoughts, on most of what I learned
+I learned at Harvard University.
+I thought I'd try to summarize that in about nine easy steps and then four
+things I learned after I got out of this place,
+and hopefully get all through that in about 25 minutes-- just
+to give you a little bit of food for thought.
+And then we'll do Q&A.
+>> I am 99.999999999% sure that nothing we talk about today
+will matter for your grade or will appear on the final.
+I think you're as safe as rain on that today.
+But hopefully, get you thinking about a couple things as we go through.
+First thing that's probably important for you to register-- this
+is sort of academically dangerous-- of all those many important things
+I learned at Harvard, it wasn't in the classroom.
+As I listened to David do the introduction, I thought to myself,
+it sounds like I majored in extracurriculars when I was here.
+That's actually true.
+I attended all of one class session senior year.
+Junior year was a little bit better.
+>> With modern technology, I don't know what the possibilities are,
+but they would seem to be even greater today
+for mischief outside the classroom.
+But I will tell you it was really very, very formative and seminal.
+I arrived here in 1973.
+And I was hell bent and determined that I was going to get my Ph.D.
+in either math or physics.
+And about the only thing to figure out was
+whether it was going to be math or physics.
+That was it.
+That's all that needed to be figured out.
+>> Freshman year, the big decision was whether to take
+Physics 55-- I don't know if that course still exists-- or Math 55.
+I thought I'd take both, and the kindly adviser said, young Steve, big mistake.
+I won't allow you to do that.
+So I took one of them and did an independent study in the other.
+And thank god I did.
+>> First lesson, I learned very, very early.
+Freshman year, I took my first exam.
+I took my first exam.
+I walked out of it.
+I called my parents and said, I think I just flunked out of school.
+
+I was already involved with the Harvard football team doing statistics.
+I was supposed to go down to Penn, so it must have been about this time of year,
+since the schedule for football hasn't changed in 50 years.
+>> We were supposed to go down Penn.
+I didn't go, because I was crest fallen that I had flunked out of school.
+I got my exam back the next week, and sure enough, I
+had gotten a 33, which was about fifth or sixth in the class.
+The guy who got 75 is Ph.D. in physics, is a professor of physics,
+and is a genius.
+So it took me about two months to learn I wasn't a physicist
+and I wasn't a genius.
+And everything good started right there with my first big failure, so to speak.
+>> I just finished giving a class, actually, at the business school
+at Stanford.
+And I worked with a lady who had been a professor here at Harvard in economics
+and now is at Stanford Business School.
+And I took the opportunity to look back and reflect on, let me say,
+important lessons that I've learned over the time of my life,
+but particularly that mattered to me as I was running Microsoft.
+>> And I'm not going to try to go through the detail of each,
+but I summarise them in short form.
+And when I stopped and looked back and I said, how many of those
+relate to something concretely that I got out of my experience at Harvard,
+the answer turns out to be very high.
+>> Small show of hands-- how many freshman do we have in the class?
+Sophomores?
+Juniors?
+Seniors trying to get that last CS in before you leave?
+OK, good.
+>> I will tell you that in reflection, the amount you can get out of this place
+is stunning.
+My best friends, many of them I met to this day while I was here.
+The formative experiences, I got here.
+And everybody tells you, but it's amazing
+what you can get out of the place.
+>> Number one for me, life lesson, is ideas matter.
+Now, people say, of course ideas matter.
+What kind of stupid life lesson is it that ideas matter?
+The truth of the matter is this is both under and over appreciated.
+Most people think every idea is a good idea as long as they had it.
+The truth of the matter is not every idea is a good idea.
+Not every idea matters.
+And not every idea should be pursued.
+>> And if you're in a field like I am or was of innovation,
+not every idea is a good idea, even if it strikes you that way on first blush.
+In fact, most people are lucky to have one idea that
+really matters in their whole life.
+That's not a criticism.
+But earth shattering, life changing ideas
+are very few and far between-- research insights, investment insights,
+innovations.
+A good idea needs to be cherished and nurtured.
+And in some senses, you could say I learned that here at Microsoft-- here
+at Microsoft-- here at Harvard.
+>> [LAUGHTER]
+>> I actually know what's on the slide, though.
+I learned it here.
+Microsoft was started here by Bill Gates and Paul Allen when I was here.
+When I finally joined the company, it was five years
+after Microsoft got started.
+Some people would say it got started up at the Currier House, but it really got
+started up at the housing project up at Ringe,
+which is where Paul Allen was living.
+>> But this notion, which Microsoft started,
+was the idea that software represented a form of free intelligence,
+and that if you coupled it with this new essentially free intelligence
+in the form of the microprocessor, unbelievable things would happen.
+And that basic idea that software was a mobilizing force
+for this new microprocessor, which was free-- that obviously was a big idea.
+>> And that was the idea that Paul Allen and Bill
+Gates had when they started the company.
+And ideas do matter.
+And it is worth considering and not falling in love
+with every idea you have, whether you're trying to solve a problem set
+or you're trying to do something else.
+>> Second thing I learned is there is an advantage
+to being what I like to call now hardcore.
+Hardcore-- I don't know quite how to describe it.
+It's a combination of tenacious and dedicated and passionate and
+committed-- something like that, hardcore.
+>> I learned about being hardcore from math concentrators at Harvard.
+>> [LAUGHTER]
+>> I'm not going to ask whether we have any math concentrators here.
+But I would say that's where I got my lesson.
+People could just go crazy-- focused.
+And it wasn't just that people were genius,
+but working and working and working and working.
+I'd sit in my room working on a problem set, and after three hours--
+I'm a little ADD-- I just couldn't take it.
+The most hardcore people could just power through anything.
+>> And the advantage of being that tenacious and dedicated
+and committed-- I claim it helped us at Microsoft.
+It was fundamental at Microsoft.
+But I learned it here at Harvard.
+>> Passion-- I think it's probably fair for me to say at this stage in my life
+that basketball is a passion.
+I started keeping track of rebounds and assists.
+$12 a game I used to get paid.
+I went to every Harvard basketball game, which I would have gone to anyway.
+But I got paid $12 to keep track of rebounds and assists.
+>> And I will say that finding your passion is something
+you get to do almost in a unique way in college.
+And finding the things that you are passionate about
+is probably the most important thing that you
+get to really start doing when you get to college.
+Before college, everything's about getting to college.
+It's unfortunate, but I know it's true.
+>> Here, take the time to explore your passion.
+I now this year will probably go to about 200 basketball games.
+I think it's fair to say it is a passion.
+But sitting there in the old IAB, which I think is called the Malkin Center,
+marking down-- there's a guy named Lou Silver
+who played on the Harvard basketball team in 1975.
+I gave him the benefit of the doubt on every rebound ever.
+I think I was part of his All Ivy success.
+And who was one of the first guys to email me when I bought the LA Clippers?
+Lou Silver-- passion built early in life.
+>> Own the results.
+This is actually, I think, one of the hardest things for college kids to get,
+especially kids at Harvard, which is at the end of the day,
+it's not just about whether you have a good idea
+and whether you're really talented and really smart.
+That's enough to get you into a lot of good colleges, including this one.
+>> But all of those things are not really measures of success.
+You have to do something other than make grades and get measured on them
+in life.
+That's generally how the world works.
+And really being accountable for outcomes
+makes you better at everything you do.
+I comped for the Crimson and had to go sell $1,000 worth of advertising.
+That was a lot of money.
+I don't know what the numbers would be these days-- but $1,000 of ad revenue,
+and then took on ad sales.
+>> And feeling the pressure, particularly at an institution
+that basically has no money-- at least that's
+where the Crimson was 35 years ago-- it's good for you.
+It's good for the soul.
+And it actually makes you better at everything you do to own outcomes.
+>> Time-- how many people in the room would say they are too busy?
+Not busy enough?
+That's a politically unpopular place to put your hand,
+but God bless you for putting your hand up over there.
+The truth of the matter is, thinking about time as something
+to be managed, whether it's how long-- for those of you who are seniors,
+I'm sure you'll ask the question, how long will I do my first job?
+How long?
+Will I stay in my job six months, a year, five years?
+>> How long before I decide whether I really like my career?
+How long before I really like my major?
+How am I really managing my time?
+>> I got involved in a lot of extracurriculars.
+The one that broke the bank for me was becoming publisher of the Advocate.
+I'm not even sure why I did.
+Really, I'm not sure why I did it.
+It was another resume build.
+I was already busy with football and the Crimson.
+>> But I did it.
+And then time management really got into my vocabulary.
+I really did have to manage-- and I don't even measure it.
+I started skipping class.
+I already confessed to that.
+But managing time even amongst the extracurriculars
+got to be a big, big deal.
+>> Today, I actually keep a spreadsheet, a bunch of them.
+These are all the things I'm going to do in my life.
+Here's how much time is budgeted to them, and allocate it.
+I record everything into Outlook.
+I have a macro that spits it out in Excel.
+And I do budget versus actual comparisons.
+>> It's a little different since I've, quote, retired, unquote.
+But at Microsoft, I could tell you I was going to have 12 one on ones with Harry
+this year.
+And then I would track them.
+How many did I have?
+I was going to spend 10 hours a year talking to customers over the telephone
+versus in person.
+And I just measure everything, because I think time is so important.
+>> Storytelling-- I think in whatever you choose to do in life,
+even if you're going to be the most hardcore, dedicated computer engineer,
+learning to tell a story, whether you do it with my-- I can't write a lick,
+but I'm not bad at a speech, but my speech style
+is very different than people standing at podiums.
+It's very different.
+>> Being able to tell a story through your work, through your speech,
+through your writing is so important.
+You want a grant application?
+You better tell your story.
+You want your start up idea funded?
+You better tell your story.
+You want to be the top engineer on the team who's
+compelling vision about where the product should go?
+You better be able to tell a story.
+>> And in general, I don't think people come out
+of school well versed in storytelling.
+On the other hand, as Harvard football manager,
+I had to get up every team meal-- listen up, everbody-- and make announcement
+for the coaches.
+And I got to tell you, being a manager is not a lofty, revered position.
+At least, it wasn't 40 years ago.
+I'm sure now it's very different, because the whole system has changed.
+But you'd get up there and you'd say, how do I tell this story?
+What am I really going to announce?
+What am I going to do?
+Even learning to give speeches-- I was very shy as a kid.
+And being a Harvard football manager for me
+was like this huge, transformative experience.
+>> The last lesson I learned at Harvard is-- not literally,
+but figuratively-- it's get in the weight room.
+The weight room in sports is where you get in shape.
+You build new muscles.
+You build new flexibility.
+You learn to do new things because you have new capabilities.
+>> In life, you have to stay in the weight room.
+You have to keep evolving, building new skills, learning new things.
+And that's easy to say, but a lot of people don't do it.
+You could say, OK, well, people who go into the tech industry
+all do-- not true.
+>> I'll just give you one big transformation
+that's happening in the world today.
+Most people who are my age learned a form of computer science
+where you wrote a program that took inputs and gave
+you outputs that were correct or incorrect.
+Most modern programming says, give me a bunch of inputs
+and I'm going to statistically guess about what might be interesting here.
+>> That's a very new skill.
+And if you find people who are, let's say, 10 or 15 years out of college,
+they don't think that way technologically, even to this day.
+And so the need-- whether it's in your career or in your life-- for me
+at Harvard, I taught Math A?
+Does Math A still exist as a course?
+It was pre-calculus.
+>> Suffice it to say, because I thought of myself as some super math guy,
+I had to learn to take concepts and explain them simply.
+I was teaching pre-calc, something I had done five years earlier.
+And the ability to build new skills-- I point
+to the experience of doing that at Harvard.
+>> Beyond Harvard-- yeah, there were still a few things to learn.
+I know this is the best institution, absolutely, in the world.
+I was at the Boston Globe today talking about Harvard,
+number one in everything.
+I bleed Harvard.
+But I actually learned a couple things after I got out of Harvard.
+>> The first message I would say is in life,
+you want to be your own quarterback.
+See the playing field.
+Many people like to get myopically tied into one thing,
+and they have a hard time stepping back.
+Being CO of Microsoft is this amazing, wonderful opportunity.
+It turns out, everybody in the world wants to tell you what to do.
+And they'll educate you.
+>> You want to learn about any field of technology?
+As long as you don't act like a know it all, somebody will educate you.
+And you have a unique ability to see broadly across the technology field.
+Right now, I'm spending a lot of my time studying government and the economy.
+>> It turns out the number of places you can actually
+read about the totality of government in the United States is almost zero.
+What is the total spent in government in this country,
+and what does it get spent on?
+There's no government report on that topic.
+>> The best site happens to come from some random blogger who I met,
+who I think it's great, by the way.
+But I found him through our Bing search engine, not surprisingly.
+>> [LAUGHTER]
+>> That's my only plug for today.
+I'm still a shareholder-- but seeing the field.
+In life, it's always good to be the first person to achieve something.
+It turns out the guy who wins is the guy who was doing it last.
+So it's always best to invent a new idea, be the first to do something.
+But ultimately, it's about committing to be successful and to stay at something.
+It's sort of a corollary of being hardcore.
+>> And certainly, there are fields of Microsoft's success,
+like selling to large enterprises, where when we started on that in the '80s,
+people said, you'll never do it.
+That's all IBM's purview.
+And today, that would be 70% or 83% of Microsoft profits
+come because we failed at something for 20 years but we kept at it.
+>> Corollary to ideas matter-- it's hard to have a second idea.
+If you really study the tech industry, most tech companies have one idea,
+and as long as the idea is hot, they stay hot and then they fade to black.
+If you look at all the companies that were important in technology
+when I got to Microsoft in 1980, only IBM is still around.
+And I might argue it's not a tech company anymore.
+>> And my great dream for Microsoft is that it is, so to speak,
+a two, three, or four trick pony.
+I said someplace that I thought Apple and Microsoft were amazing
+because they were two trick ponies, and somebody thought I was bashing Apple.
+No, that's my ultimate compliment.
+>> Anybody who can have two good-- if you have one idea, I think you're amazing.
+If you have two ideas, you're lionized in history for your success.
+It's really interesting.
+>> Optimim-- Colin Powell came to speak one year at our executive retreat
+after he had been Head of the Joint Chiefs of Staff.
+And he has this quote that I have come to love.
+"Optimism is a force multiplier."
+And particularly amongst technical people and really smart people,
+the chic, chic, cool thing to do is to be cynical and skeptical
+and pick things apart.
+>> I know that would never happen in CS50, but you see that
+amongst certain kind of high IQ technical people.
+And yet, optimism is a force multiplier.
+So how are you brutally realistic and be optimistic?
+It's very, very important.
+
+>> I figured this out after a while at Microsoft.
+Salespeople at Microsoft are naturally optimistic, probably everywhere.
+Just tell us where to go and we're gonna run!
+And I know we're gonna succeed!
+Because people want to believe.
+Engineers, you say, here's where we're going to go,
+and the first thing they say is, oh, come on.
+>> [LAUGHTER]
+>> That's not right.
+That's not the right way to go.
+But I have found-- and this might belie my fundamental optimism--
+that the engineer's optimist is sometimes
+a little different than the salesman.
+While the salesman just says, where to go, charge, the engineer likes to say,
+the world is all screwed up, but I can fix it.
+That's an engineer's optimism to me.
+Everything's-- but I can fix it.
+>> Luck-- this is the one that really doesn't always
+play well amongst Harvard guys.
+It turns out that as smart as you are, as privileged as you
+are to be at a place like this, and as hard as you work,
+luck is still going to be a factor in your life.
+Whether you're Bill Gates, Mark Zuckerberg, or the man in the moon,
+luck is important.
+It really is.
+>> Why is that important to know?
+Because it means you better like what you're doing.
+You better not be doing things just because it will make you successful,
+because you're going to need some luck to make yourself as successful as you
+want to be anyway.
+So find something where your passion wins out,
+where you're really satisfied.
+And then understand-- I know this.
+>> I think I'm really talented guy.
+I think Bill's a genius.
+I think Paul Allen is amazing, insightful guy.
+And I say, boy, how lucky we were.
+Apple-- I've seen their success, and yet,
+how lucky they were in many dimensions.
+We're a company that gave them $500 million
+when they were almost bankrupt in '97-- confluence of factors.
+And then they did great things with it.
+But luck always factors in.
+>> And then last, but not least, because I think I'm about out of time,
+everything in the world-- and this comes from a guy with a real bias--
+everything is a technology problem.
+Innovation and technology is the heartbeat
+that leads to progress in the world.
+>> I read this book in the last six months.
+It's called Inequality, Capital in the 21st Century
+by a French economist named Piketty.
+It was kind of controversial.
+It turns out, if you look at the Amazon statistics,
+hardly anybody finished the book.
+It sort of reads like a socialist diatribe in the end.
+But it's got all this great analysis in the beginning.
+>> But a fundamental point he makes, looking back
+over thousands of years of history, is GDP growth
+is only a function of three things.
+So the improvements in life are a function
+of population growth and innovation.
+That's it-- population growth and innovation.
+>> Today, the hot technology, the operating system of all innovation,
+is computer science.
+And as I guess David likes to say, I'm Steve Ballmer.
+This is CS50, the most important class you'll take at Harvard.
+Thank you.
+>> [APPLAUSE]
+
+DAVID J. MALAN: So Steve has kindly left an enormous amount of time
+here to take questions.
+We have two microphones here.
+We have two microphones in the balcony.
+So you are encouraged to meet Gabe and Davin and others here
+if you would like to be the first and second to ask these questions.
+STEVE BALLMER: Or you can shout out.
+I've heard that's standard protocol in this class.
+>> DAVID J. MALAN: All the better.
+>> STEVE BALLMER: That also works.
+
+>> DAVID J. MALAN: Our first question over by Gabe here.
+>> AUDIENCE: What was it like for you making that decision
+to drop out and go to Microsoft?
+Because obviously, there was a lot of uncertainty.
+>> STEVE BALLMER: OK.
+It's 1980.
+I'm at Stanford Business School finishing up my first year.
+Bill Gates calls as I'm trying to decide what to do for a summer job.
+He says, hey, look, how are things?
+Yeah.
+Yeah, oh, you're not finished yet.
+Yeah.
+Too bad you don't have a twin.
+We could kind of use a business person around here.
+That was the pitch.
+>> [LAUGHTER]
+>> I thought about it, and I said, well, shoot.
+I guess I could tell him.
+So I called him back the next day and said, well, maybe we talk.
+We should talk.
+And my instincts were actually right.
+The most risk-free decision you'll ever make
+is the decision to drop out of college.
+No, why?
+I say it for a reason.
+>> Colleges let you drop back in.
+All my friends, professors-- oh, you're not gonna do that.
+You're gonna go to work for McKinney or blah blah blah-- I can't remember
+who I had offers from-- Brownstone Consulting Group.
+>> [LAUGHTER]
+>> And I said, I might go join this friend of mine who's got this small start up.
+Well, what do you know about that place?
+And I said, it's the world leader in something called software.
+And I had written a couple programs, but it's not like I-- I did not take CS50.
+The only programs I had written was for AM115 or something like that.
+It was a mathematical modeling class.
+>> And they looked at me kind of funny.
+And I told my mom and dad.
+My dad was an immigrant.
+My dad did not go to college.
+My mom did not go to college.
+My dad was an immigrant from Switzerland.
+The only college he really grew up hearing about was Harvard.
+Even when I went to Stanford to Business School,
+he was afraid I was making a mistake, because it
+was some place unheard of to him.
+And I said, I'm going to drop out.
+And this company is the world leader in software for personal computers.
+And my dad said to me, what's software?
+Well, that was not an ignorant question in 1980.
+It would seem funny now.
+>> And my mom asked me an even more prescient question,
+which is why would a person ever need a computer?
+Because remember, we're in a time of room-sized computers.
+But I said, look.
+I made a deal with Bill that said if it didn't work, he could fire me
+or I could drop back into Stanford at the end of the summer.
+>> After a month, I decided I'd made a mistake going to Microsoft.
+I was basically the bookkeeper for a 30-person company.
+I told Bill we were 30 people.
+We needed to add 18.
+He said, you're gonna bankrupt this place, Steve.
+I didn't ask you to drop out of Stanford to bankrupt Microsoft.
+>> And we had a huge fight.
+We were good at that.
+>> [LAUGHTER]
+>> And then he said, come on.
+We're going out to dinner with my dad.
+Bill's dad's sort of a scary looking dude-- not really, but he's 6'7".
+6'7" doesn't look that tall anymore either to me,
+but that's a Clipper thing.
+>> But anyway, I went through my shtick for Bill and his dad.
+And that's where Bill invented what I think was the theme for the company.
+He said, you don't get it, Steve.
+We're going to put a computer on every desk and in every home.
+>> And I settled down.
+I stayed.
+Stanford would still take me back.
+It turns out, to this day, I could go finish my MBA.
+It just isn't that risky a proposition, because these great schools
+let you take time off as opposed to drop out of their memory banks.
+It turns out, I'm still a Stanford alum, too, when it comes to alumni giving.
+>> [LAUGHTER]
+>> [APPLAUSE]
+
+>> DAVID J. MALAN: Another question from Ian at the mic here.
+>> AUDIENCE: So you've made a series of comments about net neutrality,
+particularly speaking against it, most recently in a tweet.
+And that's a particularly unpopular opinion
+amongst a lot of young people and tech people,
+so I was wondering if you could elaborate that
+in maybe more than 180 characters.
+>> STEVE BALLMER: Yeah.
+Well, first, I haven't made a lot of comments.
+I made one little tweet yesterday, because I
+was kind of annoying on the plane and had nothing to do.
+So I tweeted.
+And boy, did that tweet get more attention than I ever expected.
+>> But look, I can explain.
+What is net neutrality about?
+I'm not quite sure.
+But it's not necessarily about keeping down the price of internet access.
+Competition keeps down the price of internet access.
+Net neutrality is merely deciding who's going to pay.
+If the providers who are making money on the internet-- the Googles,
+the Netflixes-- the Clippers, for example,
+if we were to go over the top with the Clippers broadcast,
+we too would be a broadband content provider.
+We're looking at that at the Clippers.
+>> But by saying you can't differentially charge for the traffic, what it says
+is all consumers should pay a higher price
+for the people who need the services that actually cost more.
+So if you watch Netflix, there's two approaches.
+You can tell your neighbor who doesn't watch Netflix, ha, ha, ha, ha.
+You pay more, even though you don't watch Netflix, than I do.
+Or you can let the market compete in differentially priced.
+>> I think we're going to get better service, more pricing
+options, and a better overall deal by having competition
+between broadband providers than by regulating the price.
+So this, to me, is not about low prices versus high prices.
+It's about letting free enterprise solve the problem versus thinking
+a few thinkers in DC can invent complicated pricing and tariffing
+schemes that are superior in creating opportunity than the market.
+>> Ultimately, what we really want is more investment in broadband infrastructure
+that leads to better service at lower prices.
+I'm with you on that.
+I'm 100% in on that.
+I'm making a statement in terms of how I think the world will best achieve that.
+And I feel clear in my thinking about that.
+DAVID J. MALAN: Up next, our microphone by Anton.
+STEVE BALLMER: And I'll say that even though I know we probably
+will wind up-- if we go over the top with our Clippers TV broadcast,
+we will wind up paying more and our customers will pay more
+and we will make a little less profit, but everybody else
+will get lower prices for fundamental broadband access.
+
+AUDIENCE: Thanks for your time.
+What do you love most about owning the Clippers?
+Who's-- wave your hand so--
+>> AUDIENCE: Up here.
+STEVE BALLMER: Oh, hi.
+AUDIENCE: What's up, Steve?
+STEVE BALLMER: It seemed like God.
+Go ahead.
+>> AUDIENCE: Voice of a deity.
+>> STEVE BALLMER: What do I like best about owning the Clippers?
+>> AUDIENCE: Yeah, exactly.
+>> STEVE BALLMER: I don't know.
+Three months in, I can find the bathrooms now in the stadium.
+That's my level of sophistication.
+There's a lot of things that have been fun.
+It turns out it's even more fun to think about the team dynamics
+and hear about those from the coach than I thought.
+>> Worrying about the fan experience in the arena--
+I didn't-- the song you were playing before this started,
+I don't know the name, but I need to get the name from you.
+I was thinking, that's a great song.
+We could really use that song for pump ups coming out at time outs.
+>> [LAUGHTER]
+>> No, seriously.
+You could say it's my-- I still am I a "We Will Rock You" kind of guy.
+But we have 150 possessions in a basketball game.
+And let's say at least on half of them, we
+want to do something to keep the crowd engaged.
+How do you do that?
+How do you orchestrate that kind of busy environment?
+What do you want to do on the Jumbotron?
+>> The technology in basketball-- unbelievable.
+Every MBA arena now has six cameras in the ceiling
+that are taking pictures of the action.
+And there actually are start ups that have machine learning technology that
+looks at the video and characterizes the action
+so it uses computers to decide that was a pick and roll versus a pick
+and pop with Chris Paul and Blake Griffin.
+That was a blitz by Jamal Crawford.
+And every arena is equipped with this technology.
+>> And literally-- it's a company called Second Spectrum.
+And one of the key guys is a 6'9" hooper out of MIT who never played basketball
+after college, but he's doing machine learning algorithms across vision
+recognition on basketball stuff.
+That's been kind of fun.
+The in arena, thinking about going over the top and what
+do the economics look like-- it turns out
+there's a lot of pretty cool things.
+>> It's much more complicated business than it is large.
+Microsoft, we have 100,000 people.
+We got about 130 at the Clippers.
+And yet, the breadth of problems we get to think about is actually-- well,
+it's not 1,000 times less complicated.
+It's probably 500 times less complicated than Microsoft.
+>> DAVID J. MALAN: Next question from Gabe's mic here.
+AUDIENCE: Oh, hi.
+My name is Larson Ishii.
+I write for Clips Nation, so I was going to continue with the Clippers
+questions.
+But I was going to ask about how you're incorporating the rest of technology.
+I've seen that you guys have an increased proportion of statistics
+within games, such as showing the four factors that
+produce the probability of victory within the game, which I don't think
+any other teams are doing in the league currently, which is really awesome.
+>> So I just want to know how, from your math background,
+you're incorporating more of the technology and statistical side
+into the game of basketball in what is scene as more than emerging field,
+and if that can help solve the Clippers' small forward problem right now.
+STEVE BALLMER: With a little edge in the end of that question--
+[LAUGHTER]
+What we're doing right noq-- and the tech is just not quite
+there-- is for every game, we produce a couple
+of plays that actually take some key play from last time we played
+an opponent, and it shows statistically what the probability was
+of success and the expected points, depending
+upon the decisions the player makes.
+So you see the guys on the court.
+Chris is with the ball.
+If he throws it to Blake Griffin, 30% chance.
+On this one, he'd have a 40% chance of making a basket with an expected two
+point or three shot point shot.
+And we're using that to demonstrate.
+>> What you want to do, of course, is get it so comes back real time.
+So we can take a play that just happened and have the visualization
+based upon the data that's coming out of the sensors happen in real time
+so fans can really track just how amazing the speed and the decision
+making at that speed is.
+>> But we're working our way up to that.
+The thing that we've done that actually gets a lot interest
+is the thing we call our Clipper Tron application.
+You just go to www.clippertron.com while you're sitting in the arena,
+and you can pick your favorite player.
+You can pick a kind of a play-- a pick and roll, a blitz, a this and this.
+And we'll go throw the highlight up on the Jumbotron.
+We're adding, now, Twitter and Facebook integration.
+So we put your name.
+We'll put your picture.
+And we'll put the plays that you picked and we can--
+people love seeing themselves on the Jumbo-- kiss
+cam, all that kind of stuff.
+>> At least, now, we're letting people throw up basketball action.
+Eventually, I want to be able to do it in people's homes.
+So with your phone, you go to Clipper Tron,
+and we'll throw it up live in the broadcast to you
+on TV-- so some of the stuff we're playing with.
+>> DAVID J. MALAN: Another mic up by Dan Bradley.
+>> AUDIENCE: Steve, after his contract with the Lakers is up,
+would you consider signing Jeremy Lin as a backup for Chris Paul?
+>> STEVE BALLMER: I support Doc Rivers 100% in his decision
+making about our basketball team.
+My job is to support, ask a lot of questions, and support.
+How's that for not answering your question?
+>> [LAUGHTER]
+>> [APPLAUSE]
+
+>> I did go to the Laker-Clipper game in LA last week, week before last.
+I'm pleased to report two things.
+One, Jeremy Lin played well.
+And two, we kicked them.
+
+>> AUDIENCE: So I'm Bobby.
+I'm from LA, just in case you guys need interns this summer.
+No, I'm just kidding.
+[LAUGHTER]
+>> But seriously--
+>> STEVE BALLMER: Bobby, sballmer@clippers.com,
+in case you need an internship this summer.
+>> [LAUGHTER]
+>> Luck, opportunity, take advantage of it.
+You got to feed the aggressive instinct.
+Go ahead, Bobby.
+Run with it, though, babe.
+>> AUDIENCE: So you mentioned your 33 on your first exam or whatever.
+But can you tell us more about other examples of failure in your career
+at Microsoft or in your life and what you've learned from it
+and how you responded, et cetera?
+STEVE BALLMER: Yeah.
+I'm funny.
+I don't actually-- it turns out, I got a B plus on the test with the 33,
+because it was the fifth highest grade in the class.
+Although I do to play golf with a guy in LA who reminds me he got 50 on the test
+and beat me.
+He remembers that to this day.
+>> So everything's relative.
+I'm a guy who's so optimistic, in a way, I never think I fail.
+I just haven't succeeded yet.
+I say be first, but commit to be last.
+OK.
+Well, that's not going well.
+And you can see it in Microsoft behavior.
+People used to say we don't get things right till version three.
+I don't know whether to take that as a criticism or praise.
+Get it right early is good, but commit to getting things right.
+>> So I've certainly had setbacks, whether it was at school.
+Certainly, when we and IBM split ways, I thought
+our company would probably go out of business.
+That was about 1990.
+Certainly, I've been told many times that we'd never
+succeed in the enterprise business.
+I was told that you can't do a start up video game.
+>> I was told no search engine will ever succeed versus Google.
+There's still more of an element of truth to that one than I'd like.
+>> [LAUGHTER]
+>> I was told that the mobile device market is locked up, which I don't believe.
+It's partly because I believe in the power of innovation and the power
+not only for people to change and improve themselves,
+but that things do change over time.
+And as long as you're prepared, as I said in my talk--
+if you've been in the weight room and you have the capabilities
+and skills to do something and you stay in the game,
+then you're prepared to take and seize on the next idea.
+>> It's kind of like saying, hey, look, we don't know how to beat the-- I
+won't take basketball.
+I'll take football.
+People don't know how to beat the Patriots or the Seahawks.
+But that doesn't mean you don't stop training, working out, building skills.
+You keep working on your game plan, but you're always
+building your skills and capabilities.
+Then you can be optimistic that failure will lead to success the next time.
+DAVID J. MALAN: Why don't we take a couple more questions
+and leave some time for hellos at the end?
+Belinda?
+AUDIENCE: Hey, thanks so much for coming.
+So I really appreciated a lot of the things you said,
+and I think three things in specific really resonated with me.
+One, treasure your time.
+Two, see the field.
+And three, also explore your passions.
+>> So the way I see it, the problem is that time is so finite
+and that we have such limited time.
+And explore your passions seems to me more depth-based,
+whereas seeing the field is very breadth-based.
+So taken in the context of also acquiring new skills,
+how do you prioritize your time?
+And specifically for you, when you said you created a budget for your time,
+how did you decide what was important and what would be worth your time,
+basically?
+>> STEVE BALLMER: OK.
+Let Two stories-- let me start as an undergraduate at Harvard.
+I beg every senior I know do what I did, because I thought it really worked out.
+When I was a senior, I interviewed with 35 different companies on campus.
+>> I'm trying to get my son to do that.
+He's a senior.
+I've tried to get friends of mine whose kids went
+to Harvard-- people don't do that.
+But why was that good?
+And then I got a chance to sniff 35 different companies, 35
+different cultures.
+I went back and visited.
+I can tell you what it felt like to run a check processing room at Mellon Bank.
+I can tell you what it would have felt like
+to go to Minot, North Dakota and trade grain for Cargill.
+I can tell you what it would have felt like
+to run a small start up insurance company
+in Cleveland-- Progressive Insurance, which is now,
+of course, a major player.
+I remember all these visits.
+And I just think if you want to see the field,
+you have opportunities to get what I would
+call rapid little experiences that are really helpful before you get down
+to your passions.
+>> What I would say as a CEO I did is I blocked two kinds of time.
+One was time that I would do whatever our people in a given country
+wanted me to do or our engineers in a given product group wanted me to do.
+That means they're telling me about things
+I'm not necessarily interested in.
+But I can always help the sales rep with a sale.
+Hey, the boss is here, blah blah blah.
+But I'm learning, learning, learning, learning.
+>> And then I also blocked explicitly about call it a total of 20% of my time
+where people couldn't schedule it.
+And then I could use it for reading, exploring.
+But even time to explore needs to be blocked.
+And time to let others educate you needs to be blocked.
+>> And I think that's part of how you can continue to see the field
+and then develop the kind of passion-- so just a few thoughts.
+>> DAVID J. MALAN: Last question from Davin's mic.
+>> AUDIENCE: Hi, I'm J. Paul Meyer.
+Over your years at Microsoft, what product or hire
+or whatever it is have you been most excited about or you most excited
+about?
+>> STEVE BALLMER: It's kind of like asking which of your kids you like the best.
+And it's kind of situational, timewise.
+You look at Windows 1.0 when it came out-- I can't write a line of code,
+but I was the development manager for Windows 1.0.
+Of course that's my favorite product, and at the end of the day,
+it's the backbone of Microsoft.
+>> On the other hand, when you say slick and interesting,
+I'd probably point to Excel.
+Life changing for me, I'd probably point to Surface Pro
+3 and the pen and One Note.
+I finally have the thing I really want to get my work done.
+I really can be paperless.
+I really have my life in the cloud.
+>> For me, inking is very important, because if you're
+the guy somebody's presenting to, you can't sit there and type.
+If you want to draw and annotate, markup, you can't type.
+So I might say Surface Pro 3.
+If I was home with my family, because I have three boys of about the right age,
+I'd say, well, of course, it was Xbox 360 and the Halo game.
+My 15-year-old still believes that's the only worthwhile piece of work
+I did in my working career.
+>> [LAUGHTER]
+Three weeks ago, he says to me, Dad, I'm very disappointed
+in you leaving Microsoft.
+I was worried about this.
+Aaron.
+I don't know whether you can still get me the new Halos when they come out.
+>> [LAUGHTER]
+>> So beauty's a little in the eye of the beholder,
+but I'd probably point to the Surface Pro 3 in modern days
+and Windows 1.0 in historic days.
+DAVID J. MALAN: Well, let me wrap up with a little something
+we've never done before.
+But we, on behalf of CS50 TFs and TAs would
+like to make you an honorary member of CS50's staff if you'll have us.
+>> STEVE BALLMER: OK, absolutely.
+>> [CHEERING AND APPLAUSE]
+
+Nice!
+
+>> DAVID J. MALAN: And for everyone here, you are all cordially
+invited to a special event that President Drew Faust, Dean Cherry
+Murray, and Steve Ballmer will be hosting tomorrow
+at the I-Lab at 12:00 PM, for which there will be a puzzle hunt which
+is inside of this packet which you'll be handed on the way
+out, for which there's fabulous prizes, including several Xboxes
+and also a pair of Clipper tickets.
+>> STEVE BALLMER: Clipper/Celtic tickets for the game here on March 29,
+visiting owners seats.
+Do compete.
+[CHEERING]
+STEVE BALLMER: Thanks, everybody.
+DAVID J. MALAN: CS50, this was Steve Ballmer.
+
+>> STEVE BALLMER: This is CS50!

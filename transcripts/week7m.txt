@@ -1,0 +1,1124 @@
+
+DAVID MALAN: All right.
+This is CS50.
+And this is the start of week seven.
+So today, perhaps thankfully, we begin our transition
+from the lower level world of C programming
+to the higher level world of web programming.
+And with that, we'll take a look at exactly how the internet works,
+what these machines and these internets that you've been using for years now
+actually do underneath the hood toward a better understanding of how it all
+works, and how you can make it work for you.
+>> Toward that end, why don't we take a look first at a clip from a TV show
+called Numb3rs, that will get us started as to exactly how the internet works.
+
+[VIDEO PLAYBACK]
+-It's a 32-bit IPP4 address.
+-IP.
+That's the internet.
+>> -Private network.
+It's Amita's private network.
+
+Oh, she's so amazing.
+
+>> -Oh, Charlie.
+>> -It's a mirror IP address.
+She's letting us watch what she's doing in real time.
+[END VIDEO PLAYBACK]
+DAVID MALAN: So there's a whole lot of wrong with that TV show.
+So let's tease apart exactly one of the first such things
+and see if we can't wrap our minds around it.
+So the last frame of that movie, of that show
+is this one here, which seems to suggest that this
+is what some hacker is using to get into some system.
+>> But no.
+If you zoom in on this source code, which
+is a language called Objective C in which iPhone apps, iPad apps, and Mac
+OS apps are written, you'll see that this
+is for some sort of drawing program that has a crayon as a variable.
+
+>> So additionally, you might have noticed this address here.
+Now, this is an as wrong.
+And this is probably deliberately chosen to be an invalid address so that it
+doesn't actually lead somewhere if a TV viewer actually visits it.
+But this number here, something dot something
+dot something dot something is what's generally known as an IP address.
+And it's actually a good segue to this topic more
+generally, known as IP, internet protocol.
+So you've probably at least heard this phrase before.
+But what is IP, or internet protocol as you understand it today?
+
+Odds are, if we asked for a show of hands, most of you
+have probably said the words IP address before.
+So what did you mean?
+
+>> AUDIENCE: [INAUDIBLE]?
+DAVID MALAN: What's that?
+AUDIENCE: [INAUDIBLE]?
+DAVID MALAN: Once more.
+AUDIENCE: Address of the computer.
+DAVID MALAN: The address of the computer.
+So that's exactly right.
+It turns out that every computer on the internet,
+and these days, every phone in your pocket and tablet in your backpack,
+has an IP address, internet protocol address, which
+is a unique address that identifies it throughout the entire internet.
+Now, that's a bit of a white lie because the world's actually
+running out of IP addresses.
+>> So we've started using private IP addresses.
+But more on that in a moment.
+But you can think of an IP address as like your postal service street
+address.
+We've use the example of Maxwell Dworkin, the CS building, before-
+33 Oxford Street Cambridge, Mass, 02138, USA.
+That is its unique address in the world.
+>> Similarly do computers have unique addresses.
+They just happen to look a little different-
+a number dot a number dot a number dot a number.
+And does anyone actually know what the valid range of numbers
+is for each of those hashes?
+Yeah.
+>> AUDIENCE: 0 to 255?
+DAVID MALAN: Exactly.
+0 to 255.
+And even if you didn't know that, now draw a conclusion,
+how many bits are used to represent each of these numbers then?
+
+Eight apparently because of the highest you can count
+is 255, that's an 8-bit value.
+So in total, an IP address is 32-bits.
+So fast forwarding to the mathematical conclusion,
+how many possible IP addresses are there in the world, then?
+
+>> So that's 8 plus 8 plus 8 plus 8, so that's 32 bits.
+And we've always said that 2 to the 32 is roughly?
+
+OK.
+I'll field this one.
+Four billion.
+And we talked about that in week zero when we talked about phone books
+with crazy numbers of pages.
+But the sort of it is that there's a finite number of IP addresses.
+And even though four billion might seem like a lot,
+we humans have been consuming quite a few
+of them for all of our servers and devices and so forth.
+>> So this is actually becoming a problem.
+Now, there tends to be a scheme behind who has what IP.
+For instance, many of the computers at Harvard
+have unique addresses that start with one of these two values.
+MIT, similarly, has a prefix.
+And a lot of companies and universities have their own unique prefix.
+And then most of us for our home internet connections and the like,
+we share some prefix that Comcast or someone like that happens to own.
+And this is only to say that if you looked at most computers on campus,
+they'd probably have an IP address that looks like this.
+>> Now, you might also occasionally see an IP address it starts like this.
+In fact, if any of you grew up with internet access at home,
+and you were ever sufficiently technically curious to poke around
+your own computer settings, you probably instead
+saw an address that looks more like this, that started with 10, or 172.6,
+or 192.168, or some variants thereof.
+>> And that just means that the world is set aside a whole bunch of numbers
+to be private, which means you can use them in your home,
+you can even use them on your campus and within your company,
+but you can't use them on the internet at large.
+>> And so these private IPs have been a solution
+toward making sure that at least so far as the whole world is concerned,
+we're not using that many IP addresses.
+But at least, we can, on our own campus, have pretty much as many IPs
+as we want.
+But who cares?
+What's the relevance of all of this to an actual usage of the internet?
+>> Well, let's take a look at perhaps a simple picture here.
+Let me through both of these up on the screen.
+And forgive my handwriting here.
+But if we think of ourselves as being this little laptop here
+somewhere on campus, these days it has Wi-Fi.
+>> But in yesteryear and if you find the right adapter,
+it can have an ethernet cable which would similarly let
+you connect to some kind of device.
+And you can call this any number of things.
+But I'm going to go ahead and call this, for now, how about an access point?
+>> So this is my laptop.
+This is my AP, or access point, and this is some wireless device,
+not unlike the ones that Harvard has all over the ceilings
+and walls around campus that have blinking lights
+and that are what your laptops used to talk wirelessly
+to the rest of the network.
+>> So somehow this laptop is talking to that thing on the wall,
+in the dining hall, or elsewhere.
+Now, meanwhile, that access point is connected to something else on campus.
+And it's probably something known as a switch.
+And they look a lot more interesting than just these box diagrams.
+>> But somehow, that thing's connected to a switch.
+And in turn, somehow that switch is connected
+to a device that's probably a bit bigger, called a router.
+And then, meanwhile, Harvard is connected
+to the entire internet which we'll draw as this cloud here,
+via some number of wires or wireless technology.
+>> So there's a lot of steps between me and the rest of the world.
+And indeed, even within this picture here,
+there are some other servers or services involved.
+And I'm just going to draw these somewhat abstractly
+just so that we have the acronyms before us.
+>> One is called DHCP.
+
+And another one, a little more interestingly for today, is called DNS.
+So these are servers that are somehow accessible to my computer as well.
+So now, let's tease apart a bit of jargon.
+So the access point is just this wireless device
+often with antennas that actually let you talk to a wirelessly.
+At home, you might call this a home router.
+It might be made by Linksys, or Apple, or D-Link, or any number of companies.
+That, in turn, is connected to a switch of some sort.
+Or back home, what is your Wi-Fi device probably connected to instead?
+Because you probably don't own all this equipment.
+
+Yeah.
+Cable modem or DSL modem back home that you got from Verizon, or Comcast,
+or one of those carriers.
+So think of all of this complexity as supporting a university or really
+a business like Comcast.
+And really, the stuff that's in your home
+is probably on this side of the fence plus maybe
+one of these home route-- one of these are cable modems or DSL
+modems they might provide.
+>> So a switch is just a device with a whole bunch of data jacks in it.
+In fact, if you recall that news report we played on the big screen
+a couple of weeks ago where we were talking about shell shock,
+and how bad this was?
+And there were of these photographs of cables, and jacks,
+and things that look technical?
+Those were just dumb switches that just internet connects computers
+by plugging cables into them.
+>> So that's all a switch is.
+Now, these devices get a little more interesting.
+DHCP.
+
+If you've poked around your computer at home or even on campus,
+you might have seen this acronym.
+Does anyone know what a DHCP server is?
+
+Dynamic host configuration protocol?
+
+Not the kind of thing you really need to write down.
+DHCP.
+
+anyone at all?
+All right.
+So let's rewind the story.
+If the story here at hand is predicated on my having a unique address
+in the world, an IP address, where does that come from?
+In yesteryear, when you've got to campus,
+you actually had ask someone at Harvard, what should my IP address be.
+And you would manually type it into your computer.
+But more recently, technologies exist that allow you to dynamically,
+DHCP, get an IP address simply when you plug into campus wirelessly
+or with a wire.
+So DHCP server is just a server that gives your computer a unique IP
+address, somewhat randomly or via some algorithm.
+But if you think back a few weeks or a few years,
+when you first registered your computer on campus,
+you were telling Harvard, authorize me to give me an IP address.
+Now DNS start to get a little more interesting.
+
+Domain name system.
+Does anyone want to take a stab at what this thing is here?
+>> It's one or more servers that perform a fairly simple task that's
+kind of important.
+
+Yeah.
+>> AUDIENCE: Translates URLs [INAUDIBLE].
+DAVID MALAN: Yeah.
+It translates URLs to IP addresses and vice versa.
+Consider, after all, that when you go on the website,
+you type in something like facebook.com, or google.com, or harvard.edu,
+you certainly have never typed most likely a numeric IP address.
+>> And you can think of the reason why.
+Back in the day, even now to some extent,
+when you make a telephone call to a company,
+they really try hard to buy themselves an 800 number that actually has words
+in it, like 1-800-collect or something that's memorable like that so that
+people don't have to remember what C-O-L-L-E-C-T actually expands to.
+So we've seen this heuristic in the past.
+And indeed, that's what IP addresses and what we'll call host names
+or fully qualified domain names do for us.
+It allows us to address servers by words instead of numbers.
+So how do we actually see this conversion.
+I'm going to go ahead and open up a program.
+
+I'm just going to go ahead and open up a terminal window.
+And I'm going to go ahead and show you what a DNS server does.
+For instance, if I wanted to see what the IP address is of Facebook,
+I can type at a terminal prompt like this--
+and you can do this even inside of your appliance.
+And that's lookup facebook.com.
+
+>> And I see a bunch of things.
+This first response is Harvard's DNS server--
+that picture that I've drawn there. --that's
+telling me that Facebook's IP address is apparently this.
+So let me go ahead and copy that 173.252.120.16.
+And let me open up Chrome on my Mac.
+And let me go to http:// and paste that IP address in and hit Enter.
+>> And indeed, I find myself at Facebook.
+So somehow that conversion, indeed, happened.
+And if I do this again, let's do nslookup, www.google.com.
+I get back a whole bunch of responses.
+And indeed, there's different ways that companies implement this.
+Sometimes, they tell the world they have one IP address.
+>> But that one IP address gets resolved or mapped to multiple servers.
+Or in the case of Google, they tell the world,
+we have a whole bunch of IP addresses.
+Your laptop is welcome to talk contact any one of these servers.
+So all of that's been going on underneath the hood.
+>> When you type in www.google.com Enter into your browser, your browser,
+and in turn your operating, Mac OS, or Windows, or Ubuntu Linux,
+ask the nearby DNS server, what is the actual address of this server.
+Because the last device in this picture, a router,
+is the one whose purpose in life is to route information,
+route packets so to speak, envelopes of digital information
+containing zeroes and ones from sender to destination, from origin
+to receiver.
+>> And so a router routes stuff.
+So why is this all particularly relevant?
+Well, let's take a look at how this might be used.
+Suppose that I have here a picture of Rob Boden.
+
+So suppose that I want to send this picture of Rob Boden
+into Dan in the back of the lecture hall.
+>> So I am a computer like my laptop, and Dan
+is some other computer on the internet.
+And I want to send a packet of information from me to him.
+That begs the question, how do I actually route this packet to him.
+Well, in human terms, I would say, hey, can you pass this to Dan?
+>> And then, a bunch of you would probably pass it back
+and forth back and forth until eventually makes its way over to Dan.
+But that's a little imprecise.
+Computers probably need to be a little more methodical.
+So probably, Dan has an IP address.
+So what really I should do is I should take, for instance, a blank envelope
+like this.
+And I don't know what Dan's IP address is.
+>> So I'm just going to generalize it as Dan's IP.
+And I'm going to put this in the to field of my envelope.
+And meanwhile, I have an IP address.
+It doesn't matter today what it is.
+So I'm just going to say My IP in the back corner there.
+And then, I'm going to go ahead and put this picture inside of this envelope.
+>> And then, each of you, presumably, as routers on the internet,
+have been preconfigured by humans generally or sometimes
+by automated algorithms to know that if Dan's IP address starts with a 1,
+it should go that way.
+If Dan's IP address starts with a 2, it should go that way.
+Maybe a 3 goes that way.
+Maybe a 4 goes that way.
+And that's a little overly.
+Simplistic but that's the general idea.
+Each of these routers-- and there might be as many as 30 between me and Dan.
+--have some kind of spreadsheet inside of their memory,
+a database table, that just says, IP address that looks like this,
+goes this way.
+An IP address that looks like this, goes that way.
+And that's how it makes fairly simplistic decisions.
+>> But it turns out that these routers do something more than that, potentially.
+They allow computers to guarantee delivery, at least
+with high probability.
+So you might, too, have heard, even if you've never quite cared or wondered
+what it is, you might have heard of something by this acronym.
+Let's go back over here for just a moment and pull up this.
+>> TCP, transmission control protocol.
+Another technical way of just describing another technology
+that's used on the internet.
+So IP, internet protocol is used for addressing.
+It some standard that the world came up with that said,
+you put one IP address here for Dan, and one IP address here for yourself,
+and then you put some information in an envelope.
+>> But TCP is another technology, used in conjunction with IP.
+And indeed, if you've ever seen these acronyms before,
+you've probably seen TCP slash IP which just
+means people tend to use them together.
+Well, TCP is kind of cool because it allows
+you to increase the probability that the data is actually
+going to get from me to Dan.
+>> In fact, the internet is a crazy place.
+There's no guarantee that if I send data this way
+that it's going to go that way next time around.
+It might go that way or that way.
+The shortest distance between two points is not necessarily
+a straight or the same line.
+>> Moreover, some of you guys might make mistakes
+or get overwhelmed with too many envelopes coming your way.
+So you just going to give up and literally
+drop some of these envelopes on the floor.
+And in that same way can data be dropped on the internet by routers.
+So to decrease the odds of this, I'm going
+to take my little safety scissors here and cut Rob
+into, let's say, four pieces, four segments.
+
+>> And now, I'm going to go ahead and put one more piece of information
+on this envelope.
+I'm going to say something like, 1 of 4.
+So now, my final envelope, at least the first, looks like this.
+I'm going to go ahead and put this one in here.
+
+And for time's sake, I'm going to label the others identically as 2 of 4,
+3 of 4, 4 of 4.
+>> Again, with Dan's IP address in the front of it and with my IP address
+on the back left, but I can't send them just yet.
+Because it turns out that on the internet,
+servers can do multiple things.
+In fact, we all might use the web quite a bit, the worldwide web,
+http:// whatever.
+But there's other services on the internet.
+What are some other services, sort of user, consumer-friendly services
+that spring to mind besides a web browser-type program?
+
+AUDIENCE: Email.
+DAVID MALAN: Email.
+OK.
+Good.
+What's another one?
+AUDIENCE: Chat.
+DAVID MALAN: So chat, whether it's Skype, or Gchat, or something
+like that.
+>> AUDIENCE: Storage.
+DAVID MALAN: So some kind of storage service, certainly.
+Something like Dropbox, or Box, or the like.
+So there's different services on the internet.
+And it turns out that Dan, if he is indeed a computer,
+doesn't have to be dedicated to one thing in life.
+He can actually do multiple things.
+And indeed, he can be an email server.
+He can be a web server.
+He can be a chat server.
+>> But that seems to suggest that Dan needs to know
+in advance what are the contents of these messages.
+Is this a web page I'm sending him?
+Is it an email I'm sending him?
+Is it an instant message I'm sending him?
+So we need one more piece of information on these envelope
+so that Dan, when he receives this envelope,
+knows what program to use to display it.
+>> Is it a browser?
+Is it Google?
+Is it Skype?
+Or is it Outlook or some other program altogether?
+And so, with TCP comes just a human convention.
+The world decided some years ago to associate unique integers
+with the most popular services.
+>> One's called File Transfer Protocol, FTP, though it's a little dated now.
+But its unique identifier is 21.
+SMTP for outbound email, its unique identifier is 25 just because.
+DNS, the thing we talked about earlier, uses the number 53 for its queries.
+Like what is the IP address of google.com?
+
+>> And now, the more familiar you might have somewhere at some point
+seen the number 80 and maybe 443.
+Those are the unique identifiers for HTTP,
+which is the language we'll soon see used
+for web traffic between browsers and servers.
+And 443 is for the secure version thereof.
+>> So the one last detail I'm going to put on my envelope
+is that I'm not going to send this just to Dan's IP.
+I'm going to send it to say, :80, if what I'm trying to send
+him is a web page, a web page that contains Rob Boden's picture.
+So I'm going to do the same thing on these other envelopes.
+>> And then ultimately, I'm going to drop these off with the nearest router,
+recognizing that that router might not necessarily
+take the same path every time.
+In fact, I might have the first packet going this way.
+Second packet might go that way.
+Third packet-- start routing.
+--might go over here.
+
+And in theory-- can't keep it.
+In theory, all four of these packets should eventually route their way,
+however efficiently or inefficiently, all the way to the back.
+>> At which point, Dan, upon receipt, can reassemble them
+based on-- the funny thing is, we all know what the outcome here
+is going to be.
+Dan's going to get a picture of Rob.
+But let's see how this works out.
+
+Well, rather, Dan's going to get part of a picture of Rob.
+
+Very good.
+
+Everyone's participating today.
+
+All right.
+So as Dan starts to receive these packets, let's ask one question.
+What if one of you gets lazy, overloaded, malicious, or just powered
+off, and one or more of the package doesn't make it to Dan?
+>> How is Dan going to know he did not receive one of the segments of the four
+I sent him?
+Just intuitively, what can we do?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+
+DAVID MALAN: Exactly.
+Because I've uniquely numbered them, and I've specified how many segments there
+should be, he can infer from that which, if any, of the segments
+he's actually missing.
+And what TCP tells computers to do, if computers, like Mac OS,
+and Windows, and Linux support and understand TCP, which they do,
+TCP's documentation essentially says that Dan should send me
+a message back saying, hey, David, I'm missing packet number 1 of 4,
+or 3 of 4, whichever it is.
+>> And then, my job is to take another picture of Rob,
+which we have extras of for later today if you'd like to take one with you,
+and then I can resend that segment of Rob all the way to the back.
+>> So as simplistic as this mechanism is, that
+is what's happening almost any time you do something on the internet,
+particularly for these most popular of services.
+There are other protocols, other technologies besides TCP
+that work a little differently.
+But so many of the services we typically use actually rely on these protocols.
+>> So Dan, did you get the full picture back there?
+Yes.
+We have reassembled Rob in the back.
+Thank you so much to the routers.
+Suppose, I actually want the see the routers between me
+and MIT, much like you guys were the routers between me and Dan.
+>> Well, rather than nslookup for name server lookup,
+I can instead type trace route, which is actually going to do what it says.
+And I'm going to do and quiet mode with dash 1.
+It's a command line argument that just says, try this
+once and not multiple times.
+>> And now, I'm going to type www.mit.edu.
+Now, the output is fairly quick and cryptic.
+But what's neat about this is that each of these rows
+essentially represents a student in this audience
+if you were the path between me and MIT.
+What you see up here, first, is the domain name that I typed in,
+or fully qualified domain name as it's properly called.
+>> And this apparently is the IP address of www.mit.edu.
+My computer figured that out for me.
+This here is a promise that we're only going
+to try to reach MIT within 30 hops.
+There better be no more than 30 students between me and Dan.
+And now, each of these rows represents literally a router
+between me and Dan, literally one of you guys.
+>> And so this one doesn't seem to have a name, a domain name.
+It just has an IP.
+And it only took 0.662 milliseconds to get from me to that first router.
+The next one wasn't that much farther away.
+It only took one millisecond to get there.
+And now, thankfully, things get a little more user-friendly
+with names that are cryptic but a little more telling.
+>> This apparently is a router in the core of Harvard's network housed,
+only because people have told us this, in the Science Center, SC.
+And GW is just a shorthand notation for gateway which is a synonym for router.
+So this is some system administrator's superscript way
+of naming one of the servers in the Science Center.
+>> Meanwhile, that server is apparently connected by some kind of cable
+to another router that's nicknamed the border gateway one dash
+something, whatever those numbers mean.
+And then, apparently, Harvard has a connection
+that's another millisecond away to something
+called the northern crossroads which is a common peering point
+between big places like Harvard where lots of cabling goes in
+and allows interconnections among different entities.
+>> Step six, unfortunately, doesn't have a valid name.
+And step seven gets interesting.
+
+I have no idea what most of these mean.
+But NY does jump out at me.
+And what does that probably signify?
+
+It's not even technical.
+Just New York.
+So indeed, what's common human convention not guaranteed
+but common convention is to name routers by nature of the city or the airport
+code that they're nearest to.
+>> So with some probability, this router number seven
+is probably, indeed, in New York.
+And this seems to corroborate that assumption because it's
+six milliseconds instead of just one or so to something here on campus.
+But now take that into account, right on Megabus or whatnot,
+it might take four, five, six hours to get a human from here to New York.
+>> To get a piece of data, it takes just six milliseconds
+to get a packet from me to Dan if he were all the way in New York.
+Then finally, this apparently is the actual domain name for www.mit.edu.
+They've apparently outsourced their web servers
+to a company called Akamai which means some other company runs their servers.
+And that's why we're seeing that weird thing there.
+>> Well, let's do this once more.
+Let's go ahead and do a trace route to our friend Professor Nick
+Parlante at Stanford who has a server called nifty.stanfor.edu.
+
+Enter.
+And now, we'll see probably a slightly longer path
+that goes through a few more cities.
+So here these nameless Harvard servers here.
+We're in the core of Harvard, the border gateway of Harvard,
+the northern crossroads, wherever this is.
+And now, it's getting a little more interesting.
+I'm guessing that router number eight is in what city?
+AUDIENCE: [INTERPOSING VOICES]
+DAVID MALAN: Chicago probably, based on this, based on this thing here.
+And now we have Salt Lake City maybe, maybe Los Angeles here, and then LAX,
+yep, this probably is LA by the bottom.
+Until finally, it goes from southern California
+all the way up to northern California to where Stanford is in Palo Alto.
+So pretty cool.
+And let's take this one step further.
+It apparently would take you 82 milliseconds
+to send a message to Dan if you were in California instead of New York.
+Let's do something like trace routes, one
+attempt to www.cnn.co.jp for the Japanese version of CNN's website.
+
+And now, we're still in Boston it seems at the moment.
+
+>> A couple servers six and eight aren't responding
+because they're being a little private.
+But eventually, there seems to be something interesting going on between,
+let's say, step seven and nine.
+
+What is probably between seven and nine, and certainly
+between seven and step 17?
+
+There's a huge jump in the amount of time
+it's taking for data to go from one of these hops, one of these routers
+to another.
+>> So odds are, somewhere in here, there's probably,
+especially right here, there's probably a very large body of water that
+has some trans Pacific or trans Atlantic cable that actually requires
+even more time for data to get from one point to another.
+But again, imagine the hours it would take the fly to Japan.
+Here, in some 200 milliseconds, boom, your message is actually there.
+So you can play around with this on the appliance or even
+in Windows or Mac OS with slightly different commands.
+Sometimes, you will get these stars, like in rows six and eight, which
+just means the routers are configured not
+to give you an answer for privacy's sake.
+But generally, this technique would, in fact, work.
+>> So it turns out too there's other juicy information lurking in tools
+that you take for granted every day.
+So for instance, if you receive an email, frankly as some of you
+may have recently, of questionable origins, if you've never
+looked at Gmail interface before, whether it's
+for the college interface or your personal one,
+you might see your inbox looking like this.
+>> And in fact, this is an email I sent, malan@harvard.edu,
+to jharvard@cs50.harvard.edu this morning just
+so I could take a screenshot.
+But it turns out, all this time in Gmail,
+there's that little triangle toward the top right
+there next to the Harvard crest that if you click, you can click Show Original.
+
+And if you do that, you'll actually see a bunch of very esoteric information
+like timestamps, and IP addresses, and domain names.
+>> But you'll see, in short, the headers that all this time have
+been hit in each and every email you send and receive.
+And it's these headers that people can use, computer scientist or otherwise,
+to actually infer with some probability where
+and from whom an email actually came.
+>> In fact, we'll talk in later weeks about how email
+itself can be generated programmatically which
+is a very good thing for a website that wants to send emails to users.
+But we'll see, too, just how trivial it is to forge emails from someone
+to someone else, unless you actually know how to verify the headers.
+And even that is a losing proposition these days.
+>> So with that said, let's go one layer up.
+We started with IP which addresses packets for us,
+gives them unique addresses.
+TCP, which, in short, guarantees delivery or at least
+increases the probability thereof by adding things like segments, 1 or 4,
+2 of 4, 3 of 4, and 4 of 4.
+>> And now, let's layer on top of that another protocol.
+All of these things are protocols, computer conventions
+that dictate how two computers talk to one another.
+HTTP, finally today, is hypertext transfer protocol.
+And this is the protocol that web browsers
+use when speaking to web servers.
+>> So when you pull up a browser like Chrome, or IE, or Firefox, or Safari,
+or whatever, and you type in something like facebook.com and hit Enter,
+not only does your computer first translate facebook.com into what?
+
+An IP address.
+It then converts-- it then sends a message to that IP address saying,
+give me today's homepage or give me the login screen of Facebook.
+>> Or if you're already logged in, give me the default view of my timeline.
+So that's what HTTP says.
+And more colloquially, if I am a web server and you are-- what's your name,
+again?
+>> AUDIENCE: Margot.
+>> DAVID MALAN: Margot is a web server, and I'm a web browser,
+and I simply want to retrieve my timeline from Margot, margot.com,
+I would say, hello, I'm David.
+>> AUDIENCE: Hi, I'm Margot.
+>> DAVID MALAN: And you would then respond with additional information to me.
+So we have this stupid human convention for instance-- thank you.
+--of shaking each other's hands.
+And computers have that same idea where a client, like a browser,
+asks a server to do something on his or her behalf.
+>> And so here's a picture, for instance.
+On the left is a computer laptop, desktop, whatever, or even a phone.
+And on the right is a very dated view of a server.
+They typically looks smaller and sexier these days.
+But the point is simply that there's some kind of communication
+between client and server.
+>> And clients in the sense of someone in a restaurant
+and the waiter or waitress, same idea with computers.
+Clients and servers, one asks for information,
+one responds with information.
+Now, how does that information come back?
+Well, consider this.
+Get is sort of the default way-- and it's a super simple term.
+--that just dictates how a browser gets information from a server.
+>> In other words, rather than just goof-ily extending my hand to Margot,
+if I really were a browser, I would stuff inside of an envelope,
+as I did with Rob's photo before, a textual message that literally says
+something like this, get/http/1.1hostwww.google.com
+or margot.com or whatever the server's name might happen to be.
+And then, dot dot dot, some other stuff.
+>> But literally, inside of an envelope would
+be fairly simple textual message like that.
+That upon receipt, Margot would open up, read the content,
+and respond accordingly.
+Now, it's a little non-obvious with this example.
+But get/, what is the slash probably referring to, just based
+on your familiarity with browsing the web in daily life?
+What's the slash?
+>> AUDIENCE: [INAUDIBLE].
+DAVID MALAN: An escape sequence.
+Not a bad idea but generally escape sequences go the other way.
+That would be a backslash usually.
+But not a bad thought.
+Yeah?
+
+A pointer.
+Also good thought but even simpler than that.
+The home directory.
+The root of a hard drive, so to speak.
+Most of us don't type this.
+But technically, if you wanted to be super proper these days,
+you would go to something like http://www.facebook.com/.
+>> Now, I said most of us wouldn't bother typing the slash.
+And frankly, most browsers, Chrome included,
+don't even bother showing us the slash these days
+just because they like to be simple and succinct.
+But the slash just means go to www.facebook.com and get
+slash, the root of the hard drive, the default page in facebook.com.
+Using what protocol?
+Well, using version 1.1 of this thing known as HTTP.
+>> The server, or Margot-- and by the way, do
+you mind that I'm using you in these?
+OK.
+So we're good now.
+So Margot response now with an envelope of her own, inside of which
+is a similarly textual message.
+The first line of which is, yep, I speak HTTP version 1.1.
+200 is the status code which just means all is OK.
+I have the page you're looking for.
+>> Meanwhile, Content-Type: text/html, this is Margot's semi-arcane way of saying,
+what you have requested is a web page.
+And it's type, so to speak-- almost like a variable sense,
+but this is much higher level now.
+Its data type is text but specifically HTML.
+The language we'll soon see.
+>> And then, there's some other stuff.
+So other stuff is literally what Facebook is responding with.
+So let's see this, too.
+Let me go ahead and open up Chrome on my laptop
+which you can do on your own computer as well.
+And I'm going to go ahead and open up www.facebook.com.
+Enter.
+
+And I get this familiar screen here.
+But now, I'm going to do something else.
+I'm going to go ahead and go to View, Developer.
+And go to Developer Tools, which you should
+have within Chrome on your computer, at least within your appliance.
+I'm going to scroll this thing up here, and you're
+going to see a whole bunch of cryptic text here.
+>> It turns out that what Margot put inside of that envelope in response to me
+is a language called HTML, HyperText Markup Language.
+It's not a programming language because you can't, it
+doesn't have loops, and conditions, and functions, and things like that.
+It's a markup language.
+In that, it has special syntax called tags and attributes
+that tells a browser what to display on the screen and how to display it.
+Should be centered?
+Should it be bold-faced?
+Red, green, blue?
+It's a markup language.
+In that, it tells a browser what to show on the screen.
+So this is, literally, all of the HTML and more that Facebook server
+is spitting out and that Chrome, and IE, and Firefox have
+been designed by their respective authors to understand.
+>> And in fact, it's a little messier than that.
+If you, instead, go to View, Developer, View Source,
+this is actually what Facebook is out putting.
+Sort of zero for five for style, right, if we
+infer that this probably isn't the best.
+But frankly, they can get away with it because if you're serving up
+billions of web pages per day, you really
+don't want to waste time, and bytes, and money ultimately in transmitting
+things like new line characters, and spaces, and tabs
+because you're spending for bandwidth unnecessarily with your ISP.
+>> So indeed, this is meant to be minified in this way.
+But what Chrome is doing for us is, it's taking
+this HTML, which completely looks like a mess and unintelligible to human,
+and it's just formatting it.
+It's pretty printing it so that we can wrap our minds around it
+a little more readily.
+But more interesting is this.
+If I now click in Chrome, not elements but network,
+I'm going to see a little logging screen that's
+going to show me all of the HTTP requests
+that are actually going back and forth between me and Facebook or me
+and Margot if I make more than one request.
+>> So I'm going to go ahead and click the reload icon up here in Chrome.
+And now, a whole bunch of stuff flew past at the bottom.
+I'm going to scroll back up to the very top.
+And now, notice this, the very first request my browser
+made was to www.facebook.com.
+>> It's using the get mechanism which just means
+it's speaking the textual language that we saw an example of a moment ago.
+And moreover, it turns out that the response that Facebook
+gave me is 200 OK, which means I found the web page in question.
+>> If I click on this row, I can actually see those headers a little more
+clearly.
+These will make more sense before long.
+But notice that my browser sends a whole lot of information like host,
+and method, and cookies.
+We'll come back to those before long.
+And you'll finally understand what a cookie actually is
+and how you soon will be sending them.
+>> And you can see what Facebook is sending back,
+including the content type of text HTML, the current date time, its privacy
+policy, or lack thereof, and then, finally, a number of cookies
+that are being set on your computer as well.
+But we'll tease those apart before long.
+>> But in short, every time you visited a web page, now for years,
+you've been sending messages to the one I sent in an envelope
+to Margot and to Dan.
+And you've been getting back responses like this from Facebook.
+But moreover, guess what's being disclosed to Facebook, and Google,
+and everyone else every time you visit a web page?
+What is on the outside of every envelope your computer has been sending?
+
+Your IP address, right?
+Maybe not your name per se, but your IP address.
+And just, let's connect the dots later, if you're using services
+like the web, or BitTorrent, and the life,
+and you've registered a computer at a place like Harvard,
+someone somewhere knows that John Harvard's IP addresses this, dot this,
+dot this, dot this.
+>> And indeed, logs can he kept both on a campus like this, on a Comcast network,
+on Verizon, or frankly, at the NSA as we've recently learned,
+that logs pretty much everything that you are doing on the internet.
+And we'll come back to this the future class
+on the implications of these design decisions and security.
+>> But the truth is, you really don't have all that much privacy.
+Every time you've been visiting anywhere on the web, you been showing your hand
+and revealing at least your IP address.
+So scary note aside, what can we do to embed things like cats in a web page?
+>> So we have a bunch of responses that might come back from the server.
+And we won't see all of these today.
+But 200 is good.
+And you're probably not seen all of these as a human before.
+But you've probably seen at least one of these.
+Which one of these might look familiar?
+AUDIENCE: 404
+DAVID MALAN: So 404.
+File not found.
+And indeed, you're going to see this programmatically yourself.
+404 just means the file you requested, slash or slash something, simply
+doesn't exist.
+And a web server typically responds with 404 as a result
+>> Meanwhile, we'll soon see that the contents of that message
+are this language known as HTML.
+And this is a super simple snippet of HTML
+that does nothing other than display hello world on the screen.
+Indeed, you see at the top of this something called a document type
+declaration which just says, hey, world.
+This file contains HTML.
+And then, the next bit of HTML that you're going to write,
+it has an open bracket, and then the word HTML,
+then a closed bracket, and then open head, and close bracket.
+So in short, let's actually do this more mechanically.
+Let me go into my appliance, but you can do this anywhere
+that you have a text editor to.
+>> I'm going to go ahead and save a file called hello.html.
+
+I'm going to put it on my desktop to keep things super simple right now.
+And I'm going to do exactly what I just saw.
+So doc type HTML, open bracket HTML.
+And now, notice, I'm going to do the opposite preemptively.
+And by opposite, I mean the same tag, so to speak,
+but it starts with a forward slash.
+And then, over here, I'm going to say, head,
+because it turns out that every web page has a so-called head which
+is stuff that goes in the title bar, at the very top of the page.
+In the title is just going to be hello here.
+And now, I'm going to have a body to this web page.
+So every web page has both a head up top and a body
+which is the guts of the page.
+And here, I'm just going to say something like hello world.
+And I'm going to save this file.
+If I now minimize gedit, look, there's a little file
+on my desktop called hello.html.
+Now, that's not on a server yet, per se, Indeed, it's
+just on my own personal desktop here.
+But if I open up Chrome and hit Control O-- there's the cat in question.
+--and I go to my desktop.
+>> And I open up hello.html, there, in fact, is my super simple web page.
+The body of my page and this white window
+here is the body with hello world.
+And the title in the head of the page is in the tab there.
+And we're going to see soon that it's super
+simple to open up other pages as well.
+For instance, I'm going to go into some of the distribution code
+for this week, source seven, and I'm going
+to open up not the JPEG which this guy is here.
+But I'm going to open up image.html, which ultimately looks like this.
+But let me now open this up in gedit, and go into Dropbox source seven,
+and image.html.
+
+>> Most of this is just comments as we'll soon see.
+But if I want to put Grumpy Cat inside of this web page,
+it suffices to put another open bracket, and then the keyword image or img
+for short, and then alternative text for accessibility reasons
+if someone has a screen reader or something like that.
+Source which is, what's the name of the file, cat.jpeg.
+
+>> And then, because this tag's a little special,
+we put the forward slash, as we'll see, inside of the tag.
+But the end result is a web page that looks like this.
+So in short, what we're going to be doing now over time is using the web
+and creating web pages to ultimately be containers
+not only for silly things like images, and links, and tables,
+and bulleted lists, and the like, but also to give us ourselves
+a graphical user interface, a GUI, not unlike what we did we Breakout.
+>> But within this environment, we're going to start using languages like PHP,
+and JavaScript, the database language called SQL,
+a client-side scripting language called JavaScript to actually create
+all the more dynamic interfaces but in a much, much more familiar context.
+But before then, let's conclude today with a look,
+as promised, of what's really going on underneath the hood with the internet
+itself.
+>> Stipulate for today that the internet can
+be used to transfer things like web pages over HTTP
+much like I shook Margot's hand earlier.
+But there's so many other services that use TCP and IP
+that we take for granted that work as we'll see here
+in this film that'll take us to the end today.
+>> [VIDEO PLAYBACK]
+
+>> -For the first time in history, people and machinery
+are working together, realizing a dream.
+A uniting force that knows no geographical boundaries.
+Without regard to race, creed, or color.
+A new era where communication truly brings people together.
+This is The Dawn of the Net.
+
+>> Want to know how it works?
+Click here to begin your journey into the net.
+
+Now, exactly what happened when you clicked on that link?
+You started a flow of information.
+This information travels down into your personal mail room
+when Mr. IP packages it, labels it, and sends it on its way.
+>> Each packet is limited size.
+The mail room must decide how to divide the information and how to package it.
+Now, the package needs a label containing important information,
+such as sender's address, receiver's address, and the type of packet it is.
+
+>> Because this particular packet is going out onto the internet,
+it also gets an address for the proxy server, which
+has a special function as we'll see later.
+
+The packet is now launched onto your local area network or LAN.
+This network is used to connect all the local computers,
+routers printers, et cetera for information exchange
+within the physical walls of the building.
+The LAN is a pretty uncontrolled place and, unfortunately, accidents
+can happen.
+
+>> The highway of LAN is packed with all types of information.
+These are IP packets, Novell packets, Apple Talk packets.
+They're going against traffic as usual.
+The local router reads the address and, if necessary,
+lifts the packet onto another network.
+
+Ah, the router.
+A symbol of control in a seemingly disorganized world.
+
+>> There he is, a systematic, uncaring, methodical, conservative,
+and sometimes not quite up to speed.
+But at least, he is exact for the most part.
+
+>> As the packets leave the router, they make their way
+into the corporate intranet and head for the router switch.
+
+A bit more efficient than the router, the router switch
+plays fast and loose with IP packets, deftly routing them along the way.
+A digital Pinball Wizard if you will.
+>> -Here we go.
+Here comes another one.
+And it's another.
+Watch this, Mom.
+Here is goes.
+Whoops.
+Around the back.
+Hey.
+In there.
+In there.
+Over to the left.
+Over to the right.
+Over to the left.
+Over to the right.
+You got it.
+Here it goes.
+He shoots.
+He scores.
+It's going.
+Hey, wait.
+Hey, watch out.
+Here comes another one.
+Oh, here we go.
+
+>> -As packets arrive at their destination, they're
+picked up by the network interface, ready to be sent to the next level,
+in this case, the proxy.
+
+The proxy is used by many companies as sort of a middle man
+in order to lessen the load on their internet connection
+and for security reasons as well.
+
+As you can see, the packets are all of various sizes,
+depending upon their content.
+
+>> The proxy opens the packet and looks for the web address or URL.
+
+Depending upon whether the address is acceptable,
+the packet is sent on to the internet.
+
+There are, however, some addresses which do not
+meet with the approval of the proxy, that is to say,
+corporate or management guidelines.
+
+These are summarily dealt with.
+
+We'll have none of that.
+For those who make it, it's on the road again.
+
+>> Next up, the firewall.
+
+The corporate firewall serves two purposes.
+It prevents some rather nasty things on the internet
+from coming into the intranet.
+And it can also prevent sensitive corporate information
+from being sent out onto the internet.
+
+>> Once through the firewall, a router picks up the packet
+and places it onto a much narrower road or bandwidth, as we say.
+Obviously, the row is not broad enough to take them all.
+
+Now, you might wonder, what happens to all those packets
+which don't make it along the way.
+Well, when Mr. IP doesn't receive an acknowledgement
+that a packet has been received in due time,
+he simply sends a replacement packet.
+
+>> We are now ready to enter the world of the internet, a spider
+web of interconnected networks which span our entire globe.
+Here, routers and switches establish links between networks.
+
+Now, the net is an entirely different environment
+than you'll find within the protective walls of your LAN.
+>> Out here, it's the Wild West, plenty of space,
+plenty of opportunities, plenty of things to explore, and places to go.
+Thanks to very little control and regulation,
+new ideas find fertile soil to push the envelope of their possibilities.
+But because of this freedom, certain dangers also lurk.
+>> You'll never know when you meet the dreaded ping of death,
+a special version of a normal request ping which some idiot thought up
+to mess up unsuspecting hosts.
+
+The path our packets take maybe via satellite, telephone lines, wireless,
+or even transoceanic cable.
+>> They don't always take the fastest or shortest routes possible,
+but they will get there, eventually.
+Maybe that's why it's sometimes called the worldwide wait.
+But when everything is working smoothly, you
+could circumvent the globe five times over at the drop of a hat,
+literally, and all for the cost of a local call or less.
+
+>> Near the end of our destination, we'll find another firewall.
+
+Depending upon your perspective as a data packet,
+the firewall could be a bastion of security or dreaded adversary.
+It all depends on which side you're on, and what your intentions are.
+>> The firewall is designed to let in only those packets that meet its criteria.
+
+This firewall is operating on Ports 80 and 25.
+
+All attempts to enter through other ports are closed for business.
+
+>> Port 25 is used for mail packets.
+
+While Port 80 is the entrance for packets from the internet to the web
+server.
+
+Inside the firewall, packets are screened more thoroughly.
+Some packets make it easily through customs,
+while others look just a bit dubious.
+>> Now, the firewall officer is not easily fooled,
+such as when this ping of death packet tries
+to disguise itself as a normal ping packet.
+-Move along.
+It's OK.
+No problem.
+Have a nice day.
+Let me outta here.
+Bye.
+>> -For those packets lucky enough to make it this far,
+the journey is almost over.
+
+It's just a line up on the interface to be taken up into the web server.
+
+Nowadays, a web server can run on many things, from a mainframe, to a webcam,
+to the computer on your desk.
+Why not your refrigerator?
+>> With the proper set up, you could find out
+if you have the makings for chicken cacciatore
+or if you have to go shopping.
+Remember, this is The Dawn of the Net.
+Almost anything's possible.
+
+>> One by one, the packets are received, opened, and unpacked.
+
+The information they contain, that is your request for information,
+is sent on to the web server application.
+
+>> The packet itself is recycled.
+
+Ready to be used again and filled with your requested information, addressed,
+and send out on its way back to you.
+
+Back past the firewalls, routers, and on through to the internet.
+
+Back through your corporate firewall.
+
+And onto your interface.
+
+Ready to supply your web browser with the information you requested.
+
+That is this film.
+
+>> Pleased with their efforts and trusting in a better world,
+our trusty data packets ride off blissfully
+into the sunset of another day, knowing fully they
+have served their masters well.
+
+Now, isn't that a happy ending.
+[END VIDEO PLAYBACK]
+DAVID MALAN: That's it for CS50.
+We will see you next week.
+
+>> [MUSIC - KATY PERRY, "DARK HORSE"]

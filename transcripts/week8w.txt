@@ -1,0 +1,1060 @@
+>> [MUSIC PLAYING]
+
+DAVID J. MALAN: All right.
+Welcome back.
+This is CS50.
+This is the end of week 8.
+And as you know, we have pretty regular office hours in a few
+of the dining halls, including Annenberg.
+And some of the team kindly took some photos lately.
+And in honor of Halloween, we thought we'd
+share one that rather caught us by surprise here in Annenberg Hall just
+the other night.
+Your classmate Jacob posed for this photo, but was more amusing
+was on Facebook, the ensuing conversation that happened afterward.
+>> His first post in response to his photo was this.
+A few minutes later, he decided to one up himself with this.
+It went on then to go to this, and then, even more amusingly
+is when his mom chimed in.
+
+And then ultimately, it seems this was just
+a wonderful ruse for a play that's going on.
+>> So, if you would like to see Jacob and others,
+among them Cynthia Meng, who's behind the scenes of CS50 zone staff,
+head to this URL and this play here.
+So without further ado, today we continue this look at web programming,
+and the actual creation of programs that don't run at your command line,
+but instead run inside of a browser.
+>> Presumably now, or very shortly, you're going
+to be in the midst of implementing your own web server, which
+is different from web programming.
+The web server in pset6 is all about writing software that knows how to take
+HTTP requests from a browser, or even from you, a human,
+with a program called Telnet, and then respond to those requests either
+by spitting out an HTML file, or a jpeg, or a gif, or even a .php file.
+>> But with a web server, it's not supposed to just open a PHP file,
+something ending in .php, and then spit out the contents.
+It's supposed to do what to that file first?
+So to speak.
+Not compile it, we said on Monday, but rather-- So, interpret it.
+>> PHP's an interpreted language, and so one of the key features in your web
+server, albeit implemented by us, is this ability for your web server
+to notice, oh.
+This is a file ending in .php.
+Let me not just send it to the user like it's static content,
+but rather let me read it line by line, left to right, and interpret it.
+>> And to do, that you guys will essentially
+punt to a program in the appliance, and on a lot of computer systems,
+just called PHP.
+That is the name of PHP the language's own interpreter.
+So, that piece we implement for you, and what's left for you,
+ultimately, is a number of pieces, among which
+is implementing support for static content.
+>> But now, and with problem set seven, you're
+going to start to transition to actually writing the PHP code
+that gets interpreted in talking to a back end
+database that stores information.
+So let's better understand first a couple of these superglobals
+and just how much power you get out of the box for free
+with a language like PHP.
+Things you don't have to implement yourself.
+>> So, we saw on Monday $_GET, which is a superglobal,
+which is just PHP speak for a global variable you can access anywhere.
+And what's inside of $_GET?
+
+What's inside of this superglobal that we see?
+
+Surely statistically at least one person knows.
+What's inside of $_GET?
+Yeah?
+>> AUDIENCE: It's the variables you put in the query string.
+>> DAVID J. MALAN: Perfect.
+It's the variables you put in the query string.
+So, in our older example of reimplementing Google when we had
+a URL, and then question mark, which demarcates the start of HTTP
+parameters, then we had q equal something, like q equals cats,
+what would automatically go inside of that $_GET super global for you,
+because of PHP, is a key of Q, and of value thereof of cats.
+>> In other words, $_GET and all of these things are associative arrays,
+hash tables of sorts, that store keys and values.
+Now, back in pset5, the hash table you might have implemented,
+or the try you might have implemented, really
+was effectively an associative array, a data structure
+whereby you can associate keys with values.
+>> But in pset5, the values were trivial.
+The value was essentially true or false.
+Is the word in the dictionary?
+So, when you hashed a word like apple to see if apple is in the dictionary,
+your check function presumably returned true or false.
+So, that's effectively the value we're getting back.
+>> But we saw on Monday briefly, you can certainly
+associate more interesting values than just true or false
+with keys, like apple.
+You could actually return an arbitrary string, and indeed,
+that's what $_GET and these other variables let you do.
+>> So $_POST is similar in spirit, but if you submit a form via post,
+a different HTTP method that's used for things like credit cards,
+and private information, and even binary information like photos,
+those things end up inside of $_POST.
+And actually for files like jpegs and whatnot,
+there's even another that's not up here called $_FILES as well.
+>> So, server we won't dwell on too much, but it gives you access
+to sort of lower level details about the server itself that you're using.
+Cookie and session, though, we'll effectively see now.
+The last is what we use to implement the notion of a shopping cart.
+A super simple one, but recall that we had this example here,
+counting how many times you had visited this page before.
+>> But today, rather than just look at the effect of this, let's open up
+Chrome's Inspector, which you can usually
+do by right clicking or Control clicking anywhere on a web page,
+and then choose inspect element.
+Or you can go through the menus that we describe in pset6's spec.
+And I'm going to the Network tab here, and let's watch for a moment
+the HTTP traffic that's going back and forth.
+>> Let me first go ahead and clear Chrome's cache.
+So some of you might be familiar with this technique already,
+and we're going to use it for debugging purposes here.
+
+Now we as computer scientists are going to start
+doing this for debugging purposes, whereby
+we will clear the cache, typically, so that we
+can get rid of things called cookies.
+So you're probably generally familiar with what cookies are, or at least
+that they exist, but what's your understanding of them,
+as just a user of computers, what is a cookie?
+
+Yeah.
+>> AUDIENCE: It's a bit of-- well, not bit in a term of computer science.
+It's a piece of data that a website sends to you in order
+to be able to record statistics on you.
+DAVID J. MALAN: OK, good.
+So it's a piece of data that a server, puts onto your computer,
+and let's generalize it even more, it's a key value-- well,
+that's getting more precise.
+It is a piece of information, a piece of data,
+that a server is able to put on your computer
+and very often, the server does this so as to remember who you are.
+So for instance, odds are you're probably
+logged into sites like Facebook, or Gmail, or others before,
+and you log in with your username and password,
+and then after that, for some number of minutes or hours or even days,
+the server remembers that you are, in fact, logged in.
+Now, how is that actually happening?
+Because you're certainly not retyping your username and password every time
+you navigate to a different page on Facebook.
+So it turns out the cookies are the answer.
+>> A cookie you can think of as, sort of like, a digital hand
+stamp that you might get at an amusement park or a club that essentially
+indicates you have been here before, and you've already
+shown your ID to the bouncer, for instance, and that the club or the park
+should now assume that you have authenticated already.
+You have already been identified by it.
+>> So with that in mind, let's open up counter here.
+Let me go ahead, I just did, and clear all of my cookies.
+And now what I'm going to do is hold Shift, just for good measure,
+and forcibly reload the page.
+Shift just make sure that nothing gets cached.
+And here's the request that went back and forth.
+So over here we have a request, and let me zoom in down here, and a lot of this
+is sort of uninteresting details for now that the browser has automatically
+sent, but let's click View Source to see the raw headers.
+>> And if you've dived into pset6 already, you'll certainly recognize things
+like this, and maybe some of these other lines here,
+but what's more interesting for today if I scroll down, not to the request
+but to the so-called response, this line probably looks familiar.
+That's a good thing when you see a 200 OK.
+Apparently this is the date and time on the server
+and there's a bunch of stuff.
+Oh, this is interesting.
+>> Turns out whenever you use PHP, at least in this server,
+the server spits out what version of PHP you're using.
+Which, actually, for security purposes, is not a good thing.
+But, we'll come back to that some other time perhaps.
+But now this is the juicy line today, and we saw briefly some of these,
+I think with Facebook when we poked around the Inspector at that time,
+set cookie is what is planting that little piece of information
+onto your computer.
+>> This is an HTTP header that's effectively
+telling your browser, Chrome, IE, whatever,
+hey browser store on the user's hard drive, or in the user's RAM,
+a key called PHPSESSID, which is a shorthand notation for session ID,
+and give it a value of 0vlk8t, dot, dot, dot.
+A really long pseudo random alphanumeric string.
+It's just a really big number, but it's encoded with letters and numbers
+so that the size of it can be even larger than numbers alone.
+And then, by the way, Path=/, that just means that this cookie should be
+associated with the entirety of the website,
+not just a specific page the whole thing.
+So this is that virtual hand stamp.
+It's as though the server, Facebook, or in our case the appliance,
+has literally written 0vlk8t and so forth, on your hand.
+Notice what the server's, not doing is it's not
+storing my username, certainly not storing my password.
+>> Instead, it appears to be storing pseudo random information
+so that no one can guess what my hand stamp is.
+On the server side, meanwhile, the server
+is going to remember, probably in a database or something,
+that the user, who in the future presents a hand stamp of 0vlk8t, dot,
+dot, dot, should be associated with this particular shopping cart, so to speak.
+In other words, if I now go back here and reload this page,
+how does the server know that I visited one time?
+>> Or if I do it again, how does the server know that I've visited it two times?
+Well if I go down to this most recent request, which
+is now the third that I've sent in total, notice my request now.
+There is still this request up here, same
+as before, there's still a whole bunch of stuff that we've ignored as before,
+but the very last header, this time, because I've been here before,
+is a presentation of this virtual hand stamp.
+>> Whereby this line here, not set cookie but cookie colon PHPSESSI= 0vlk8t,
+that's just my browser's automatic presentation of this hand stamp so that
+now the server, as soon as it realizes, ooh, this is user 0vlk8t dot, dot, dot,
+I can now remember who he or she is and reassociate with that user whatever
+information I want to, and all of that information can be stored by you,
+the programmer, in $_SESSION.
+>> So to be clear, if I open up real quick in gedit that actual file, counter.php,
+in my local host public directory as before, notice that, indeed,
+I'm ultimately storing in $_SESSION quote unquote "counter,"
+the value of the previous counter which I get from these lines up here that we
+looked at last time plus one.
+So underneath the hood, that's all cookies are.
+It's just the sort of digital hand stamp going back and forth,
+and frankly if you open Chrome's Inspector on any website
+you visit today, with super high probability,
+you're going to see maybe one, maybe half a dozen cookies
+being remembered by you.
+>> And worse yet, if those website you're visiting
+all have advertisements, which is certainly quite common today,
+and if those advertisements are coming from some central party, someone
+like Google or AdWords as they call one of their products
+or other such vendors that sell ads, what's interesting,
+and frankly what's a little worrisome, about how HTTP works,
+is that if you have an ad embedded in Facebook.com, and Google.com,
+and Harvard.edu, any number of websites, so it's such
+that there's a middle man who is serving up ads for all three of those websites,
+it turns out that the cookies are per domain.
+>> So if you have an ad coming from the same company on different websites,
+that company can effectively track who you are across all of those websites.
+Harvard might not know you're visiting Facebook.
+Facebook might not know and you're visiting Harvard.
+But whatever ad service they're using if that domain is
+present in both Harvard.edu web pages and Facebook.com webpages,
+this middle man surely knows who you are because of these cookies being shared
+across, or rather to, that so-called middleman.
+>> So we'll come back to this in security implications thereof,
+but there's a lot of information being stored about you any time you
+visit most any web page on the internet and it really
+reduces to this very simple mechanism.
+What happens, then, if you're super paranoid
+and you decide to go into Chrome or IE or whatever and turn off your cookies?
+What happens?
+Yeah?
+You really-- you've done this right?
+OK.
+No, go ahead.
+>> AUDIENCE: Certain websites don't have a function without it like Facebook.
+DAVID J. MALAN: Yeah!
+So certain websites will just stop working.
+And in most websites these days that fundamentally rely on cookies,
+especially if they have you log in, they're just going to break.
+Because consider the alternative, if the website
+has no way of remembering who you are, and therefore your web browser is not
+representing with every HTTP request of this hand stamp,
+effectively a website like Facebook's going
+to have to prompt you to log in every darn time
+you change pages, or click a link, which is surely not a particularly good user
+experience.
+>> So that there, too, is among the trade offs.
+So without further ado, let's take for granted that with web programming,
+in languages like PHP, you can remember information like that in problem set
+seven when you implement your own E*Trade-like website with which to buy
+and sell stocks, you'll remember exactly what the user has bought and sold
+and who he or she is by way of this session.
+But we're going to need a fancier way than email
+to start keeping information around.
+Right?
+>> On Monday, we talked about Frosh IMs and how in version one of that website,
+years ago, all we did was email the Proctor who's
+in charge of the intramural sports program, the name, and the gender,
+and whether or not they're a captain, and the dorm of someone who's
+registering for an intramural sport.
+So it's not bad, but he or she then had to troll through their email,
+make a spreadsheet or something like that, to keep everything organized.
+So surely we as programmers can do this for that proctor.
+And so enter in SQL, Structured Query Language,
+which is going to look pretty different to both C and PHP,
+and you'll dive in much more hands on PHP and problem set seven but also SQL,
+or SQL, this is a language that you use to talk to a database.
+>> But what's a database?
+Well you think of a database, at least for now,
+as just being like an Excel file, or if you're a Mac user a numbers file,
+or if you're a Google Apps user a Google spreadsheet,
+it's effectively a database, or really specifically a relational database.
+A relational database is just something that has rows and columns,
+and you can store any kind of information in these rows or columns.
+>> But what's nice about SQL, and about actual databases, not just
+spreadsheets or Google spreadsheets, is that you can use a language
+to actually execute queries to insert data, to remove data,
+to look for data, even most importantly, and you
+don't have to use it fairly manually as you might typically a Google
+spreadsheet like this.
+>> So in SQL, there's a bunch of fundamental statements or pieces
+of functionality built in.
+There's many more than these, but you can go a huge distance
+just by knowing that this language called
+SQL has at least four statements you can leverage.
+>> Delete, for removing data, Insert, for adding rows,
+Update, for changing rows, and Selecting,
+for getting back rows and that's indeed what SQL does.
+It operates entirely on rows so that when you insert, or remove,
+or update, or select what you're getting back as a so-called result set,
+like an array of rows.
+A bunch of rows from a table.
+>> So back in the day, and even to this day,
+you can interact with the database using a command line,
+but it's not particularly fun to use this black and white style window
+and actually execute commands and poke around your database.
+A graphical user interface, or GUI, is much more preferable, arguably,
+and so the tool we recommend and preinstalled for you on the appliance
+is called phpMyAdmin.
+It's a total coincidence that the name of this thing has PHP in it,
+it just means that the people who wrote this program themselves
+wrote it in PHP.
+>> But it's ultimately about administering a database server, like a MYSQL server
+that you might have, as you do, in the CS50 appliance.
+So there's more detail here than we need to care about today,
+but what's key is that on the left hand side is a list of the databases
+that you have on your computer, on your CS50 appliance,
+or come final projects that you might have on a third party, a company's
+website or web server, that you might be paying for space.
+So on the left is the databases, one of which
+is pset7 which I borrowed from next weeks pset, and then on the top
+there notice there's a bunch of tabs, one of which
+is databases, SQL, status, users, export and so forth.
+So you can go a long way just by realizing
+that most of the user interface is in the top left column
+and across the top right up there.
+So what can we actually do with this?
+Well, let's start creating a bit of information as follows.
+>> Suppose the following is the case, as will be in just a few days,
+you want to implement a website, called CS50 Finance,
+and this website lets you buy quote unquote and sell stocks.
+And it's going to figure out the price of those stocks,
+ultimately as you'll see, by talking to Yahoo Finance.
+Which, wonderfully, has a free service whereby you can pass in a stock ticker
+like GOOG for Google, and it will give you back Google's current stock
+price within the past few minutes at least.
+>> So you'll use that, ultimately, to pretend for the user
+to buy and sell actual stocks using virtual money,
+but the very first thing the user's going to see
+is this login screen which asks them for their username and password.
+And so, one of the first challenges for you in pset7
+is going to be to implement the back end database, the spreadsheet if you will,
+that's going to store users names and passwords
+and ultimately what stocks they own, and how many, and how much cash they have,
+so a bunch of other things in other tables, or spreadsheets.
+>> So let's take a look at how this might appear at first glance.
+I'm going to go back to the appliance and I'm
+going to go to this URL here phpMyAdmin localhost/phpmyadmin
+and you'll see that it takes me to an interface
+exactly as we saw on the screen shot, and here I
+have an additional database called lecture for today
+and let me go ahead first and click on pset7.
+>> I seem to have a couple of options, one for new , for creating a new table,
+and a link to users, which is a table I already created.
+So what's a table?
+So if you used Excel before, and if you've
+used numbers or Google Spreadsheets, you open up a window
+and you get a whole bunch of rows and columns,
+but then you usually have worksheets along the bottom, or separate tabs.
+You can think of each worksheet as a table
+so that database, ultimately, is a combination of one or more tables, one
+or more worksheets, in the world of a normal spreadsheet.
+So let me go ahead and click on this worksheet
+that I premade, called users, a.k.a.
+Database table.
+And if I scroll down here, let me zoom out a bit,
+this is what phpMyAdmin is telling us is inside of this table right now.
+It's a little confusing at first glance because the UI is not
+the prettiest thing in the world, but what is interesting is this part here.
+ID, username, and hash.
+>> In advance, and you'll be handed this in problem set seven,
+we give you a file containing a super small database table, borrowed actually
+from the hacker edition of problem set two,
+inside of which there are six rows.
+One for Belinda all the way down to one for Zamyla,
+and notice to the left of those usernames are unique IDs like one,
+two, three, four, five, six, integers, and then to the right are hashes.
+>> And if, odds are, you didn't do the hacker edition problem set two,
+but a hash is just like an encrypted password with a few caveats.
+And so, what you see here are the encrypted versions of all six
+of our passwords from problem set two's hacker edition.
+Now to the left is just some GUI stuff, editing this row, copying this row,
+deleting this row.
+>> But what's interesting now is the following.
+I can actually start experimenting with this table.
+So if I go and click the SQL tab, I get this big text box.
+And this is not how we're going to do it when actually writing code.
+To be clear, phpMyAdmin is just a tool that's
+going to let us poke around the database and let us experiment with queries.
+>> So for instance, suppose I execute exactly this.
+Select, which is one of those keywords I mentioned earlier, star,
+which represents all the columns in a table.
+From what table?
+Well, users.
+And notice there's this weird convention in SQL
+where you actually use back ticks, typically,
+not single quotes and not double quotes when you talk about tables names,
+so the back quote is the thing on the top left hand of your keyboard most
+likely.
+>> So let me go ahead now and just leave that alone
+and scroll down and click Go, and we're actually going to see the same thing.
+We have just executed a SQL query saying select everything star
+from table called users, and what you get back is this.
+Ultimately, we'll be able to do that same thing in code,
+but for now all I wanted to do was see it in my browser.
+Well let's do something a little different.
+Let me go back to the SQL tab, and let's just say that what?
+Zamyla has lost all of her money, and therefore it's
+time for us to delete her as a user.
+She's no longer logging in.
+>> So I'm going to say delete from-- well, maintain capitalization
+for consistency, delete from users where.
+And so, we can have these predicates, or these
+qualifiers, at the end of my statement where and how could I delete Zamyla?
+By her name Zamyla, so the column, one of the columns
+was named, so where name = "Zamyla".
+And here I use double quotes or single quotes,
+you only use the back ticks when talking about the names, for instance,
+of tables or fields.
+And let me click Go here.
+And now, the web page is being a little uptight.
+>> Or, do you really want to execute delete from users where name equals Zamyla?
+Yes.
+So now, if we go back to my table by clicking users, notice that Hm.
+I goofed.
+And in fact, I kind of clicked away so fast
+you didn't even see the red error message, perhaps.
+What did I do wrong?
+AUDIENCE: You didn't need to capitalize her name.
+DAVID J. MALAN: Yeah I capitalized her name,
+but her username-- actually I made a couple mistakes, right?
+One, her username is zamyla, lowercase Z,
+and the column name is username, not name, so let's do this again.
+Let me go ahead and delete from users where
+username equals quote unquote "Zamyla".
+All right?
+So this looks a little better, let me go scroll down and click Go.
+It's still going to yell at me to be sure.
+I click Yes, and now we see, frankly this happened, really
+fast, less than one second certainly, this
+is exactly the query that got executed.
+To confirm, let me click users and indeed now Zamyla is gone.
+Now let's do the opposite.
+Suppose that Gabe wants to register for the website.
+What's the SQL query, what's the command I could type to add Gabe?
+Well it's pretty straightforward.
+Insert into users, and now it gets a little cryptic.
+I need to specify, to the server, what fields I want to assign.
+I don't really care what Gabe's ID number is, so I'm going to skip that.
+I'm instead going to say username, hash, and then
+the values I want to put there is going to be Gabe.
+And then his hash, I don't know.
+So for now, I'm going to leave that as a big to do.
+We'll come back to that in the problem set
+spec as to how you actually do that.
+>> So notice, again, the syntax.
+Insert into table name, then a parenthesized list of the fields,
+the columns you want to add values to, and then just
+the same exact ordering left to right of the values you want to add,
+and it's just wrapping because the text is a little long.
+So now let me click Go.
+One row inserted.
+And now if I go back to users, what's interesting
+is that not only is Gabe now in the database, what is apparently his ID?
+>> Well it's seven.
+Why is it seven when I didn't add it?
+So this, too, is one of the features you get of the database.
+A lot of built in functionality.
+It turns out that when created this table,
+I preconfigured it's automatically assign an ID in such a way
+that it increments.
+So if you've ever poked around, and looked at what your Facebook ID
+number is, these days it's not really a thing to do, but Facebook as an API,
+Application Programming Interface, whereby you can get back
+a whole bunch of data about yourself, about your friends,
+and your connections.
+And what used to be kind of cool, back in the day,
+was to look up what your Facebook ID number was.
+Mark Zuckerberg's, for instance, is three
+since he was the author of the site.
+And as the story goes, he created two test accounts, users one and two,
+which he then deleted.
+And so, Zuck, as is his username on Facebook, is ID number three,
+and all of us have numbers much larger than three these days.
+In fact, at some point Facebook moved away
+from even using an int, which is a 32-bit value, to using
+the next step up, essentially a long long so
+that they could accommodate even more users registering.
+So a fun little historical fact.
+>> So that's just the basic syntax with which
+we might execute a couple of queries, but we can actually
+do a bunch more things with SQL.
+And you'll see, ultimately, in the problem set seven
+that you have to make a number of design decisions,
+among them is going to be what data types to use.
+So just like in C, there are data types in a database, like MySQL,
+and the data types you have to choose from include these fields here.
+Char, varchar, Int, big int, decimal and date time, and many others.
+So let's actually do this.
+Let's pretend that we didn't hand you this user's table
+and let me go ahead and create, for myself, in the lectures database--
+actually let me go ahead and delete the table I have in here already
+so that we can actually create this.
+Whoops.
+I'm going to drop this table, and now I'm
+going to go again to the lecture database over here,
+I'm going to create a table called users and let's
+just do three columns initially and click Go.
+>> Now, for the most part, again, this is just
+using this graphical tool called phpMyAdmin, and what we're doing now
+is creating a table.
+So this is like going File, New, and creating a new Excel file.
+So it's asking me a few questions, from left to right,
+what's the name of the first column, and then the name of the second column,
+and the name of the third.
+So let's recreate this.
+ID, and then username was one, and then hash was another.
+So what should the data type be now for a field like ID?
+>> Here is the whole list of data types available to you in a database,
+and for now let's just go with int.
+32-bit value, I don't think realistically I'm
+going to have more than 4 billion users in my account, in my service,
+so I'm going to keep moving on to the next question.
+I'm not going to specify a length or values,
+it's not applicable here for an int, per se.
+And now I can specify, apparently, a default
+value, which I'm not going to specify.
+A collation, I don't know what that is.
+An attribute.
+Now we actually do have a design decision.
+So there's a few fields here, not all of which are applicable, but unsigned
+just means what?
+That the int must be?
+Just non-negative.
+So it has to be 0 on up.
+No, I'm not going to check because I want every user to have an ID,
+it cannot be null.
+And then, we get to some more interesting design decisions like this.
+We'll come back to this in a moment, but what another feature of database
+is, is that you can tell the database server go ahead
+and optimize yourself, your RAM and your hard disk space,
+so that selects, and inserts, and deletes, and updates are really fast.
+Contrast this with pset5.
+>> If you wanted to look up something in your hash table, which
+you think of as a database, who had to do all the
+work for making your hash table fast.
+It's like, obviously, you.
+Right?
+You had to put in all the time fine tuning things, getting a hash function
+right, figuring out how many buckets to have.
+>> But what's nice, again, about a database is
+you just punt all of this to other people
+who have thought this through for you, and what
+I'm going to say here under index is that my ID field
+is going to be the primary way of identifying users in this database.
+I'm not going to think of Zamyla as Zamyla,
+I'm going to think of her as the number 6.
+>> Why is it, perhaps, better intuitively to think of and model
+each of your individual rows using a number instead of something
+like a string, like the Zamyla or Gabe or longer string still?
+Yeah?
+>> AUDIENCE: An ID is unique?
+DAVID J. MALAN: Say again?
+AUDIENCE: An ID is unique?
+DAVID J. MALAN: An ID is unique, but suppose--
+as the case in general with usernames, suppose
+I also said there can only be one Zamyla in the world, and only one Gabe.
+I could impose the uniqueness constraint on strings, too, if I wanted.
+So not a bad thought.
+>> AUDIENCE: More secure.
+>> DAVID J. MALAN: More secure, why?
+AUDIENCE: You can't tell which is which, as in the user.
+DAVID J. MALAN: OK, you can't tell which user
+is which so there's a privacy aspect to it,
+especially if the IDs maybe appearing in the URLs.
+So sure, that could kind of work, too.
+Other thoughts?
+Yeah?
+>> AUDIENCE: It's easier to perform operations on an int.
+DAVID J. MALAN: That's the real kicker.
+It's just more efficient, or easier for the computer,
+to perform operations on an integer.
+Right?
+An int is guaranteed to be 32-bit, whereas Zamyla
+is a few characters long, Gabriel is a few more characters long,
+Davenport is really long, and so it's not particularly efficient to use
+strings to compare values and look for fields, and update fields,
+if you can get away with just one integer.
+Just 32 bits.
+So usernames, too, this way, don't have to be unique,
+although they probably should be, and even in this way too
+a user could be allowed to change his or her username.
+>> So let's now leave this as the primary means of identifying the user.
+This is telling the database go ahead and optimize yourself
+so that look ups on ID are super fast.
+AI, horribly named, just means Auto Increment,
+and this is the check box we need to check
+to specify that the ID field to be automatically updated for me,
+and then I'm going to scroll to the right here
+and frankly I'm not really interested in any more of these fields.
+Certainly not today.
+>> So I'm going to go back here, to the first column, where
+I need to specify username and hash, and let's
+at least focus on the second one for now.
+Int is probably not the right call, so what makes more sense perhaps?
+>> AUDIENCE: Text.
+DAVID J. MALAN: Say again?
+AUDIENCE: Text.
+DAVID J. MALAN: Text?
+OK, I heard text.
+What else?
+
+We kind of have a bunch of choices that are textual in nature.
+So when, and why, do you use some of these?
+Well char, contrary to what you might think, is not a single character.
+It's a specific number of characters.
+So if we know that all usernames must be like eight characters,
+as used to be common in older computer systems, I could say char
+and then I could say 8 here.
+That's when the third column becomes applicable when creating a table.
+>> But that's kind of annoying because some people might
+want to have a longer username than eight characters,
+some people might want to have a shorter username,
+so why commit myself to a specific number?
+Why not have a variable number of chars and just
+say that the maximum length of a name is, I don't know, like 64 characters.
+I can't think of any friends who have names longer than 64 characters,
+and even if that's too short you could certainly bump it up arbitrarily.
+>> So varchar is a variable number of chars.
+Text is not a bad instinct, and frankly that sort of does what it says,
+but a text field can be like 65,000 bytes at least.
+That's probably overkill for a field, and in fact, yup, 65,535.
+That's probably overkill for a name, so we'll stick, typically,
+with varchars for textual field and hash, too.
+Hash, it turns out, we could do a varchar as well or something like that,
+but we won't focus today on the cryptography there and the numbers
+that we might actually want to use for its length.
+>> But let me scroll down to the right.
+You can only have one primary index for a table,
+but do I want to apply any of these, now, to username, would you say?
+What should username be based on a vague understanding of these four options?
+Just by their names?
+>> AUDIENCE: Unique.
+>> DAVID J. MALAN: So unique, right?
+So it turns out that not only could you tell a database, in advance,
+this is the primary way of identifying fields.
+You can also say this is going to be a unique field.
+It's not going to be the thing I rely on,
+but I would like the database to essentially have that if condition, so
+that if I ever tried to register two users with the same name,
+the database flat out is not going to let me.
+I might have some additional code in PHP that prevents as much,
+but the database, too, can ensure that that's never going to happen.
+>> Now, as an aside, especially as you think about final projects,
+keep in mind it index and full text are actually quite useful.
+If you have a larger database, not with dozens, but with hundreds or thousands
+or even millions of fields, you can also tell the database in advance
+this is a field I'm going to be searching on a lot.
+Maybe its username, maybe it's bio, if you're
+making a Facebook-like website that has paragraphs that the user's allowed
+to save, and if you want to tell the database in advance
+I'm going to be searching on this field a lot, but it's not necessarily unique,
+you can specify create me an index.
+Or, you can say also allow me to do sort of arbitrary searches like Command
+or Control F, like you might in a Word Processor,
+so you could look arbitrary strings or substrings in this field.
+In other words, we're getting to the point in the semester
+where you don't have to worry about how to implement things efficiently.
+You just need to know about what design decisions to make so that you're
+using the right tools for the trade in order to leverage features
+that other people have built for you.
+So to recap, primary should only have one, you can only have one,
+and it's the thing you're committing to using to identifying fields uniquely.
+Unique is just similar in spirit, but you might only occasionally use it,
+but you want the database to impose it.
+Index just means preemptively speed things up in the future
+so that I can search for things in this field.
+And then full text is generally for paragraphs, or essays, or large bodies
+of text where you might also want to have
+wild cards like the equivalent of star.
+Right.
+>> So that was kind of a lot to all at once.
+Let's see if we can't distill a couple of these features
+and then build something fairly simple, but powerful.
+So among the other design decisions you're
+ultimately going to have is along the lines of storage engines.
+And let me just make mention of this in anticipation of final projects,
+and anticipation of let's say-- no let's do this.
+Let's build this little application first.
+I'm going to go into my terminal window, and in here is not
+only counter.php, which we're now going to get rid of as no longer germane,
+but we have a whole bunch of directories and this
+is going to be very similar in spirit to what you'll see in problem set seven.
+>> So we have three directories includes public and templates, which
+is exactly where we left off on Monday with our whole MVC paradigm.
+And to recap, in public is going to go any file that I want users to actually
+v be able to visit in their browser via URL.
+Template.
+What did we put in templates?
+What kind of stuff?
+There wasn't much but a couple files at least on Monday.
+Yeah.
+>> AUDIENCE: Header and Footer?
+>> DAVID J. MALAN: Header and Footer.
+So we have something similar today, too.
+We've got a few more files but Footer I see, Header I see,
+and then a bunch of other files.
+So this is the equivalent of the V MVC view, which,
+again, will be a bit more clear in problem set seven,
+but this is just a folder I'm putting a lot of my aesthetics.
+A lot of my HTML, a lot of my forms.
+Meanwhile, includes, is another directory that has these three files
+and let's take a quick look at these.
+>> I'm going to go ahead and open up config.php.
+As it turns out, much like earlier in the term,
+you sharp included CS50 dot h with pset7.
+In today's example, you're going to do the equivalent of that
+with a require statement that effectively
+includes these several lines.
+So to be clear, this is a file called config.php.
+And notice what it's doing.
+It's apparently doing something cryptic, turning on error messages
+so that you can see them in the browser.
+It's, then, apparently requiring two other files
+so this is like #include in C, and then this one we did see,
+and we've relied on, this turns on that shopping cart like functionality.
+>> This means a cookie will be sent back and forth.
+So why is this interesting?
+Well, if we go back to this directory and open up, for instance,
+constance.php.
+Notice that PHP does support constants, it's not quite like #define in C.
+Instead, you literally say defined, and notice
+that I've stored in advance four constants in this file.
+One for today's database, for my password, for my username,
+and for the name of the server.
+So these are actually going to be pretty similar in problem set seven.
+And lastly, and this is where I'm going to get some nice functionality
+from the staff, in functions.php is a bunch of code we've written,
+and I stole some of this from problem set seven
+for today, that does a bunch of things and let's just look at one of them
+in particular.
+This function here, query, is going to be
+the PHP function we call in order to execute SQL.
+A moment ago we were using phpMyAdmin, but that's just
+for sort of learning purposes and diagnostic purposes
+and forgetting your database set.
+When you actually use your database, you, the human,
+are obviously not going to be pulling up a web
+page every time someone registers.
+You're going to write code that inserts and deletes users on demand,
+and we're going to do this by way of the query function.
+If I now scroll down, there's going to be a few more features.
+Redirect is going to be a function we wrote
+for you that allows you to send the user to another URL,
+and render is a function, quite like we saw on Monday, that actually renders
+a template, but more on these in the form of pset7's own walk through.
+For now, let's go ahead and do this.
+>> Let me go into my lectures table and see that there's currently nothing
+here just yet, and let me also go into my public directory, where
+there's just one file, index.php.
+This file appears to be super simple at the moment, it looks just like this.
+Very much like how we left off on Monday.
+I'm requiring this file, config.php, which is in
+an includes directory, which is in dot dot, my parents,
+and then it's just rendering this file.
+So what is this file?
+>> Let's open up in my templates form.php, and we'll see this.
+Super simple, apparently this form is going to submit by a $_GET or $_POST.
+Quick sanity check.
+
+Literally visually search the file.
+Method equals post.
+So it's not going to use the URL, like Google does, it's going to sort of hide
+the information behind the scenes and it's
+going to submit to a file called register.php,
+and that's the file we haven't yet written
+but what this is going to look like is this.
+>> If I go to a separate page This is what localhost/index.php looks like.
+And again, the server's just assuming index.php.
+Enter.
+So that's where we're at, and what I want to do
+is be able to type things like David, and then
+my phone number, which will say 617-555-1212 for now, register
+and now register.php was not found.
+So I need to implement this.
+So let's quickly whip something like this up.
+Let me go into my public directory and do gedit of register.php,
+and now I'm going to go ahead and start PHP mode, like we did on Monday,
+and close PHP's tag, and let's do a couple of things.
+>> So one, I know, from having written that form,
+that I want to check for the following.
+If it is empty, whatever the user typed in to the name field, then
+I'm going to say something like apologize missing name.
+Apologize, meanwhile, is not a built in PHP thing,
+it's a function we wrote in functions.php for pset7
+so that you have access to it.
+Else if the other field is empty, number, then I'm
+going to apologize to the user and say missing number.
+Save this file.
+>> Now let's go back to my browser, go back to the forum try again.
+Register.
+OK.
+Nothing happened, which is good.
+I didn't get an error message.
+But if instead, let's reload this page, and not provide anything.
+Damn it.
+
+Do that.
+Register.
+What did I do wrong?
+If empty, $_POST name.
+Say again?
+>> Oh, of course.
+I forgot the most important part, which is require("../includes/config.php.").
+
+I need to have access to the apologize function, which
+is why nothing was happening.
+The function doesn't actually exist.
+So let's try this again.
+Let's reload the page, click Register.
+OK.
+There it is.
+So, the output we're seeing here is the result
+of calling an apologize function, super simple,
+and it just prints out whatever I give it as an argument.
+>> All right, so let's cooperate.
+Let's provide my name like David, register,
+missing number OK let's provide that, too.
+617-555-1212.
+Register.
+OK.
+So all is well now, just nothing interesting is happening.
+So now let's make something more interesting happen like this.
+Let me go into phpMyAdmin, and let's actually create a table called users,
+I'm going to give it three columns, and I'll quickly
+create ID, and then name, and then number,
+and the ID field I'm going to leave as an int.
+The name field I'm going to leave as a varchar,
+and we'll say 64, somewhat arbitrarily.
+The number I'm going to make, you know what?
+We're going into support US numbers here,
+so I'm going to do something like char and then 10 characters
+max for an area code and then seven digits.
+And then over here, I'm going to specify auto increment this field,
+make this a primary key, and I'm going to go ahead and not
+check any of these other boxes.
+>> So when I now finally click Save, and I go back to my users table,
+this is what it looks like if I now click a New Tab structure.
+So this, to be clear, is just phpMyAdmin's way
+of saying your database table has an ID, a name, and a number
+with those particular configurations and we'll ignore the rest of the fields
+there for now.
+>> So now what do I want to do?
+So if I go now into my source code, if all is well
+I want to execute the following query.
+Insert into, and I can just say users I don't strictly
+need those back ticks if it's not a dangerous word like users.
+I'm going to say name, number, and then here I'm
+not going to hard code the digit of the values yet.
+I'm going to put two question marks.
+And this is a convention in many languages
+whereby if you want to have a placeholder for a string
+you're going to use the question marks, for reasons we'll
+come back to chat about security, and here
+I'm going to pass in those two fields post name,
+and then post number, and now save the file.
+>> And now I'm going to go down here is a super
+simply say rendersuccess.php, which is going to be another template.
+I'm going to create really fast.
+Geditsuccess.php and I'm just going to say H1 success in that file.
+All right.
+So now, let's go back to the browser, where I visited before.
+Let's go ahead and confirm I wrote in David, I wrote in a phone number,
+register.
+Damn it.
+What did I do wrong?
+So I'm seeing an error here, you have an error in your SQL syntax.
+Let me jump back to gedit, let me go back to register.php,
+and what did I omit that was important last time?
+I need this.
+You want to know that other than from having noticed before, but I need this.
+>> So now let's go back, and this was helpful to see in the browser
+and that's why in config.php we spit out errors.
+Let's go ahead and reload, click Continue, success.
+So now let me go over to my database here and click on Users,
+and browse, and notice I now have David in my database here.
+Now technically this website is not yet on the public internet,
+so I can't have other people in putting here,
+but if I now wanted to, for instance, send myself a text message.
+Let's go out on a limb here and see if this actually works.
+I'm going to go ahead and delete this row
+and we'll blur this out in the video later
+so we don't have the entire internet texting me,
+and we will now go up to the browser and we'll go over to lecture
+and we'll type in different number here, register, success.
+>> So now, my own number's presumably in the database, and now the fun part.
+Let's actually use PHP to do something programmatically,
+either from the command line or from somewhere else,
+and for now I'm just going to keep it simple
+and I'm going to go into my directory here and do the following.
+Gedit script let's say, we'll call it text, #!/user/bin/env PHP,
+like we saw last time.
+PHP.
+>> Now I'm going to do require includes config.php,
+even though this might induce a slight error.
+And now I'm going to go ahead and say rows, query, select star from users,
+and now here I'm going to do a technique from last time for each rows as row.
+And I'm going to do something simple.
+Printf let's say name is this, and number is this, backslash n.
+And now I'm going to pass in row quote unquote name,
+and row quote unquote number, and now let's go ahead
+and my terminal window chmod this a + x to make
+this script called text executable.
+And now let's run text.
+>> OK, so progress.
+So I've now written a command line script,
+in a language called PHP, that, because of that require line,
+has access to all those configuration constants that I specified.
+The name of the database and so forth.
+In fact, just to be clear that this isn't a fluke,
+let me go ahead and register, really fast, someone else like Rob
+and will give him the 555-1212 number.
+>> And now, if I run the script again, notice the power
+of what we're doing with the database.
+Now I've immediately seen what the other two rows are in my database.
+So now let's try to do something even fancier inside of,
+and this is the part we've not tested in advance,
+so the last time I did this things went horribly awry,
+we have video to that effect.
+>> Actually, yeah, funny aside.
+So the last time, in a lecture like two years ago,
+we decided, I decided, to be all this would be a great idea
+to dynamically generate emails in class, using the entire database CS50
+students, who had given us their numbers and their cellphone carriers which you
+might recall from pset0, how to reason, it turns out
+I had a minor bug in my program and did a couple mistakes in 2012, I think.
+>> Whereby, one I had for loop that did exactly this kind of thing,
+iterating over the database, getting a name from the database,
+name from the database, and then on each iteration of that loop I sent an email.
+But instead of sending one email, I sent one email the first iteration,
+and two emails a second iteration, sent three emails a second iteration, which
+as you might recall from our discussion of asymptotic notation
+this big O of bad, like n squared is how many messages I sent,
+but it wasn't even emails it was text messages.
+>> And as you know, attendance isn't super high toward the end the semester
+and so I thought it would be cute at the time to say, "Why aren't you class?"
+In the text message I sent to the whole class,
+and it was funny to like 50% of the class, but the other 50%, some of whom
+freaked out, i sent incredibly apologetic sweet notes
+to the staff apologizing for having missed the lecture just
+this once, right?
+
+>> So that would horribly awry.
+So in that spirit, let's try this again but just with my number.
+In advance, in functions.php, I've written this function here.
+It's called text, and it takes in three arguments.
+A number, a carrier, and a message.
+>> I'm using a switch statement, which wonderfully PHP take strings, not just
+integers, and I didn't implement all the support for this yet,
+I've just done AT&T and Verizon.
+Because it turns out that with these carriers
+they have email to SMS gateways, whereby you can actually
+send an email to an address like phone number at vtext.com
+and if the user hasn't blocked the messages, it'll go through
+is a text message.
+>> Now to do this, I'm going to have to add one field really fast to my database.
+I'm going to go into my structure, and I'm
+going to go ahead and add a field at the end of the table.
+Let's click Go, and I'm going to call this carrier
+and for now I'm going to leave this as a bar text,
+but we can be fancier in the future.
+I'm going to quickly go into my table, and I'm
+going to get rid of Rob, because that's a fake number,
+I'm going to go into edit here and I'm going to change my carrier manually
+to be Verizon, which it is, and now over here.
+>> Let's do a quick sanity check.
+Let's open up our text script, which looks like this, carrier is %s.
+We're doing a lot more error checking than I did in 2012, carrier.
+And now, I'm going to go ahead and re-run the script.
+OK.
+Carrier is Verizon, which means now hopefully I can do just this.
+Correctly this year, hopefully, here we go.
+>> So inside of this for loop, I'm going to not only have this printf,
+I'm also going to call text and the usage of this function recall
+was it takes a number, a carrier, and a message.
+So let's see, number is going to be row quote unquote "number,"
+row quote unquote "carrier," and the last one was message.
+Don't screw up this year, semicolon.
+>> OK.
+Fingers crossed.
+Let's see if this works.
+All right, so.
+Here we go.
+Let's unlock the phone, cross your fingers, damn it.
+Undefined variable may-- oh wait, wait, wait, real fast.
+Real fast, real fast.
+This is totally worth it.
+Let me grab, let me grab, uh-oh.
+Thank you, the texts have started from someone else.
+
+Let me go ahead and open up real fast, dropbox.php/mail in here.
+Standby.
+Totally worth it.
+Downloads.
+OK, source src8m.
+OK.
+>> Need one more line here.
+Oh there it is, it's in Frosh IMs, it's in register at three.
+Oh hello, Margo, thank you very much.
+OK, and I was missing this line here.
+So let me quickly grab this line of code,
+which includes the mail or library that I actually want to use,
+I'm going to quickly go back into functions,
+I'm going to go to the top of this file and require this file as well,
+and now I'm going to really cross my fingers when I go back to the command
+line script, which is inside of today's local host directory.
+Run text.
+Enter.
+Mail.
+Standby.
+
+Standby.
+Mail.
+Oh, OK.
+Here we go.
+>> Mail gets new PHP mailer.
+Did I do this right?
+Damn it.
+To-- oh, wait, wait, wait.
+Stand by.
+
+I promise, this is going to be so worth it.
+Address.
+This is why I don't make the examples right before class.
+Ugh.
+The following recipients failed.
+
+Let's try one last thing.
+SMTP set from, add address, the address is indeed that.
+Let's try this last part in address.
+Aw, I'm really sad right now.
+Thank you.
+But I really appreciate all the texts you've been sending.
+
+You've got this David.
+You're blowing it.
+Let's leave it there and we will fix on Monday.
+See you then.
+>> DAVEN FARNHAM: And now Deep Thoughts by Daven Farnham.
+
+If a binary tree falls in a forest and no one is around to C it-- [CHUCKLING].

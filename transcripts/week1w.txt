@@ -1,0 +1,1139 @@
+>> [MUSIC PLAYING]
+
+>> DAVID MALAN: All right this is CS50 and this is the end of week one.
+So I'd like to introduce my former advisee, Andel Duff, who not only makes
+iPhone 5 stands, as well as this lectern, he also makes cars.
+
+ANSEL DUFF: How's it going, everybody?
+I just want to tell you a little bit about Formula SAE, of which I
+am the captain.
+It's an MIT team.
+I just want to tell you guys a little bit about it
+and hopefully generate some interest.
+>> So let me just run through a couple things about our team.
+So we're completely student run, wherein all
+of the members design, simulate, test, and manufacturer a subsystem
+of the car.
+We have our own machine shop and garages, and N52-- or sorry,
+N51-- which is the same building as the MIT Science Museum.
+And we are the people that drive the car.
+There's a national competition in the beginning of the summer,
+and then there are smaller shootout competitions throughout the year.
+And then we do driver training days to get new members acquainted.
+>> Our build days are on Saturdays from 11 AM to 8 PM.
+Lunch and dinner are taking care of, from Bertucci's and Beantown
+respectively.
+We have a weekly meeting and seminar, which is for course credit.
+Which is new as of this semester, and it will also be for next semester,
+so you can cross-reg for that.
+And then we have designing, shop, and CAD days during the week,
+whereas members will independently CAD parts, order stock et cetera.
+>> So for electrical engineering at the team
+we have our tractive, high voltage system,
+which runs at a nominal 300 volts, which includes
+motors, motor controllers, and battery packs.
+Then we have a low voltage system, which runs
+at 12 volts, which includes controls, CAN nodes, the brain
+box, and the dashboard.
+As far CS goes, we do have website maintenance
+that we need done for events, membership changes, new pictures, and PR material.
+And then we have code that controls the car for our traction control, launch
+control, dash control, torque vectoring, and regenerative braking systems, which
+run typically in MATLAB, Simulink, and LabView.
+>> Tell you a little bit about the car.
+So it's about 500 pounds.
+It's rules limited to 85 kilowatts.
+It has 2 EMRAX 207 motors in the back, one for each rear wheel.
+It has custom-built battery packs from Prismatic A123 pouch cells,
+totaling 300 volts and 5.6 kilowatt hours.
+And it's direct drive with a 2.64 to 1 drive ratio.
+Here are some pictures we took of it at competition.
+Here's the back, nose cone, and here are the motors,
+those big black disks underneath the et mens manus.
+Here's a slide that I pulled out of our competition scheme.
+And this is just comparing our car to a couple of commercially available cars,
+like the KTM XBOW, Ariel Atom, and Caterha M 7-280.
+If you're familiar with price, power pull weight, dollars per horsepower,
+dollars per torque, and our car blows them all out of the water.
+If you have any questions, jot down this email address.
+Shoot us an email at fsae@mit.edu.
+>> We're happy to talk about anything you'd like.
+Harvard students are kind of the minority on the team.
+If you have any questions about that please do shoot us an email,
+happy to talk, and I'm going to head back over to David.
+Thanks.
+I appreciate it, guys.
+[APPLAUSE]
+
+>> DAVID MALAN: Ansel spent the summer working with us here on campus in CS50
+this summer.
+And in addition to working on things like the binary bulbs,
+he actually really opened our eyes-- and mine in particular--
+to what really the intersection of not of hardware and software can be.
+In fact a lot of the things he just toured you through are ultimately
+created first in software, and then ultimately fabricated
+in the real world in hardware.
+So if you're interested in exploring that intersection,
+perhaps take up that group.
+>> Now meanwhile, those of you who are fans of technology,
+and Apple products in particular know that there
+were a couple of announcements yesterday.
+But we thought we'd show you one that came out
+a few days prior that you might not have seen.
+>> JORGEN EGHAMMER: You know, once in awhile something
+comes along that changes the way we live.
+A device so simple and intuitive using it feels almost familiar.
+
+Introducing 2015 IKEA catalogue.
+It's not a digital book or an e-book, it's a book-book.
+>> The first thing to note is no cables, not even a power cable.
+The 2015 IKEA catalogue comes fully charged,
+and the battery life is eternal.
+The interface is 7.5 by 8 inches, but can expand to 15 by 8 inches.
+The navigation is based on tactile touch technology that you can actually feel.
+>> Content comes pre-installed via 328 high-definition pages
+of inspiring home furnishing ideas.
+To start browsing, simply touch and drag.
+Right to left to move forward, left to right to move backwards.
+>> Notice something else?
+That's right.
+No lag.
+Each crystal clear page loads instantaneously,
+no matter how fast you scroll.
+If you want to get a quick overview, just hold it in the palm of your hand,
+and using just your thumb, speed browse the content.
+>> If you find something you want to save for later, you can simply bookmark it.
+And even if you close the application, you can easily find the bookmark again.
+Amazing.
+>> [LAUGHTER]
+[APPLAUSE]
+
+So that brings us to the end of week one.
+A few announcements now.
+So sectioning is now in progress.
+Go to this URL here sometime between now and Friday at noon
+to actually specify whether you are among those less comfortable, more
+comfortable, or somewhere in between.
+>> This is typically one of those things that you just kind of know.
+And in fact those of you who are less comfortable probably know as much,
+those of you who are more comfortable know as much,
+and again if you aren't quite sure which of those buckets you fall into you're
+probably somewhere in between.
+But rest assured you can swap after a couple of weeks if need be.
+>> Meanwhile, for the coming week we don't start sections per se,
+but super sections, which are open to all students.
+This coming Sunday at a location to be announced on the course website
+we will have one for those less comfortable,
+as well as one for those more comfortable.
+And those somewhere in between can choose which of those two,
+or both if you'd like, to sit-in on.
+And the focus of those will be ultimately on C,
+which we'll continue our conversation of today.
+>> Problem set 0 meanwhile is hopefully in your hands.
+Officially due tomorrow, Thursday, at noon.
+Unless you cash in one of your 5 late days,
+which would bring it until Friday at noon.
+Problem set 1 meanwhile will be posted on the course's website.
+And this will be our first foray as a class into C.
+And that problem set spec will walk you through a lot of the mechanics of what
+we started talking about on Monday, and we'll continue talking about today.
+C, Linux, the CS50 appliance, all of that
+will await you in the specification.
+>> Office hours meanwhile are in progress, in the undergraduate dining hall.
+Head to this URL here to see the schedule for tonight and tomorrow,
+if you would like to partake.
+Questions meanwhile, so that you have opportunities to ask questions
+asynchronously, 24/7, realize you're not limited to sections and office
+hours, but rather this tool here, CS50 Discuss at that URL
+will be the course's online bulletin board software, via which
+you can ask questions of classmates and also staff.
+So keep in mind that resource as well.
+Meanwhile a tradition starts this Friday.
+As you may have glimpsed from last Wednesday's teaser video,
+we have a tradition most every Friday during term
+of taking some 50 students and staff to a local restaurant called
+Fire and Ice, at which we're typically joined by some alumni
+or friends from industry to generally aspire
+to make a large class feel smaller.
+So it's a completely casual lunch.
+A bunch of us, the staff especially, will play musical chairs
+and chat with students about 50, life outside of 50,
+life in the future, the real world, I'm talking about job opportunities
+with friends in industry.
+>> So if you would like to join us this Friday, head to this URL here.
+Space is limited, but we'll do this recurringly throughout the term.
+Head there to cs50.harvard.edu/rsvp.
+And if you don't get in this time, not to worry.
+We will do it again in the coming weeks as well.
+>> So this is the picture we painted last week,
+and you've probably been dabbling in thus far.
+But let's try to connect this now to what we're going to do today
+and onward.
+Could I have one volunteer?
+All right, or several.
+How about here on the end, in the blue shirt.
+Come on up, what's your name?
+ALANA: Alana.
+DAVID MALAN: Alana.
+So Alana, for just a moment-- nice to meet you--
+is going to play the role of this function here.
+The purple block we've called thus far a function.
+So what I'm going to go ahead here and offer Alana
+is a little name tag, to make clear what role you're playing.
+>> So you shall be the say block.
+If you want to go ahead and put that on.
+And we're going to keep this super simple.
+If the goal at hand is simply now to implement with Alana,
+this so-called say block, here's how it's going to work.
+I have-- let's call it an argument or parameter,
+it's really just a blank sheet of paper.
+And it's white to kind of be reminiscent of the white box into which you
+can write words.
+>> Meanwhile I'm going to go here.
+I'm going to go ahead and write H-E-L-L-O comma world.
+And now I, as say the programmer, don't actually know how to say something.
+I can come up with the words, but I don't necessarily
+know how to express myself verbally or on the screen.
+And so what I'm going to do is take this piece
+of functionality, whose input-- or argument, as we'll call it,
+I've written on this piece of paper-- and I'm going to outsource it.
+>> And indeed that's the role that functions in a programming language
+can play.
+Something like the say block can be outsourced
+to someone who really knows what she or he is talking about.
+So if you'll step over here for just a moment,
+I am going to pass this input to Alana, and ask that you say this input.
+>> ALANA: Hello, world.
+DAVID MALAN: That's it.
+So that there is a function.
+Now we can take it a little more, we can take a step forward here.
+Because that was clearly underwhelming.
+So let's now convert this to something a little more sophisticated.
+>> So this of course is our C version.
+So now if you want to take that one off, that name tag off,
+and let's have you put on a new name.
+But fundamentally you're playing the same role,
+it just so happens to be called printf now.
+>> The story is, of course, going to be-- probably
+just as underwhelming-- is going to be the following.
+You are now the function printf.
+I am the caller, or the programmer, who wants
+to stand on the shoulders of people in the past like you,
+who've already figured out how to actually write something down.
+And so this time, rather than say it let's
+actually use our screen over here.
+So if you'd like to step over here, I'm going
+to pass again this as input to my printf friend.
+If you could go ahead and print that on the screen,
+simply by drawing with your finger on the black screen.
+
+Excellent.
+All right, so lots of suspense for how that was going to play out.
+>> So now let's take things up one final notch, if we could, as follows.
+So this is a C program as we said last time.
+And this just does what you did, it prints out to the screen, hello, world.
+Even though there's clearly a lot of distracting stuff up there.
+But let's take things up a notch and introduce this version, which recall
+was the third version that we ended up with last time.
+>> And now there's clearly two uses of printf.
+There's 2 calls to Alana in this case for printf,
+but there's also a call to another function.
+What's that function clearly?
+Getstring.
+>> Can we get one more volunteer?
+OK, come on up.
+What's your name?
+>> JAVIER: Javier.
+>> DAVID MALAN: Javier, come on up.
+So Javier's role is on this piece of paper.
+Which I'm going to call generically s.
+Now this is a variable, it's of type string, as implied
+by that second line in the middle there.
+And I'd like you to go get me a string.
+Specifically head down to the orchestra section and get me the name of someone,
+and come back with a variable containing that value.
+It can be anyone you want.
+
+>> Here we go.
+
+All right, Javier is writing down the name.
+
+All right.
+We can all probably guess how this is going to play out.
+We're perhaps belaboring the point of what
+a function is doing, but nonetheless thank you very much.
+>> So Javier has returned this string here, which, can't quite see,
+Jonathan is the string that we've gotten.
+So now what I'm actually going to provide to Alana though
+is something a little different.
+Because in this version of the program, first there's state your name.
+So the very first argument I need to provide Alana
+with is going to be literally state your name.
+All right, so simple as that I would hand this to you.
+And as I write up the next argument, if you
+want to go ahead and write this on the board, let's go ahead
+and do the final example here to make clear what's ultimately got to happen.
+So state your name, write it toward the top
+if you don't mind, just so that we have room for one second line.
+Because the last thing I'm going to now provide you with is not one,
+but two pieces of paper.
+>> All right.
+H-E-L-L-O comma and then a blank line.
+So what I'm about to hand Alana now is something a little different.
+Not only is she getting this, where fill in the blank represents
+that percent-- what was the placeholder we've been using?
+Yeah, so percent s.
+Meanwhile I'm going to pass her in a second argument, which
+is precisely what Javier retrieved from Jonathan.
+>> So let me give you these two.
+If you'd like to, go ahead and print that effect.
+
+What's ultimately happening now is, Alana again
+is playing the role of printf.
+Javier was playing the role of GetString.
+So that will be your souvenir.
+And ultimately what's happening, despite this hello-- yep go ahead and comma.
+ALANA: Did I receive this yet or no?
+DAVID MALAN: Yep, you received them both at once.
+So the idea is that you can now flip the page
+to handle the second of those two inputs.
+So this is only to hammer home the point that whereas Alana executed
+this green line here, and then Javier did this one for us
+and return to me something we'll call s, but it was really
+just that piece of paper of his own.
+And now Alana has done this third line.
+>> And even though all of this looks so incredibly cryptic perhaps
+at first glance, it really is as simple as that.
+Passing inputs around, getting outputs, either
+being physically handed back something, or seeing a side effect like this.
+Something visually written on the screen.
+So let's go ahead and thank Alana and Javier,
+who was down here, for joining us up here.
+>> [APPLAUSE]
+
+>> So now let's take for granted just how straightforward all of that might be.
+And let's proceed to actually do something in actual code.
+So up on the screen here is a screenshot of the so-called CS50 appliance.
+And if you had to at, as a 2:00 PM on Wednesday afternoon,
+explain to some friend what the CS50 appliance is,
+how would you define it in a sentence?
+
+Any one sentence?
+Yeah?
+STUDENT: It's like a program that makes everyone's computer
+run with the same system.
+DAVID MALAN: Good!
+It's a program that enables everyone's computer to run with the same system.
+It's sort of your own copy of an operating
+system that happens to be called Ubuntu Linux.
+And it runs effectively inside of a window on your own Mac or PC,
+so that this way right out of the gate in week 1, everyone here in the class
+has access to the same tools, the same configuration,
+and there's no learning curve specific to a Mac or a PC in particular.
+>> Now we opened up, inside of the CS50 appliance on Monday, this program here.
+It happens to be called gedit.
+But that's really just a graphical editor.
+It's something like Notepad or Text Edit on Windows or Mac OS respectively.
+And I proposed that there were really three important parts to this screen.
+The top side is where you would write your code.
+And that's where we spent much of our three examples in Monday's lecture.
+The bottom we called what, this black window, yeah?
+>> STUDENT: Compiler?
+>> DAVID MALAN: Compiler we accessed by way of that window.
+But more generally.
+Yeah, it was just a terminal window.
+This is an age old term that just describes essentially a blinking
+prompt, that years ago used to be on one of those big CRT style monitors.
+But nowadays it's sort of virtual in software.
+And the terminal windows let's us type commands.
+It sort of the simplified version of the user interface or UI.
+It's not a graphical user interface or GUI,
+it's a text-based interface or a command line interface.
+>> And indeed that's where ultimately I was able to write some code.
+Once I had written some code though, recall that I used this command.
+And as it the name kind of suggests, this
+allows me to make a program called Hello.
+But what was it really doing?
+Well make was taking my input, my source code,
+and converting it to what, ultimately?
+>> Object code.
+And object code is just a fancy way of saying zeros and ones.
+And then once I wanted to run that object code,
+once I wanted to pass as input those zeros and ones into my computer's
+brain, the so-called CPU or central processing unit,
+I had to run the program.
+But it wasn't quite a simple on Monday as just double clicking some icon.
+What instead did I have to do in order to run a program?
+
+>> What was that second command?
+I'm hearing a little slashes?
+Yes, yeah?
+>> STUDENT: Dot slash and the program's name.
+DAVID MALAN: Exactly.
+Dot slash and the program's name.
+Now what did this mean?
+Well dot is just an arcane way of saying current directory.
+Whatever folder you are in is referenced as, is represented as dot.
+The slash is just what you've seen in Mac OS and Windows for years,
+it's a separator between a directory or folder and the rest of some name.
+In Windows it happens to go backwards, in Linux and Mac
+OS it happens to go forwards.
+But it's just the separator, so it's just an uninteresting syntactic detail.
+>> The juicy part of course is the name of the program, Hello.
+And that's what make created for us.
+It outputted that file for us.
+But how did we get to that point?
+Let's now ask the question, what was really
+going on here, at least with regard to some of this syntax?
+>> So in an sentence or so, how did we explain away
+this first line that's highlighted in green?
+What was that first line doing, with respect to my program?
+Yeah?
+>> STUDENT: [INAUDIBLE].
+DAVID MALAN: Say it again?
+STUDENT: Including and downloading past functions [INAUDIBLE].
+DAVID MALAN: Good.
+Including, I won't say downloading, but let's say
+including functions that people have written in the past.
+And those functions are implemented somewhere in my computer.
+Someone wrote a file years ago, and that file
+is somewhere inside of the CS50 appliance, or on my hard drive
+more generally.
+And so this line is essentially saying, go find that file, standard I/O dot
+h, and copy and paste its contents right here on the top of my file
+so that I don't have to do that manually myself.
+>> And among the juiciest pieces inside of that file we claimed was what function?
+What function did we say was declared or mentioned in standard I/O dot h
+most likely?
+Printf, right?
+We did not write printf on Monday, it just existed.
+Much like Alana just came up on stage and she just
+existed and knew how to draw something on the screen,
+so does printf exist for many years.
+And so this is how we access it.
+Now if we move on here, main was analogous we
+said to the puzzle piece called when green flag clicked
+in the world of Scratch.
+It's just sort of the default name that humans
+decided would represent the default entry point to a program.
+The chunk of programming code that gets executed first.
+>> Meanwhile these curly braces are kind of like the curved shape
+of a lot of those yellow scratch pieces.
+They kind of encapsulate a whole bunch of instructions together.
+So it just kind of binds together some related functionality.
+printf of course is a function that prints the screen, as we just did.
+>> What about these parentheses?
+How would you define-- even if you've never programmed before, but just based
+now on an increasing hopefully intuition, what
+are the parentheses doing for us here?
+Or what are they surrounding?
+Yeah?
+>> STUDENT: They're saying what you're going to print with printf.
+>> DAVID MALAN: Yeah, they're saying what you're going to print with printf.
+Or more generally, they are surrounding the inputs to the function.
+So you can almost think of those parentheses
+as being like the metal clip on this clipboard.
+It's what's holding, it's what's going to be used to provide arguments
+into the function, which in this case is called printf.
+>> So in general almost any time we call a function,
+we are going to see a pair parentheses.
+Maybe with something in it, like now, maybe nothing in it.
+But that's where you would put the inputs or so-called arguments
+to a function.
+>> Here's one such argument.
+I've highlighted everything between the quotes,
+because it turns out in this language called
+C, when you want to represent a string-- that is a word or a phrase
+or even a paragraph-- you have to surround it with double quotes.
+Not single quotes, double quotes.
+And that's exactly what I've done here.
+>> Meanwhile there's a funky symbol toward the end there.
+The backslash n.
+What did we say that represented?
+Yeah?
+>> STUDENT: A new line.
+>> DAVID MALAN: New line.
+Right, you don't generally hit Enter when
+you want the program to spit out a new line.
+Rather you tell it explicitly with this admittedly arcane piece
+of syntax, backslash n, that you want a new line to go there.
+Finally the semicolon.
+We didn't really talk too much about this,
+and by far this will be the bane of some of your existence for the first problem
+set, when you just failed to realize you've forgotten something as stupid
+as a semicolon.
+And generally putting it there will fix that problem.
+But what's it doing for us, would you say?
+>> STUDENT: [INAUDIBLE].
+>> DAVID MALAN: Sorry?
+>> STUDENT: [INAUDIBLE].
+DAVID MALAN: Finishing a statement.
+It's sort of like the period at the end of an English sentence,
+whereas in this language C it's ending a statement.
+An instruction of programming code that you just want to say,
+I'm done with this.
+Now notice that's the only one here.
+So you don't want to get in a habit of putting semicolons
+after every closed parenthesis.
+For instance there's none next to void, and we'll
+come back in the future to what void means.
+But in this case your printf is a function, or a statement being used,
+and so we want to have that terminus at the very end of it.
+>> And I'm intentionally picking on C. And frankly a lot of languages like C, C++,
+Java, JavaScript, and any number of other languages have a lot of these
+sort of syntactic details.
+That certainly if you're new to programming can genuinely trip you up.
+And you will, mark my words, some of you will
+have this experience in office hours or late
+at night working on some p-set, where your damn program just doesn't compile,
+it doesn't run, you have no idea what's wrong,
+it seems completely logically correct to you.
+And it's because you forgot something like hitting
+a semicolon at the end of some line.
+>> But these are the kinds of things you're going to immediately learn to see.
+And indeed these are the things that the CA's and TF's have
+been sort of trained to see much more quickly than you.
+And so this is only to say, as you dive into problem set 1 especially,
+don't get frustrated by this stuff.
+Once you sort of acclimate to the world, you
+begin to see things that you might not see at first glance this first week.
+>> So source code is something like that.
+We want to pass it into the so-called compiler.
+And that compiler as we said provides output
+known as object code, the so-called zeros and ones.
+But from there, what does that give us?
+Well it gives us these patterns.
+And again your computer, your Intel inside,
+understands these patterns of zeros and ones.
+And sometimes the pattern represents an actual decimal number
+as we saw last week, sometimes it represents a letter
+like we saw last week, sometimes it represents an instruction,
+like printing something to the screen.
+>> So printf for instance-- but rather, let me rewind.
+We've been taking for granted that those zeros and ones are
+produced by this command make.
+But make is not a compiler.
+Make is not the thing in the middle that's producing the zeros and ones.
+Rather make is just a very conveniently named program whose purpose in life
+is essentially to figure out how to compile your program.
+And we use it in these first weeks because it just
+saves us a lot of trouble.
+>> But what make is really doing when you compile hello,
+is, as we said last time, it's looking on your hard drive
+or in the current folder, for file called what, apparently?
+Hello.c, right?
+That's just kind of a convention.
+It's arbitrary, but that's the way things are.
+Make, if you just specify the name of a program that doesn't yet exist,
+it's going to look for the source code in a file, by default means hello.c.
+And if it finds it, great.
+It's going to convert that source code into object code for you.
+>> But every time I've hit Enter after running make hello,
+do you recall seeing last time a fairly long and cryptic sequence
+of other white letters and characters on the screen?
+Well that was the actual command, the actual compiler, that was running.
+So the actual compiler we'll use most of the semester is something called clang.
+Some of you might have used Visual Studio before, or GCC,
+or any number of other compilers.
+We'll use clang.
+>> And clang allows us to actually convert that source code to object code.
+What does this actually mean in practice?
+Well let me go into one of my folders from last time.
+Inside of the CS50 appliance.
+And let me go ahead and create this same file, include standard I/O dot h.
+Int main void.
+And we'll come back in the future as to what int means and what void means.
+But for now let's do hello world backslash n,
+just like we did on the board.
+>> Let me save this file called hello.c.
+And now if I want to compile this I could-- let me zoom in-- run
+make hello enter.
+And this again was that very cryptic line.
+But now at least one word probably jumps out at you.
+Clang is that line we saw before.
+Now there's a lot of other stuff frankly that we'll wave our hands at for today.
+But there's a few subsets, a few characters in here
+that are of interest.
+But I'm going to go ahead and do this.
+I'm going to first run hello, just to prove
+that this is working as it was Monday.
+But now I'm going to delete the program.
+And much like we had these short names last time,
+the command for removing something is rm, remove, enter.
+You're going to get some fairly cryptic questions.
+Hard to believe that you can make even this question hard to understand.
+But remove regular file hello just means do you want to delete hello.
+>> And I can go ahead and type y for yes, Enter, and now it's gone.
+What this means now, if I clear my screen,
+is that instead of doing make hello-- you
+know what, I'm getting good at this.
+I'm going to run the compiler myself.
+I don't need some program to figure out what my file is called.
+I wrote hello.c, I know what it's called,
+I'm clearly capable of typing that.
+So I'm going to go ahead and do clang hello.c Enter.
+>> Seems to work.
+And there's no additional output, because clang is the compiler.
+It's what's converting the source code to zeros and ones.
+So if I now do dot slash hello Enter, hm.
+New error message today.
+So bash is just the name of the blinking prompt that we're using.
+That's a gross oversimplification, but for now that's all that is,
+it's the blinking prompt.
+And that's why it's yelling at us.
+>> No such file or directory is a little more straightforward.
+But surely I made that object code.
+But the catch is, that if I type the command
+to list the contents of this directory, which is what?
+ls for list.
+There's a bunch of stuff in here, some of which came with the appliance,
+like my Desktop folder, Downloads folder, Dropbox folder, and all
+that stuff.
+But what is interesting is hello.c, which
+I created a moment ago with gedit.
+And what's the weirdest looking name in here,
+perhaps that we didn't see last time at all?
+>> a.out, right?
+So back in the day, it was just decided that when
+you compile a program for the first time,
+and you don't specify the name of a file, let's call it a.
+And a.out just means this was the output of the compiler.
+So it's a horrible name for a program.
+But by that logic, dot slash for current directory, slash a.out,
+should mean there's in fact my hello world program.
+Now a little warm up exercise, too.
+If I want to rename this file, turns out that you
+move a file from one name to another.
+So mv a.out, and then I can call it hello Enter.
+So this is a Linux command.
+DOS had this years ago, Windows has a terminal window
+of some sort that looks like this, Linux and Mac
+computers have this blinking prompt.
+Even though most of us probably rarely, if ever, use it.
+>> But what I've done is run a program, whose name is mv,
+and I've provided it with two arguments, so to speak.
+Two inputs.
+a.out is the original name.
+Hello is the new name.
+So if I now do dot slash hello, Enter, that exists.
+And if I do dot slash a.out, what do you expect I should see?
+>> Bash, no such file or directory.
+Because I just renamed it.
+So this takes a bit of getting used to.
+But the problem set 1 specification will truly
+hold your hand through some of this minutae.
+Because this is a complete intellectual distraction
+from the more interesting ideas at hand, which
+is actually creating something out of code.
+But let's do one modification now to this program.
+>> Recall that last time I did something like this, printf state your name.
+And indeed we just did this on the big screen over there.
+And then I did string s gets GetString open paren, close paren.
+And paren just shorthand notation for parenthesis.
+So does GetString take any arguments?
+No inputs no, but it needs the parentheses,
+because that's what demarcates the calling of a function.
+>> So I'm going to go ahead and try to run the compiler on this program now.
+Clang hello.c, because I didn't change its name for now.
+And I got a bunch of errors.
+Let's zoom out here.
+If I scroll up again, like I said last time,
+to the first, same error that I got last time.
+On line 6 of hello.c I had an undeclared identifier string,
+did I mean standard in?
+I didn't.
+Because what mistake have I made in this program, if you recall from last time?
+
+Yeah, we need the so-called training wheels
+that we'll just use for a few weeks.
+But I need to specify that also, somewhere inside of the appliance,
+is a file that we wrote just a few years ago.
+Inside of which are functions like apparently GetString.
+So now if I go back down here, zoom in, and re-run clang hello.c.
+Damn, another error.
+But we haven't seen this one before.
+>> This one's a little more esoteric to figure out.
+But this is deliberately on the screen, because we wanted to tell this story.
+When you compile hello.c, just as the picture from before suggested,
+you're only converting that source code to zeros and ones.
+Now CS50 staff a few years ago wrote CS50.h, and a corresponding file,
+CS50.c.
+And we, a few years ago, compiled those files
+into a file that happens to be called CS50.o.
+>> Or it can be renamed a few different things.
+But that's a simple way of thinking about it.
+So we compiled CS50's library into zeros and ones.
+But nowhere have I specified that I want to combine my zeroes
+and ones for my hello world program with the zeros and ones
+that CS50 staff created a few years ago into one complete program.
+All I've specified by writing clang hello.c is compile hello.c.
+>> I've not told clang to link in the zeros and ones
+that CS50 staff created for you some time ago.
+So it's an easy fix, dash l for link, CS50.
+And we'll again see this before long again and again.
+But notice now there was no complaints.
+So now if I run dot slash hello, now it's working.
+Although that's a bit misleading since I just recreated what file?
+a.out.
+>> So let me rewind for just a moment.
+The program we just compiled has the three lines of code.
+When I ran hello world, hello a moment ago, I didn't see state your name.
+And that's because I ran the old version of the program.
+But if I do indeed run dot slash a.out Enter, state your name, Rob, hello,
+world.
+Hm.
+That's kind of a bug.
+Probably meant to say Rob, right?
+So what's the fix here in code.
+STUDENT: [INAUDIBLE].
+
+DAVID MALAN: Exactly.
+So I just need to make that final tweak so that I'm passing in a placeholder,
+like a fill in the blank, like we did a moment ago.
+But percent s is now that fill in the blank.
+So lastly let's reveal one last detail so that there's no magic.
+I'm going to go ahead and get rid of hellow.
+I'm going to go ahead and get rid of a.out.
+So now I have no programs, just my source code.
+And I'm going to run a slightly longer command, clang
+dash o hello hello.c dash LCS50.
+>> Now this is starting to sort of go in one ear and out the other perhaps.
+But just tease apart what this is doing.
+Clang is the compiler, dash LCS50 deliberately at the very end
+does what in a sentence?
+Links to the CS50 library.
+Grabs the zeros and ones that the staff made
+and crams them into my own program.
+So the last question at hand is, what is dash o hello probably
+doing, even if you've never seen this syntax before?
+>> Outputting a program that's not named the default a.out.
+Rather it's named hello.
+So now there is no a.out.
+No such file or directory, because I explicitly said
+call this program hello, so that I can now type in a name like that
+and have it behave.
+>> Now frankly, boy is that uninteresting to have
+to remember all of that little minutia, right?
+So let's go ahead and get rid of hello again.
+And let's now return to a world in which it suffices to say make hello.
+But that's the magic that make is doing for you,
+that's the tedium that it's doing for you.
+And as our programs and problems get more complex,
+make will truly be your friend.
+Because not too long from now we're going
+to have programs that are written not with one file, but several files,
+and make will automate the process of compiling all of that for us together.
+>> So now print.
+printf is inside of this file, standard I/O dot h, that we've seen before,
+but there's more to printf than that.
+There's backslash n, but there's also a bunch of other escape sequences.
+And escape sequence is just a fancy way of saying something
+that starts with a backslash, not a forward slash, a backslash,
+and does some special thing.
+And we won't dwell on most of these, but why is there backslash double quote,
+do you think?
+Why is there this weird sequence of characters, backslash double quote,
+why might that be useful?
+STUDENT: [INAUDIBLE].
+
+DAVID MALAN: Exactly, right?
+Think back to our hello world program that we've seen quite a few times now,
+every time we've seen that hello world program we've had double quotes inside
+of which is hello comma world backslash n.
+But think to yourself, what if you actually
+wanted to print out a quotation mark?
+Your first instinct might be, I don't know why I might want to do-- here,
+we can be a little passive aggressive, hello friend.
+We might want to do something like that.
+>> But why is this now problematic?
+Ignoring the curly quotes aside that keynote made for us automatically.
+Why is this problematic?
+
+>> Exactly.
+Because we have like 4 quotation marks.
+Well the first one probably goes with the second one,
+and maybe the fourth one goes with the third one,
+or, I mean I'm not even sure, nor is the computer going to be.
+Computers again, compilers again, are fairly dumb.
+They'll only do what you tell them to do.
+And if you're not unambiguous they are probably going to throw an error.
+>> If you're not unambiguous as to how to make a peanut butter and jelly sandwich
+strange things might arrive.
+It's the same idea.
+Now suffice it to say there's some other escape sequences,
+but we'll come to those before long.
+Essentially these escape sequences represent something
+that you might not be able too easily at the keyboard,
+without confusing the computer.
+>> Now meanwhile we have placeholders in printf.
+Percent d, which can also be written in almost all cases as percent i,
+is a placeholder for what type of data?
+What type of value?
+A decimal number.
+So actually we'll start using percent i because it's
+a little simpler, like an integer.
+Percent i.
+An integer that happens to be decimal.
+>> Percent s we already said was a placeholder for a string.
+Which is just a word, a phrase, a paragraph, an essay, whatever.
+It's a sequence of characters of some length.
+And we'll see before long some of these others.
+But percent c is for a single character.
+Percent f is for a floating point number,
+like a real number that has a decimal point in it, which
+is of course not an integer.
+And there's a whole bunch of others as well.
+>> Meanwhile in C, and in a lot of languages,
+we have different data types.
+Different types of glass bowls if you will.
+The bowl I used last time was for ping pong balls,
+but we can also store different values like chars and strings
+and integers in a container, like a variable, and C has these.
+Char is the type of data, the type of variable,
+in which you can store a character.
+Float is a type of variable in which you can store a real number.
+>> Int is of course for an int.
+And rather ridiculously named a long long
+is where you can store essentially a really long number, with even
+more digits then a typical int might store.
+But we'll come back to that before long.
+>> In CS50 dot h meanwhile the other header file
+that we've seen a couple times in use, there's
+two other data types that don't exist in C typically.
+One is string, and we'll see in a few weeks what strings really
+are underneath the hood.
+And one is bool.
+And a bool is a variable that can only take on certain values.
+And just based on last week's explanation of Scratch,
+and more recently C, what would you guess
+are the two possible values for some container that is of type bool?
+>> Yes and no.
+One and zero.
+True or false.
+And indeed it's the last that tends to be conventional in a programming
+language, saying something like true or false.
+>> Meanwhile the CS50 library comes with a bunch of functionality
+that the staff wrote for you, besides just getting a string.
+We wrote in advance functions that can get an integer from the user,
+get a single character, get a float, that
+is just a number with the decimal point.
+Get a long long, a really big value from the user.
+So we've only seen this in action in the form of GetString.
+But via these functions will soon be able to write
+programs that get input from the user.
+>> Meanwhile consider this program, and consider
+how we might now start to add to it with new constructs.
+A quick whirlwind tour and then we'll look
+at some writing some programs manually ourselves.
+Henceforth if we want to implement a condition,
+it's not going to look like a nice little pretty puzzle piece.
+It's going to look a little more arcane.
+But this is the canonical structure of a condition in C.
+>> The word if, two parentheses, inside of which
+is going to be some kind of Boolean expression.
+Now the slash slash in the middle, this is
+at the moment sort of like pseudocode code placeholder.
+But more properly, any line of code in C that starts with slash slash
+is a comment.
+>> It's like a sticky note that you might put on an essay, printed on paper.
+It's a note to yourself.
+It has no functional impact on the program.
+It's sort of a reminder, it's your own documentation as to what's going on.
+So do this at the moment is sort of a placeholder
+for whatever's inside of those curly braces
+eventually is going to do something.
+>> Meanwhile you have two forks in the road, an if else construct like this.
+You can if, elseif, else.
+Now it's worth noting, especially if you've been Googling around
+online for resources out of curiosity, or if you pick up
+one of the course's recommended books on C,
+you will see that humans have lots of different preferences for how
+to express themselves in code.
+Some people like to put the curly braces as I've done here.
+Some people like to put the curly braces for instance up here.
+>> Some people like to put the elses up here and then this over here.
+There's any number of ways to write code, and none of them
+are right per se.
+Although there's a few that are pretty wrong.
+But there are no-- if this is ultimately a very religious debate.
+In fact, one of the most annoying things about computer science
+is how opinionated computer scientists can be.
+And you will find over time that even you develop personal preferences
+as to how your code should look.
+>> Not just behave, not just create output, but how it should look aesthetically.
+So what we will do is guide you along the way toward, for now at least,
+a standard CS50 style that at least keeps things uniform and easy to read.
+But more on those distinctions before long.
+>> A Boolean expression in C, if you wanted to say if this condition is true
+and this other condition is true, you don't write the word
+and, as you would in English.
+You instead use ampersand ampersand, for reasons we'll come back to.
+If you want to say or you use two vertical bars, which on a US keyboard
+is generally above the Enter key next to the backslash.
+And this just means if this condition or this other condition is true do this.
+>> Meanwhile there's this crazy thing, which
+you'll have occasion to use once in awhile.
+But it's just an alternative way to express yourself.
+This, for now, let's stipulate, it's just
+another funky way of expressing if, elseif, elseif, elseif, elseif.
+It's just formatted in terms of cases, where you literally
+enumerate the values that you might want to check for.
+>> Meanwhile loops.
+We saw a comparison of Scratch with a loop.
+And I'm going to wave my hand at what each of these things means.
+But notice that a loop will very often start with the keyword for.
+Or it will start with the keyword while.
+Or it will start with the keyword do, and end with the keyword while.
+>> But what we're about to see is things more like this.
+Here is, in general in C, how you might declare a variable and give it a value.
+In C it doesn't suffice, like in Scratch, you just
+say give me a variable called something.
+You have to tell C, and tell your compiler, more specifically,
+what type of value do you want to put in the glass bowl.
+>> Is it an integer?
+If so, you have to literally say int and then
+the name of the variable, then a semicolon.
+If you instead wanted string and called it s like I did my code here today,
+you would say string s semicolon.
+Once you want to give it a value you can then use the equal sign,
+otherwise known as the assignment operator.
+And notice how each of these lines of code
+has the semicolon at the end of it.
+>> But frankly this just looks a little ugly.
+Why can't I say to the computer, give me a variable and initialize it to zero.
+That is, give me an empty glass bowl.
+While you can.
+And so one of the judgment calls you'll have to make stylistically over time
+is, do you write your code like this, or do you kind of clean it up and impress
+people by writing two lines as just one.
+And this would be considered generally a more elegant way
+of writing your code stylistically.
+>> Functions we're of course seen.
+They're going to take this format.
+The name of a function, some parentheses, and then maybe some
+stuff inside.
+Or you might see uses of multiple functions side
+by side, like something like this.
+Now as a tangent, does this joke now make sense?
+
+>> [LAUGHTER]
+It doesn't mean it's funny, but it does perhaps make a little more sense.
+So now let's go into the CS50 appliance for a moment.
+And let me open up one teaser here.
+>> And indeed one of the reasons for introducing IKEA catalog
+and flashing the picture of the iPhone a bit ago
+was to actually tie in together the fact that just a few years ago, in 2007,
+this piece of code was released, which was
+one of the very first implementation of a piece of software
+that does what's called jailbreaking.
+For those unfamiliar, jailbreaking something like a phone or an iPhone
+means essentially figuring out how to do things
+with it that the company who made it didn't intend.
+Like you want to install certain software that's not in the app store,
+jailbreaking your phone which you do things like that and more.
+But what was fun in 2007-- and there's been
+dozens of different versions of these things since then,
+in all sorts of languages-- is that this program here, called iUnlock,
+was actually written in C. And so I pulled up the source code for this,
+just to kind of show you some of the similarities with the constructs
+we've been discussing thus far.
+Now there's way more complexity here than we've seen already in class.
+Let me scroll up just a little bit here.
+>> But notice these-- well we notice a few things-- but notice these lines here,
+including standard I/O dot h.
+And all-- line 24, please-- notice standard I/O
+dot h and a whole bunch of other files that apparently other people
+have written.
+And if we scroll down through this, little arbitrarily,
+notice I don't know how to write all of this myself necessarily yet,
+but there's if.
+So apparently this has a branch.
+>> And if I scroll down a little further there's another if.
+If I scroll up, I think around line 100 I saw for.
+So I'm not quite sure how this works yet,
+but this is a for loop that's going to let me iterate some number of times.
+And if I scroll all the way to the bottom
+I see that there's a function down here called
+main, and some additional credits for your reading pleasure.
+>> So this is only to say-- and we'll put this online among the course's source
+code today-- that even some of these devices that we take for granted,
+at the end of the day you're still using these basic constructs that we've
+been introducing already thus far.
+That's enough of that one.
+All right, so now let's actually build something.
+>> Let's go beyond something like hello.c, and open up this,
+let's write this program here.
+I'm going to go ahead and write a program called adder.c,
+whose purpose in life is going to be like my first super simple calculator
+that just adds a couple of numbers.
+Not because that's a hard problem, but because it
+allows me to now tie together a few things.
+So I'm going to go ahead and include standard I/O dot h and CS50 dot h.
+I'm going to say int main void.
+And again in the future we'll come back to it
+into in this context and void means.
+>> And now I'm going to say something like printf, give me an integer.
+And now on my second line, how do I express myself such
+that I want to declare a variable that's going to store an int?
+Literally what do I type if I want to create a variable that stores an int
+would you say?
+int a equals getint.
+Sure, so that works.
+And just for consistency with the code you'll
+see online, let me change this to x, just because x
+is a common variable name to use, at least in algebra.
+Now let me go ahead and do printf again.
+Give me another integer.
+And now I'm going to kind of learn from that pattern,
+I'm going to say int y gets to GetInt.
+>> And we've not used GetInt before, but just
+like GetString goes and gets a string, like Javier did from the audience,
+similarly does GetInt start blinking the prompt.
+And effectively waiting for the user to give it an integer, by typing it in
+and hitting Enter.
+Now lastly I'm going to do this, printf the sum of--
+and let me get fancy now-- percent i and percent i is present
+i exclamation point backslash n.
+And what do you think I'm going to put in now as the additional inputs
+to printf?
+>> I don't want to say literally quote unquote x.
+I want to class in x and then, and now let's get fancy
+and let's just assume we can do what we want.
+What you want to say next?
+x plus y.
+And indeed that will work.
+It's minimally programming languages do understand basic arithmetic,
+and so this should in fact work.
+>> So let me go ahead and do make adder in my black and white window
+down here, Enter.
+Cryptic line but no error message, so that's good.
+Dot slash adder, give me an integer, 1.
+Give me another integer, 2.
+The sum of 1 and 2 is 3.
+>> All right, so a pretty trivial program, but what's it done?
+It's allowed me to use a function call here, call another function here,
+two calls to GetInt, a third call to printf,
+and then using these placeholders.
+So it's a little more sophisticated than last time.
+But what if I want to get a little fancier?
+>> Let me go ahead and now do this.
+Let me go ahead and create a new file called conditions zero.
+And I'm going to save some time for classes sake
+and just paste in that code as a starting point.
+And now I'm just going to put something new here in the middle.
+So printf I'd like an integer please.
+And all this code is available on the course's website,
+you needn't type it all out in class if you'd rather not.
+int, and now I'm going to use, instead of x and y,
+I'm going to use n, which is probably the most common name
+for an integer in a computer program.
+And now I want to do a little judgment here.
+I'm going to see if n is greater than 0, then
+I'm going to say printf-- whoops, printf-- you picked a positive number,
+exclamation point backslash n.
+Close that.
+Else I'm going to print out printf you picked a negative number.
+>> Now before you yell at me, let's run this program.
+Let me go down here.
+And how do I compile a program called conditions dash 0?
+Make conditions dash 0.
+Kind of a stupid name, but-- dammit.
+OK, good teaching moment.
+Why did that break?
+
+>> What did I accidentally call this file?
+You can kind of infer from the tab up here.
+So it's not bad that I did this, because this
+will happen perhaps to some of you.
+So I accidentally named my source code condition 0.
+But my source code by convention should be in a file called condition 0 dash c,
+or whatever dot c.
+>> So let me fix this.
+Just like Microsoft Word I can go up to Save As and do condition 0 dot c.
+Now just to be tidy I'm going to go ahead and remove
+condition 0, which was my old version.
+And now let's do make condition 0, Enter.
+OK, seems good.
+>> Condition 0, Enter.
+I'd like an integer please, 50, you picked a positive number.
+Now how about negative 50?
+You picked a negative number.
+How about now, 0.
+
+Pretty sure 0's not negative.
+>> So this is kind of a logical bug.
+How do I fix this?
+Else if n is less than 0, do this, else we can have a three way branch here,
+printf you picked 0.
+So now if I rerun this program, after compiling it
+again with make, and now rerun condition 0, what I'll see here
+is 0 gives me that output.
+So where are we going with this?
+>> Well it's very easy to lose sight of the forest for the trees.
+And so allow us to conclude with this 2 and 1/2 minute video
+that ultimately is a bit of an ad from Google,
+but that really is testament to what even using these basic building
+blocks we can ultimately do once we have a bit of programming
+savvy under our belts.
+>> [MUSIC PLAYING]
+
+>> SAROO BRIERLEY (VOICEOVER): It was 26 years ago,
+and I was just about to turn 5.
+We got to the train station and we boarded our train together.
+My brother just said I'll stay here, and I'll come back.
+And I just thought, well you know, I might as well just go to sleep
+and he'll just wake me up.
+And when I woke up the next day, the whole carriage
+was empty on a runaway train, a ghost train taking me I don't know where.
+
+>> I was adopted out to Australia, to an Australian family.
+And mom had decorated my room with the map of India,
+which she put next to my bedside.
+I woke up every morning seeing that map, and hence
+it sort of kept the memories alive.
+People would say, you're trying to find a needle
+in a haystack, Saroo you'll never find it.
+>> I'd have flashed of the places that I used to go, the flashes of my family
+faces.
+There was the image of my mother, sitting down with her legs crossed,
+just watching her cry.
+Life is just so hard.
+That was my treasure.
+And I was looking at Google Map and realized there's Google Earth as well.
+In a world where you could zoom into, I started to have all of these thoughts
+and what possibilities that this could do for me.
+I said to myself, you know, you've got all those photographic memories
+and landmarks where you're from, and you know what the town looks like.
+This could be an application that you can use to find your way back.
+>> I thought, well I'll put a dot on Calcutta train station,
+and a radius line, you know, that you should be searching around this area.
+I sort of came across these train tracks.
+And I started following it, and I came to a train station which
+reflected the same image that was in my memories.
+Everything matched.
+I just thought yep, I know where I'm going.
+I'm just going to let the map that I have in my head
+lead me and take me back to my hometown.
+>> I came to the doorstep of the house that I was born.
+And walked around about 15 meters around the corner,
+there was three ladies standing outside, adjacent to each other.
+And the middle one stepped forward, and I just thought, this is your mother.
+She came forward, she hugged me, and we were there for about five minutes.
+
+>> She grabbed my hand and she took me to the house
+and got on the phone, where she rang my sister and my brother
+to say that, you know, your brother has just
+all of sudden appeared like a ghost.
+And then the family was reunited again.
+Everything's all good, I helped my mother out,
+she doesn't have to be slaving away.
+She can live the rest of her life in peace.
+>> It was a needle in a haystack, but the needle was there.
+Everything's there.
+Everything we have in the world is at the tap of a button.
+But you've got to have the will and the determination to wanting it.
+>> [MUSIC PLAYING]
+
+DAVID MALAN: Wonderfully sweet testimonial
+to just what you can now do with technology.
+We will see you next week.

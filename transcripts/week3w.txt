@@ -1,0 +1,880 @@
+>> SPEAKER: All right, this is CS50.
+This is the end of week three, and if you haven't taken advantage already,
+know that there will be lunch this Friday as usual, where
+you can enjoy good conversation and food at Fire and Ice
+with some of CS50's staff and classmates.
+Head to this URL here.
+>> Now you may recall, or you may soon be acquainted with,
+these things here, which are given out at the end
+of the semester for many classes.
+So-called exam blue books, in which you write your answers to exams.
+Now I have here 26 such blue books, on each of them
+is written a name, A through Z. And indeed the names are that simple, A
+through Z. And one of the goals at hand today
+is going to be to continue what we started on Monday, which is not
+so much looking at code, but really looking at ideas and problem solving.
+One of the goals and promises of this course
+is to teach you to think more carefully, more methodically,
+and to solve problems more efficiently.
+And indeed, we can do that really without even touching a line of code.
+So I have a couple of elephants up here today, orange and blue,
+if we could get one volunteer, maybe from farther back than usual.
+How about right there, come on down.
+The goal of which is going to be to help plus administer this exam here.
+What's your name?
+>> AUDIENCE: Mary Beth.
+SPEAKER: Mary Beth, come on up.
+Let me get the microphone here for you.
+Nice to meet you.
+>> AUDIENCE: Nice to meet you.
+SPEAKER: All right, so I have here blue books A through Z,
+and I'm going to pretend that I have one of the students,
+and they're coming in somewhat randomly at the end of a three hour exam block,
+so they're ending up in some semi-random order like this.
+Now your job in just a moment is going to be-- this is actually how they get
+turned in at the end of the class, most likely.
+Your job now is going to be, quite simply, to sort these blue books for us
+from A through Z.
+>> AUDIENCE: Oh, this is going to take forever.
+>> SPEAKER: And we will watch as you do this, no pressure.
+AUDIENCE: No, no pressure or anything.
+>> SPEAKER: And for fun, let's put up a timer.
+>> AUDIENCE: So much fun, so much fun.
+>> SPEAKER: I can hold the mic for you.
+All right, we've just doubled our speed.
+So in the meantime, let me pose what's going to be the question for Mary Beth
+is what is she doing, how is she going about solving this?
+And in fact, you might not have ever thought about something
+so simple as when you pick up 26 books like this,
+which do have a natural ordering to them.
+What is the process that you actually use?
+Is it fairly random just picking the first one you see
+and putting it in its place?
+Do you first move your hands around looking for A then looking for B?
+Do you take a look at a pair of them side by side
+and just say, wait a minute, this isn't right, and then swap the order?
+We saw already on Monday that there's a number of ways
+in which we can do this, and indeed as we near the end here,
+I would take note perhaps of what Mary Beth is doing.
+We have a few piles it seems, a bigger one, three smaller ones.
+>> AUDIENCE: I'm ordering them when I find two letters
+that I know are together in a sequence, I put them together so that I don't
+have to worry about keeping track of a whole row of books.
+It's just, oh, A is first, I've got this stack here.
+SPEAKER: So, almost like a puzzle pieces that
+have the right shape to match up with each other.
+AUDIENCE: Pretty much, yeah.
+SPEAKER: OK, excellent.
+And now each of these piles is presumably sorted?
+>> AUDIENCE: Yeah.
+>> SPEAKER: All right, A through Z. All right, congratulations, you did it.
+You have your choice.
+Blue?
+All right, thank you for that.
+So Mary Beth did propose what her approach was,
+but what is another approach how you might go about sorting these things?
+What would you have done?
+The record to beat would have been one minute and 50 or so seconds,
+plus the ones I forgot to count.
+What would you have done?
+Yeah?
+AUDIENCE: Take the stack.
+Start from the beginning.
+Check your papers.
+And if the top one is higher than, maybe, they are,
+the bottom one is higher, then switch them.
+>> SPEAKER: OK, so starting at the top and the bottom,
+and then working your way inward like that, swapping them?
+OK, so a little similar in spirit to bubble sort,
+but choosing the extremes not the adjacent pairs.
+But the short of it is that there's surely a bunch of different ways
+we could do this, and frankly, I think you kind of
+adopted a couple approaches, right?
+You made sort of four sorted piles, and then effectively merged them together.
+And that's, daresay, another technique altogether.
+You didn't treat it as one big pile, you divided the problem into four quads,
+if you will, and then somehow merged them in the end.
+>> So let's consider, ultimately, how else we might do this.
+We formalized the notion of bubble sort last time,
+and bubble sort recall was an algorithm that we visualized
+with eight of your classmates up here, seemingly randomly sorted at first.
+And we then decided pairwise, if two elements are out of order,
+simply swap them.
+So four and two are obviously out of order,
+so those two classmates switched positions.
+And then we repeated with four and six, then six and eight, on each iteration,
+moving to the right.
+>> So given eight people, how many pairwise comparisons did I do while walking from
+left to right in one such iteration?
+How many comparisons?
+Seven, right?
+Because if there's eight people but you have the pair
+them and you keep moving one hop to the right,
+you're not going to have eight comparisons because you can't compare
+an element against itself, or it would just be pointless, so you have seven.
+Or more generally, if we have n people, we
+do n minus 1 comparisons with bubble sort.
+>> So let's consider now how good or bad bubble sort actually was, and try
+to give ourselves vocabulary with which to critique algorithms like this,
+and soon our own.
+So the first pass through bubble sort, the first time
+I walked from left to right across the stage, took me n minus 1 comparisons.
+And that's going to be my unit of measure, right?
+I was kind of talking and strolling, somewhat fast, somewhat slow,
+so counting my number of seconds isn't particularly telling,
+but counting the number of operations that I did on Monday,
+comparing two people, that feels like a nice unit of measure.
+>> So n minus 1 steps the first time, but then what happened after that?
+What's the one upside of one pass through an otherwise unsorted list?
+What can you tell me about the element who was all the way over there?
+Yeah?
+That was the biggest element, right?
+Number eight, even though she started here, every time I
+compared her against a neighbor, she kept
+bubbling up to the right hand side of the list.
+And indeed, that's where the algorithm gets its name.
+>> Now by that logic, how many comparisons need I make on the second time
+I make that pass from left to right?
+n minus 2, right?
+It would just be wasting my time if I keep comparing eight against someone
+else because we already know she was in the right place.
+So that's a bit of an optimization, so the next pass
+is going to be plus n minus two steps, where n is the number of people.
+Now you can kind of extrapolate, even if you're not a computer scientist,
+how this ends.
+At the end of this algorithm, presumably you've got just one comparison left.
+You have to kind of fix the beginning of the list in case two
+and one are out of order and should be one and two,
+so this bottoms out at plus 1 final comparison.
+>> Now the dot, dot, dot kind of waves it's hands at some of the juicier details,
+but let's just go ahead and simplify.
+If you recall from high school, frankly, a lot of you
+had math books that had a little cheat sheet
+on the front cover or the back cover that showed you
+what series summations like this ultimately added up to.
+In the general case, if you have a variable like n, and indeed this one,
+if you looked at your old school math book,
+you would see that this actually adds up to this sum here,
+n times n minus 1 all divided by 2.
+So for now let me just stipulate this is true, so on a leap of faith,
+that's what this sums up to, and we could
+prove that in a more general case.
+But now let's expand this out.
+So let's multiply this out, so that's n squared, minus n, all divided by 2.
+That's really n squared, divided by 2, minus n over 2,
+so that's all nice and interesting.
+But what happens if we now plug-in a value?
+Suppose I didn't have eight people, but say a million.
+And a million just because it's a pretty big number,
+let's plug that in and see what happens.
+So if I plug a million into that formula I'm going to get a million squared,
+divided by 2, minus a million, divided by 2.
+Now what's that going to equal?
+So 500 billion, minus 500,000.
+And if I actually do that math out, that means
+that sorting a million people with the bubble sort
+might take me 499,999,500,000 steps or comparisons in the end,
+we're just extrapolating.
+>> That feels pretty slow, but frankly measuring one particular input
+like this, isn't all that telling.
+But indeed it does suggest that as n gets larger and larger, this algorithm
+kind of feels worse and worse, or you really
+start to feel the pain of that exponentiation, that n squared,
+which adds up pretty fast.
+And this detail isn't lost on people, in fact
+some years ago a certain senator who was campaigning, sat down for an interview
+with Google's Eric Schmidt, CEO at the time,
+and was challenged with a question much like we're exploring today.
+Let's take a look.
+>> [VIDEO PLAYBACK]
+>> -Senator, you're here at Google, and I like
+to think of the presidency as a job interview.
+Now, it's hard to get a job as president,
+and you're going through the rigors now.
+It's also hard to get a job at Google.
+We have questions, and we ask our candidates questions,
+and this one is from Larry Schwimmer.
+What-- you guys think I'm kidding, it's right here.
+What is the most efficient way to sort a million 32-bit integers?
+>> -Well--
+>> -I'm sorry, maybe--
+>> -No, no, no.
+I think the bubble sort would be the wrong way to go.
+>> -Come on, who told him this?
+I didn't see computer science in your background.
+>> -We've got our spies in there.
+>> -OK, let's ask a different interview question.
+>> [END VIDEO PLAYBACK]
+>> SPEAKER: So talking about specific numbers though,
+isn't going to be all that useful.
+It is not a life lesson that bubble sort, given a million inputs,
+might take as many as 500 billion steps.
+You can't really generalize too effectively from that
+and make good design decisions when writing programs.
+So let's focus though on how we might simplify this result.
+>> So I've highlighted in yellow here the result of n squared divided by 2,
+so a million squared divided by 2, and then
+I've highlighted what the ultimate answer was
+once we subtracted off n divided by 2.
+And the claim I'm going to make now is, who the heck cares if you subtract off
+a little old n over 2 when the first part of this formula is so much bigger?
+It dominates the other term, n squared divided by 2
+is so much bigger, clearly, as n gets large like a million,
+that is there really a big difference at the end of the day between 500 billion
+and 499,999,500,000?
+Not really.
+And so what we're going to do as computer scientists is
+ignore those lower order terms and take something like this and really
+just simplify it to the term that's going to matter.
+The bigger our data sets get, the bigger our databases get, the more web pages
+we have to search, the more friends you have on Facebook.
+>> As n gets larger, we're really going to care about the largest
+term in any such analysis of our algorithms performance.
+And I'm going to say, you know what, bubble sort is on the order of big O,
+on the order of n squared.
+It's not exactly n squared as we've seen,
+but who really cares about those smaller terms,
+and frankly, who really cares if we divide by 2?
+That's just a constant factor.
+And is 500 billion versus 250 billion really that big of a deal?
+I could just wait one year, let my laptop literally
+get twice as fast in hardware, and that sort of difference
+just goes away naturally over time.
+>> What we care about is the expression, the part
+of the expression that's going to vary as our input gets bigger and bigger.
+And indeed, in the real world, that's what's happening increasingly
+is the inputs to our problems and algorithms are getting bigger.
+So big O is going to be the notation, the asymptotic notation, that we just
+use as computer scientists to describe the performance, or the running time,
+of an algorithm.
+So that we can compare algorithms on different computers written
+by different people, by using some fundamentally similar metric
+like the number of comparisons you're making, or maybe the number of swaps
+you're making.
+>> What we're not going to count is the amount of time
+that passes on the clock on the wall typically.
+What we're not going to worry about is how much memory
+you're using today at least, though that's
+another resource we might measure.
+We're going to try to base our analyses on just the basic operations, the ones,
+frankly, that you can see most visually.
+So with something like big O of n squared, I claim that O of n squared
+is an upper bound on the so-called running time of bubble sort.
+In other words, if you wanted to claim that there's
+this upper limit on how many steps an algorithm might take,
+it's going to be in the big O of n squared in this case, an upper bound.
+>> What if I instead change the story to be not about bubble sort,
+but about this upper bound.
+Can you think of an algorithm that we've looked at already
+whose upper bound, maximum measure of time or operations,
+would be said to be bounded by n, a linear function,
+not a quadratic one that's curved?
+What's an algorithm that always takes no more
+than like n steps, or 2n steps, or 3n steps?
+Yeah?
+>> AUDIENCE: Finding the biggest number in a list?
+>> SPEAKER: Perfect, finding the biggest number in a list.
+If I'm given a list of people for instance,
+each of who is holding a number, what is the maximum number
+of steps it should take me, a reasonably smart person,
+to find the largest person in that list?
+n, right?
+Because in the worst case, where might the biggest value be?
+Right, all the way at the end.
+So in the worst case upper bound, I might
+have to go all the way over here and be like,
+oh, here's number eight, or whatever that value is.
+Now it would just be stupid if I kept going, right?
+Looking for more and more elements if the last of them is over there?
+So surely, n is an upper bound.
+I don't need to take more steps than that.
+>> So what if instead I proposed that there are algorithms in this world that
+have a running time that's bounded by big O of log n, log n?
+Where have we seen this before?
+Yeah?
+>> AUDIENCE: In the phone book problem?
+SPEAKER: Like the phone book problem.
+What was the measure of how much time or how many tears it
+took me to find someone like Mike Smith in the phone book?
+We claimed it was log n, and even if unfamiliar or it it's
+a little hazy what a logarithm or exponent was,
+just remember that log n generally refers to the process,
+in this case, of dividing something in half again, and again,
+and again, and again, such that it gets increasingly small as you do that.
+>> So log of n refers, sure, to the phone book example,
+to binary search in theory, when we had the virtual doors on the board,
+or when Sean was searching for something.
+If he had used binary search, log n would be the upper bound on how much
+time that takes.
+But those algorithms that ran in log n assumed what key detail?
+That the list was sorted, right?
+Your algorithm is wrong if your input is not sorted,
+and yet you're using something like binary search
+because you might jump right over the element
+without realizing it's indeed there.
+>> Now what might this mean, big O of one?
+This doesn't mean that your algorithm takes one and only one step,
+it just means it takes a constant number of steps.
+Maybe it's 1, maybe it's 10, maybe it's 1,000,
+but it's independent of the size of the problem.
+No matter how big n is, a constant time algorithm
+always takes the same number of steps.
+So what might be an algorithm we've talked about or just
+intuitively that comes to you that always runs in so-called constant time?
+Yeah?
+>> AUDIENCE: Add two numbers.
+SPEAKER: Add two numbers, 2 plus 2 equals 4, done.
+So that might work, what else?
+How about more real world, yeah?
+>> AUDIENCE: Finding the first thing in a list.
+SPEAKER: Finding the first element in a list, sure.
+We've actually been talking about arrays already,
+how do you get at the first element in an array,
+no matter how long the array is in C code?
+You just use like the bracket zero notation, bam, you're there.
+And indeed arrays, as an aside, support something generally known
+as random access, random access memory, because you can literally
+jump to any one place.
+We can do this even more simply we can rewind to week zero
+when we did Scratch.
+How much time did it take for the say block in Scratch to execute?
+Just constant time, right?
+Say something, say something, it doesn't matter
+how big Scratches world is, it's always going to take the same amount of time
+to simply say something.
+>> So that's constant time, but what's the flip side?
+If that was upper bounds, what if we want
+to describe the lower bounds of our algorithms running time?
+Almost a best case potentially, if you will,
+though these terms could apply to best cases, worst cases, average cases more
+generally, but let's just focus on lower bounds more generally.
+What's an algorithm that has a lower bound of n steps,
+or 2n steps, or 3n steps?
+Some factor of n steps, that's its lower bound.
+Yeah?
+>> AUDIENCE: Bubble sort?
+>> SPEAKER: Bubble sort takes you minimally n steps, why?
+Why is that?
+Why should that start to come to you intuitively, even if it doesn't just
+yet?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+SPEAKER: Exactly.
+In the best possible scenario of bubble sort, and a lot of algorithms,
+if I hand you eight people who are already sorted,
+it would be foolish for you, the algorithm,
+to go back and forth more than once, right?
+Because as soon as you walk through the list once,
+you should realize, oh, I made no swaps, this list is sorted, exit.
+But that's going to take you n steps.
+>> And conversely, what's another way of thinking about it?
+Bubble sort is an omega, so to speak, of n,
+because if you look at fewer than n elements, what
+is the fundamental issue there?
+You don't know if it's sorted, right.
+We humans might glance at eight people and be like, oh, it's sorted,
+that didn't take me n steps, but it did.
+Your eyes, even though you kind of have a big field of vision,
+you looked at eight elements, you looked at eight people,
+that's eight steps effectively.
+And only if I walk through the whole list do I realize, yes, sorted.
+If I stop halfway thinking, all right, it's pretty sorted so far,
+what are the odds it's not sorted?
+That algorithms not going to be correct.
+Might be faster, but incorrect.
+>> So now we have a way of describing a lower bounds,
+and what about constant time?
+What's an algorithm that has a lower bound on its running time of one?
+1 step, 2 steps, 10 steps, but constant, independent of n,
+the size of the input?
+Yeah, in back.
+>> AUDIENCE: Printf?
+SPEAKER: What's that?
+AUDIENCE: Printf?
+SPEAKER: Printf.
+OK, sure.
+So it takes a fixed number of steps.
+And I should now-- now that we're talking about C code
+and not Scratch, something like say, with printf,
+we should start to get careful.
+Because printf does take input, it's a string,
+and strings do technically have length.
+So if we now want to pick on you, if you don't mind,
+technically we could argue that printf does take a variable length input,
+and surely it might take more time to print a string this long,
+than this long.
+>> So what if we consider just the sorting and searching examples?
+What about Mike Smith in the phone book, or binary search more generally?
+In the best case, what might happen?
+I open the phone book and, bam, there's Mike Smith's number.
+I can call him right away.
+>> Took one step, maybe two steps, but a constant number of steps
+if I got lucky.
+And frankly, we saw on Monday your classmate
+get quite lucky twice in a row.
+And that was indeed constant time in a lower bounds
+on the algorithm in question for finding the number 50 behind those closed
+doors.
+>> Now, as an aside, if you discover that both big O, the upper bound,
+and omega, the lower bound, are one in the same, that
+is the same formula in parentheses, you can also
+say, just to be fancy, that something is in theta
+of n or theta of some other value.
+That just means when big O and omega are the same.
+Now what about selection sort?
+Let's use this new vocabulary.
+In selection sort, what were we doing again, and again, and again?
+I was going back and forth through the list, looking for whom?
+The smallest number.
+>> So how many steps, how many comparisons did I
+have to make in order to figure out who the smallest element in the list was?
+n minus 1, right?
+Because if I just start with the one I'm given and I start comparing him or her,
+then him or her, him or her, him or her, I
+can only pair elements together n minus 1 times.
+So selection sort similarly takes n minus 1 steps the first time.
+>> How many steps does it take me to find the second smallest element?
+n minus 2, because I'm being dumb if I keep looking at the same people
+again if I've already selected him or her and put them in their place.
+And the third step, n minus 3, then n minus 4.
+We've seen this pattern before, and indeed
+selection sort similarly has an upper bound
+of n squared if we do up that summation.
+What is its lower bound, selection sort?
+Minimally, how much time must selection sort take, as we defined it on Monday?
+Propose two options.
+Maybe it's n, as before.
+Maybe it's n squared, as it is now as the upper bound.
+>> AUDIENCE: n squared.
+SPEAKER: n squared.
+Why?
+>> AUDIENCE: Because you have to define [INAUDIBLE].
+>> SPEAKER: Exactly.
+At least as I defined selection sort it was pretty naive, keep going,
+find the smallest element.
+Go again, find the smallest element.
+Go again, find the smallest element.
+There's no sort of optimization in there that
+might let me abort after just n or so steps.
+So indeed, selection sort, omega of n squared.
+>> What about insertion sort, where I took who I was given, and then I plopped him
+or her in the right place?
+Then I proceeded to the second person, plopped him or her in the right place.
+Then the next person, plopped him or her in the right place.
+Notice that this is very linear, so to speak.
+I'm a straight line, I'm not going back and forth,
+I've never looking back really, but what's happening when I insert him
+or her into the beginning of the list as we did on Monday?
+What's happening?
+Yeah?
+AUDIENCE: [INAUDIBLE].
+SPEAKER: Yeah, that was the catch, right?
+You might recall from your classmates, if they
+were making any movement with their feet, that was an operation.
+So if there were three people here and the new person belonged way over there,
+on a long stage like this, sure, he or she could just go to the very end.
+But if we're thinking about a computer and an array of memory,
+these people are going to have to shuffle over
+to make room for that person.
+And so that n minus 1 shufflings, n minus 2 shufflings, n
+minus 3 shufflings is just kind of happening behind me, not in front of me
+as before, in some sense.
+Now as an aside, and as you might have seen online
+if you start poking around about sorts, there's so many different ones
+out there, some of them better than others.
+Indeed, bogosort is one that's kind of fun to look up.
+Bogosort takes a set of numbers or say a deck of cards,
+randomly shuffles them, and checks if they're sorted.
+And if not, does it again.
+And if not, does it again.
+If not, does it again.
+Incredibly stupid.
+>> And indeed, if you read like the Wikipedia article,
+its nickname is stupid sort.
+It will eventually work, hopefully, given enough time,
+but that amount of time could take quite some time.
+So if I could, let's speed things up from Mary Beth's example earlier,
+by having a few more elements, but two more processors.
+Two people, if you wouldn't mind joining me.
+How about 1 over here, and let's go-- no one over there?
+No one over there?
+OK.
+You with the black shirt, yes, come on down.
+All right, what's your name?
+>> AUDIENCE: Peter.
+>> SPEAKER: What's that?
+>> AUDIENCE: Peter.
+SPEAKER: Peter, David, nice to meet you.
+All right, we have Peter here, if you want to come onto the table over here.
+And what's your name?
+>> AUDIENCE: Elena.
+SPEAKER: Elena.
+OK, nice to meet you.
+Elena meet Peter.
+Peter, Elena.
+And we'll need Andrew up here as well, please.
+And your challenge is going to be to sort a deck of cards.
+And if unfamiliar, deck of cards should ultimately
+be sorted a little something like this where we'll do the clubs, then
+the spades, then the hearts and diamonds, from ace as a one,
+all the way up to king.
+>> The cards I'm going to give you are going to be 52 in quantity.
+We're going to similarly time you, in just a moment.
+We're going to throw Andrew up on the screen here,
+so as to watch as you do this.
+And so that all of this is all the more visible,
+these are the cards I got on Amazon.
+So they are already randomly sorted, and we're going to time you.
+And we're going to keep it real this time,
+so we're going to try to pressure you because otherwise this will get tedious
+quickly.
+If you could proceed to sort 52 elements together via some means, now.
+>> And again, as we watch these guys do what, in the end
+is going to produce an obvious result, think about really
+how they're each doing it, how you might describe it.
+Because again, these are all processes, algorithms
+that we take for granted as a human.
+But you've probably long had intuition, long before you even
+thought about taking a computer science class you
+might have had the intuition with which to solve problems like this.
+But once you recognize the patterns and begin
+to formalize the steps with which you're solving these problems,
+you'll find that you can solve much more interesting and much more complex
+problems quickly.
+So someone from the audience, what is at least one element of the algorithm
+that they're using here?
+>> AUDIENCE: [INAUDIBLE]
+SPEAKER: What's that?
+AUDIENCE: By suit.
+SPEAKER: By suit.
+So first they are clustering all of the diamonds together
+it seems, all of the hearts together it seems,
+and so forth, without respect for the numbers on the cards.
+And now they appear, for instance, to be sorting them by number.
+Very good.
+>> All right, so what's going to be the final step then here?
+Once we have four sorted suits, what do we need to do to the four piles
+in order to achieve one sorted deck, quite simply?
+So we need to merge them again.
+>> So there's an interesting idea that again, daresay, is very intuitive even
+if you might never have slapped that kind of label on it.
+This fundamental notion of dividing the problem not in half this time,
+but at least into four pieces.
+Solving pretty much fundamentally identical problems
+in isolation of each other, and then merging the results.
+And, excellent, done.
+All right, a big round of applause, if we could.
+>> [APPLAUSE]
+>> SPEAKER: I have no idea what you'll do with these, but here you go.
+Thank you so much.
+So let's see, two minutes and eight seconds,
+if you'd like to challenge your friends.
+What then is going to be a take away from this
+that we can leverage more generally?
+Well, think back to this array of numbers,
+and think back now to some of the pseudocode we've written in the past,
+and this was the pseudocode for solving the phone book problem.
+Whereby in pseudocode I enumerated a more methodical way
+of describing how I did a very intuitive human algorithm of dividing the phone
+book in half, repeat, repeat, repeat, until I find someone like Mike Smith,
+if he is indeed in the phone book.
+>> But I kind of used what I'll call a very iterative approach here,
+in particular notice line 8 and line 11.
+Those are evidence of an iterative approach, a looping approach,
+because that's exactly the behavior they induce.
+Those lines both say go to line three, and you can kind of
+think of that in your mind's eye as being a loop.
+It's telling you to go back up to step three and repeat, again, and again,
+and again.
+>> But what if we leverage a key idea here that we didn't the last time,
+and simplify line 8 and line 11 and their neighbors
+as just this, in yellow.
+It's not fundamentally shortening the pseudocode very much,
+but it's fundamentally changing the nature of my algorithm.
+What I'm now saying in step 7, in step 10,
+is to search for Mike in the exact same way,
+but just in the left half or the right half.
+>> So in other words, if I start from step one,
+pick up phone book, open to middle of phone book, look at names,
+if Smith is among name's, call Mike, else
+if Smith is earlier in book, step seven search for Mike in left half of book.
+But that kind of feels like it's leaving me hanging, right?
+In yellow, is an instruction, but how do I
+search for Mike in the left half of the phone book?
+Where do I have an algorithm with which I
+can search for someone like Mike Smith?
+Well, it's staring us in the face.
+I can literally use the exact same program effectively going up to the top
+again and re-running the same lines of code.
+>> So even though this should feel like a bit of a cyclical definition
+where you're answering someone's question by just sort of asking
+the same question again, like why, why, why?
+The reality is because we've hard coded a couple of special lines, step 4,
+which is an if, and step 12, which is effectively another branch,
+because we have those stopgap measures, this algorithm will terminate if we
+find Mike, or if we don't.
+But in step 7 and 10 now, we have what we'll call a recursive algorithm.
+And recursion is indeed a powerful idea that's a little mind bending at first,
+that we can now apply as follows.
+>> Merge sort will be the last sort that we look at, at least in class formally.
+And it's fundamentally different from those last three, and certainly
+last four if we include bogosort.
+Here's the pseudocode for merge sort.
+When on input of n elements, so given an array of size n, if n is less than 2,
+return.
+So why do I have that sanity check first?
+What's the implication if I hand you an array whose length n is less than 2?
+It's already sorted, obviously, right?
+Because the list either has one element, which is trivially
+sorted because it's the only thing there.
+Or, it's of size zero which means there's nothing to sort, so by nature
+it is sorted.
+There's just nothing wrong there.
+So that's our so-called base case.
+>> That is similar in spirit to what we did with Mike.
+If Mike's in the phone book, call him.
+If he's not there, give up.
+It's a so-called base case, to make sure this algorithm at the end of the day
+will stop in certain circumstances.
+>> But here's the leap of faith now, else, sort the left half of the elements,
+then sort the right half of the elements,
+and then merge the sorted halves.
+And here's where it feels like we're copping out.
+I've asked you to sort n elements, and I'm
+saying, OK, do it by sorting the left and sorting the right.
+But I am saying one other thing, and this
+is the key theme it seems in the intuition thus far,
+there's this third step of merging.
+Which even though it seems so dumb in spirit,
+like just merge things together, it seems
+to be a key step toward the reassembly of two problems that
+were divided ultimately in half.
+>> So merge sort, let's do this, if you'll humor me, with one more demonstration,
+just so that we have some numbers to work with.
+Can I exchange eight stress balls for eight people?
+All right, how about you three, you four in this section, five, six, and let's
+do 7, 8, come on up.
+OK, yeah OK.
+Minus 8, there we go, plus 1.
+Excellent.
+All right come on up, let's quickly give you numbers.
+Number two, number three, number four, number five, six, seven, and eight.
+I did eight correctly this time.
+>> OK, so go ahead if you could, and let's sort in the original order
+that we had yesterday which looked like this, if you wouldn't mind.
+And let's do it in front of the table.
+All right, so merge sort.
+This is where it's going to get kind of interesting,
+because I seem to be giving myself so much less information today.
+>> So merge sort first of all on input of n elements,
+and is obviously not less than two, it's eight, so I have some more work to do.
+So now mentally we as a class are now in the else branch,
+which means three steps.
+First, I have to sort the left half of the elements.
+So how do I go about doing this?
+Well, I'm going to kind of mentally divide the list here,
+you don't have to physically move, and I'm
+going to focus only on the left half of the elements here.
+So how do I go about sorting a list now of size four?
+What's my algorithm?
+First I check is n less than two, no, so I proceed to the else block again.
+Sort left half of elements.
+>> So now again, mentally, and this is where
+you have to accrue a lot of mental history, if you will.
+Now I'm sorting the left half of the left half.
+All right, so now I call my same merge sorting algorithm, is n less than two?
+No, it is two, so I have to sort the left half, and the right half.
+So here we go, sort the left half.
+Why don't you just take one step forward.
+What's your name?
+>> AUDIENCE: Darren.
+>> SPEAKER: Dan.
+Dan has stepped forward.
+>> AUDIENCE: Darren.
+SPEAKER: Darren, done.
+Did you say Darren or Dan?
+>> AUDIENCE: Darren.
+>> SPEAKER: Darren.
+OK, Darren has stepped forward and he is now sorted.
+And this is almost an inane claim, right?
+I don't really seem to be achieving anything, but let's proceed.
+Now let me sort the right half of the elements.
+What's your name?
+>> AUDIENCE: Luke.
+>> SPEAKER: Luke.
+Come on, step forward.
+Done, I have sorted Luke.
+The left half is now sorted and the right half is now sorted,
+but again, there's a key step here.
+What do I next need to do?
+Merge the sorted halves.
+Now we're going to just have everyone back and forth in this way,
+because I kind of need some scratch space.
+It's almost like these guys are on a table,
+and I need some room to move them around on.
+So I'm going to merge you guys by looking
+at the left half and the right half.
+And who obviously comes first, left half or right half?
+So right half, so let's move Luke over here to Darren's original position.
+And now to merge their left half in, Darren's going to move right there.
+>> So feels like almost a bubble sort effect,
+but my fundamental algorithm, very different this time.
+But now's where things get a little annoying because you
+have to rewind mentally where did I leave off.
+I've just merged the sorted halves, which means I'm where in my algorithm?
+I have to sort the right half, right?
+>> If you rewind, literally on the video, you'll
+see that we got to this point of Luke and Darren
+by sorting the left half of the left half.
+Then we merged those sorted halves, which
+means the next step is sort the right half of the left half.
+All right, so let's do this more quickly.
+All right, six, I'm going to claim you are now sorted, come on forward.
+What's your name?
+>> AUDIENCE: Adriano.
+>> SPEAKER: Adriano.
+Adriano is now sorted.
+And what's your name?
+>> AUDIENCE: Alex.
+>> SPEAKER: Alex is now sorted.
+Left half, right half, what's the final step?
+Merge.
+Pretty trivial, so I'm going to merge in six,
+take a step back, eight, take a step back.
+And now notice this is a useful takeaway, what
+is now true about the left half of the list, irrespective of how we began?
+It is sorted.
+>> Now it's not sorted in the big scheme of things,
+but it is sorted independently of the other half.
+Now what step am I on if I keep rewinding how the story began?
+Now I have to sort the right half.
+So now we're way back at the beginning of the story,
+and let's do this more rapidly.
+So I'm going to sort the right half of the whole list.
+What's the next step?
+Sort the left half of the right half.
+Sort the left half of the left half of the right half.
+And what's your name?
+>> AUDIENCE: Omar.
+>> SPEAKER: Omar, step forward, done.
+Left half is sorted.
+And what's your name?
+>> AUDIENCE: Chris.
+>> SPEAKER: Chris, take a step forward, you are now sorted.
+What's the key step now?
+Merge.
+So one is going to merge into place here, if you could take a step back,
+and three is going to take a step back, merge.
+So the left half of the right half, is now sorted.
+Frankly, this algorithm feels like we are wasting way more time than before,
+but if we did this in real time, we'll see what the takeaways going to be.
+Now here I am, right half of the right half,
+let me go ahead and sort the left half.
+Step forward, what's your name?
+AUDIENCE: Ramsey.
+SPEAKER: Ramsey is now sorted.
+What's your name?
+>> AUDIENCE: Marina.
+>> SPEAKER: Marina is now sorted as well, if you take one step forward.
+Key step here is now merge, I'm going to pluck from my two lists,
+left and right.
+Five is going to come first, and seven is going to come next.
+And again, this is deliberate.
+The fact that they're taking steps forward and back
+is meant to represent that we can't do this algorithm in place as easily
+as bubble sort, and selection sort, and insertion sort where we just
+kept swapping people.
+I literally need a sort of scratch paper in which
+to put these folks while I do the merging,
+and then I can put them back in place.
+And that's key because I'm using a new resource, space, not just time.
+>> OK, this is amazing.
+Left half is sorted, right half is sorted, now that key merging step.
+How am I going to merge this?
+So if you'll follow my left hand and right hand,
+I'm going to point my left hand at the left half, my right hand
+at the right half, and now I have to decide step by step whom to merge in.
+Who obviously comes first?
+Number one.
+So come on over here, here's our scratch pad.
+So now number one, and notice what I'll do with my right hand,
+I'm going to move my right hand one step over to point number three,
+and now I have to make the same decision.
+And actually stand right in front of Luke here if you could,
+because this is our scratch pad.
+So who comes next?
+We have Luke with number two or Chris with number three.
+Obviously Luke, number two, so you come here.
+>> But my left hand now is going to be incremented to point at Darren,
+and here's the key take away with merging, I'm going to keep doing this,
+obviously, if you kind of follow the logic.
+But my hands are never going to go backwards,
+which means I'm only ever moving to the left with my merging process,
+and that's going to be key to our analysis in just a moment.
+>> So now let's finish this up rapidly.
+So three comes next, then four comes next,
+and now five comes next, then six, and seven, and then finally eight.
+Feels like the slowest algorithm yet, but not if we actually
+run it at the same sort of clock speed, so to
+speak, with the same ticking clock as before.
+Why?
+Well, Let's take a look at the end result.
+>> Let's go back over here, let me pull up a demonstration visually
+of what we just did.
+Zooming in here, on this page here, telling Firefox
+that we want to queue up in this box, let's
+say bubble sort, with which we're now well familiar,
+selection sort, which is another fairly straightforward one,
+and now today's merge sort, which will be our climactic ending.
+The reason it took so much longer here with humans and me verbally is,
+obviously, I'm explaining every step.
+But if you simply execute this, much like we did bubble sort and selection
+sort not only visually, watch just how much more efficiently
+this leveraging of division and conquering
+can be when applied to a data set that's not even size eight, but even much,
+much bigger.
+I give you merge sort, side by side with these other algorithms.
+This is going to get painful quickly, and the ending
+is not particularly climactic, they just end up sorted.
+But the key take away is that look how much faster merge sort
+was, unless you think I'm just kind of messing with you.
+If we do this one final time, let's reload this, let's go back
+and choose bubble sort, and just for kicks,
+let's choose insertion sort, just for good measure.
+And this time again, let's choose merge sort and let's
+actually run these side by side.
+>> And it's not, in fact, a fluke.
+What I've effectively done is I've divided my input in half, again,
+and again, and again.
+And there's only so many times you can divide your input into halves, left
+and right.
+What's the formula that we keep seeing that describes the division in half
+again, and again, and again, and again?
+>> AUDIENCE: Log n.
+>> SPEAKER: Log n.
+But then there's one other key step, this algorithm is not log n steps.
+If it were only log n steps, we would be in the same problem
+as before where we can't be sure everything's sorted.
+You have to minimally look at n elements to be sure n elements are sorted,
+otherwise it's a leap of faith.
+>> So it's minimally log n steps, but what about this key merging step
+where I merged my left half and right half and walked across the stage?
+How many steps is that to merge?
+It's n, but I didn't just merge the final time.
+On each of those nested calls, on each of those nested merges, I still sorted.
+I merged these two guys, then these two guys, then these two guys and so forth.
+>> So I did merging again, and again.
+How many times?
+So every time I divided the list in half, I did a merge.
+Divide the list in half, do a merge.
+So if dividing the list can be done log n times,
+and the merging ultimately takes n steps, what might be now the upper
+bound on the running time of our algorithm?
+n log n.
+>> And indeed, that's what we've achieved here.
+So the feel that you see visually when those three things run side by side
+is n squared against n squared against n log n.
+Which fundamentally we'll see, not only today but in the future,
+is much, much faster.
+A round of applause for these guys, I will reward them with stress balls.
+Let's adjourn here today, and we will see you on Monday.

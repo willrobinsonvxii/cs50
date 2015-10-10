@@ -1,0 +1,856 @@
+
+[MUSIC PLAYING]
+
+>> [MUSIC ARMIN VAN BUUREN, "THIS IS WHAT  IT FEELS LIKE"]
+
+>> [MUSIC - M4SONIC, "WEAPON 2.0"]
+
+>> [CLAPPING]
+>> STEVE BALLMER: Woo!
+This is CS50.
+
+>> [APPLAUSE]
+
+>> DAVID MALAN: This is CS50.
+And this is the start, and end, of Week 12 for the very last time.
+You'll recall from Week 0 that we promised
+this, that what ultimately matters in this course
+is not so much where you end up relative to your classmates,
+but where you, in Week 12, end up relative to yourself in Week 0.
+>> Well, we are here now in Week 12, and you
+might look back fondly, or remarkadly, at just how far you've
+come when this was the worst of your problems, some weeks ago.
+But consider how far you've come since then.
+Particularly, if among those with no prior experience, just weeks later,
+were you implementing a fairly sophisticated data
+structure like this hash table here, or even this TRI here.
+>> Just a few weeks later, and just a week ago,
+were you implementing this, a mash-up of multiple APIs uisng asynchronus
+JavaScript calls and HTTP requests behind the scene.
+Ultimately, creating an entire web app from something
+that began with just a few hash marks.
+Now, indeed you might recall that 78% of you had no prior experience,
+and we proposed that you might be feeling
+a little lonely at the beginning, but realize
+that you are now very much among friends and supporters here.
+>> Now, it's a tradition in CS50 to not only start the semester,
+but also end the semester with a bit of cake.
+Indeed the team has been downstairs cutting it up, and sampling the cake,
+but that awaits in just a little bit of time.
+But I thought I'd pick up where we left off and get some closure today.
+>> You may recall this here website, I thought the only good thing I could do
+is write these kind folks upon having endorsed them so in class just a couple
+of weeks ago.
+And I will say to their credit, I got back this reply
+from ediblearrangments.com.
+Good morning, Mr. Malan.
+We have inquired with our IT department regarding your concern.
+They advise that as of next week, there will be a website patch applied.
+We appreciate the feedback.
+And indeed--
+>> [APPLAUSE]
+
+DAVID MALAN: And indeed if you go to editablearrangments.com
+now, click login, you are indeed sent to the HTTPS version of the site.
+>> [APPLAUSE]
+
+>> So there you have it, CS50 here making a difference, one website at a time.
+So now, the final project is, of course, all that awaits now.
+And realize that there's any number of ingredients
+that you can weave into this project of yours.
+>> Indeed what many students do, if tackling a web based final project,
+will take p set 7's distribution code, CS50 Finance,
+and then will rip out parts of it that are
+of interest, or germane to their final project,
+like the look up function, which is surely very specific to Yahoo Finance.
+And they'll add in their own code, and build atop the login mechanism
+that we provide you with.
+And so that is absolutely a great place to get started.
+>> Especially if over break, and shortly thereafter, you're
+just not really sure where to begin to create something that hasn't already
+been handed to you at least in part.
+p set 8.2, if you want to do something with AJAX,
+or you want to write a script that imports a really big data set
+into a database, use p set 8 as a model in which
+you can build your own code, ultimately.
+But realize, too, that there's even fancier ways to get started.
+>> A very popular framework, that we're fans of, is called Laravel.
+This is a PHP framework that essentially adds
+to PHP a number of features that are already
+commonplace in the world of Ruby and Python,
+other programming languages that have built into them,
+or on top of them, additional frameworks.
+And so Laravel will take p set 7's framework, essentially,
+and give you a whole lot more tools for your tool kit.
+So if curious, and if you'd like to not only apply lessons learned,
+but tackle some new lessons for your final project,
+check out this and similar types of frameworks online.
+>> How about hosting your website?
+You can certainly put your final project, if doing something web based,
+on your CS50 appliance, and most students do.
+But if you'd like to actually take the worldwide web out for a spin
+and put your code out there, realize that it's
+pretty straightforward these days to buy a domain name for a few dollars,
+to set up your domain name's DNS settings for the IP address stuff.
+And then actually push your code to some remote server
+so that someone can visit you at something.com,
+or whatever domain name you happen to buy.
+>> Stay tuned to CS50's home page in the days to come,
+where we'll post some instructions for doing exactly that.
+If you'd like to follow some guidance, or if you'd
+like to venture out on your own, there's so
+many popular frameworks and systems out there.
+Many of which are free, or super cheap, or at least free for students.
+AWS, or Amazon Web Services, is one.
+In fact, that's where CS50 runs most of its own servers in the so-called cloud,
+using virtual machines, servers that aren't really physical.
+>> They're the illusion of physical servers, but that we, and you,
+could have complete control over.
+And we just had a seminar, in fact, a couple weeks ago on that.
+Parse.com is a super popular back-end tool
+that you can use to actually host a database.
+If you don't want to figure out, or stand up your own MySQL database,
+there's this and other related services that
+let you focus on the part of your app that you really
+like, the front-end or the user interface,
+or the features, and then outsource to someone else, often for free.
+Certainly for student scale prototypes, any back-end services
+like email or databases that you might need.
+>> Now, for authentication, a super common FAQ in CS50
+is, how do you authenticate users?
+Not with their own user names and passwords,
+but with like Harvard IDs and PINS.
+Well, realize CS50 has a service called CS50
+ID, via which you can do exactly that.
+And then those of you tackling, say, mobile projects, where you're
+kind of conflicted if you want to do an iPhone app, a Windows Phone
+app, an Android app, or any number of other devices out there,
+realize that there are actually tools that
+allow you to write your app, in typically JavaScript,
+or some similar language.
+And then deploy it to multiple platforms like iOS and Android
+and the like, phonegap being one, Titanium another.
+>> So if you're sort of conflicted, and realize
+that there's a bit of a learning curve to learning
+just one of these languages, realize you can
+take your own new found familiarity with JavaScript out for a spin,
+and apply it there.
+And there's so much more that you can find on your own,
+or by consulting your TFs.
+Now, what about life after CS50?
+Just so that this is said, at least once,
+you're not going to be handed problem set specifications and distribution
+code in perpetuity, but realize that you don't need the CS50
+appliance to continue coding on Mac OS.
+>> It's a wonderful, useful environment in that
+it's pre-configured to be representative of a nice Linux system.
+But you can certainly use any number of freely available tools
+these days to write code on your own Mac without the overhead of an appliance,
+or on your own Windows computer, or if you're running Linux, a number of tools
+exist there as well.
+So that's just a whirlwind tour that you might
+want to curl up with at some point.
+But for now, let's take a look ahead and what remains.
+>> In particular among the course's historical events
+is the CS50 hackathon.
+An epic all nighter, at which you'll arrive around 7:00 PM,
+set up shop with your laptop, and project, and friends.
+And dive into final projects in an environment
+that looks a little like this upon arrival.
+You'll check in here, you'll then get down to work,
+you'll help out a classmate.
+>> You'll indulge in first dinner around 9:00 PM, second dinner around 1:00 AM.
+And then for those still standing at the end of the night,
+we'll take you to IHOP.
+But along the way there will be a photo booth,
+not like this, and indeed actual CS50 shuttles on our way to IHOP.
+>> Now, the CS50 fair, for students in the class,
+this is your opportunity to exhibit proudly your final projects.
+Not only to others, but typically 2,000 plus attendees from across campus,
+students, faculty, folks who see the balloons along Oxford Street
+and come on in.
+So realize that what awaits there are glimpses of maybe each other's projects
+here, where you'll bring your laptop.
+We'll set up tall tables on which you put your laptop, hop on the Wi-Fi,
+and demo your projects to passers by.
+>> Meanwhile, there will be music, and popcorn, and candy, and more.
+So that you'll have ample opportunities to mingle.
+We'll have friends of ours from industry,
+recruiters from any number of these companies
+here there just to chat up students about life after college,
+or internships during college, and the like.
+You'll see, too, that there's a raffle to incentivize not only
+you to strike up these chats with friends,
+but also to invite your own friends, or convince
+your own friends to come see your project.
+>> You can sweeten the deal by these little cards that will be handed out.
+Each of them will have placeholders for little Smiley face stickers.
+You guys as the students will be given Smiley face stickers.
+And for anyone who ventures up to you and says, hey, what did you do?
+Or asks you for a demo of your project, you hand them a sticker.
+They put it on their card.
+And that qualifies them for any number of fabulous prizes,
+including those pictured here, which are then
+raffled off at the end of the event.
+
+That's it for CS50.
+And along the way, there will be ample popcorn, and stress balls, and candy,
+and even last year the Harvard band, who was not
+expected, but was in attendance.
+>> There will be a photo booth there as well, and massive numbers of balloons
+like these ones here.
+So many so, that invariably the staff try
+to pull this trick at the end of the night, never quite works.
+But for you, if you'd like to invite your friends to this event--
+>> SAM CLARK: Now, as we come over to the next stop on the tour.
+You'll notice a distinct--
+>> [LAUGHTER]
+
+>> File on in.
+You'll notice a distinct departure from the Gothic architecture
+that we saw on the rest of the tour of Yale's campus.
+Now, here we are at Sanders Theater.
+Sanders Theater is really a cultural and academic hub here at Harvard.
+Commencement was held here until 1922.
+It's modeled after the Sheldonian Theater in Oxford, England,
+as a matter of fact.
+And it serves as a location for many cultural events,
+and big academic events here.
+>> Many A cappella groups perform in Sanders,
+the Crocodillos perform here frequently, they're
+sort of like the Wippenpoofs 2.0, almost.
+As well as the largest class actually at Harvard, CS50, is taught here.
+Who on the tour is interested in computer science?
+Anyone interested?
+Terrific.
+Well, if you happen to matriculate at Yale,
+you'll really, really want to be taking CS50.
+>> [LAUGHTER]
+>> [APPLAUSE]
+
+>> You won't actually be able to take it physically within Sanders Theater,
+however, CS50 will be live streamed over to you in New Haven.
+As well as you'll have an entire support staff, support network of staff
+there to take CS50, to learn all about computer science.
+So this is Sanders Theater.
+It's not Gothic, but it's great.
+Does anyone have any questions before we move on to the next stop?
+Yeah.
+>> AUDIENCE: Is that David Malan?
+>> [LAUGHTER]
+>> SAM CLARK: Oh, my God it is!
+Let's take a selfie.
+Selfie!
+Take a selfie!
+Right here, right here.
+Here, someone hold it up.
+Someone hold it up.
+How are you, David?
+>> DAVID MALAN: Hello, DA
+>> SAM CLARK: I'm doing well.
+I got to flip it around.
+
+And duck face, David.
+>> [LAUGHTER]
+>> Yeah, he likes that.
+Terrific.
+Terrific.
+Well, we'll move on to the next stop.
+Our next stop is the Harvard stadium, where
+we've had great luck in the last 13 years.
+>> [LAUGHTER]
+>> [APPLAUSE]
+
+>> DAVID MALAN: So the rumors are indeed true.
+For the first time in history, students at Harvard and Yale
+alike will be able to take a course called CS50 this coming Fall in 2015.
+We will put asie the rivalry for nearly 100 years,
+and ultimately, in Fall 2015, actual Yale students
+will be able to take CS50 for the first time.
+The lectures will indeed be streamed from here,
+your successors in this audience, to New Haven, where students
+will be able to engage in person, or as some of you
+have so optimized, online live, or on demand after.
+>> But we will be standing up a local support
+structure, complete with teaching fellows,
+course assistants will be leading sections, and office hours.
+CS50 Puzzle Day will be held in Cambridge,
+and we will invite our Yale friends to Cambridge
+for CS50 Puzzle Day, as well as the CS50 hackathon.
+And then at semester's end, there will be an epic display in both Cambridge
+and in New Haven of CS50 students from Harvard,
+and Yale alike on display in those respective towns.
+>> And indeed if you have any friends who go to Yale,
+we do need some TFs and CSs so do send them to this URL here.
+But we will in the meantime, be sending one of CS50's own best teaching
+fellows, Jason Hirschhorn, who's about to graduate, having just finished
+his thesis on the intersection of computer science and education.
+Jason will be working full time at Yale, and will be on the ground there
+helping us to stand this up and bring these two universities together
+via CS50.
+>> [APPLAUSE]
+
+>> Now, along with CS50's production team, I
+had an opportunity to hop in the car with this guy
+and take a look at what awaits us in New Haven.
+>> [VIDEO PLAYBACK]
+>> [MUSIC - "MOVIN' RIGHT ALONG"]
+>> -Movin' right along in search of good times and good news
+with good friends who can't lose.
+>> -This could become a habit.
+>> -Opportunity knocks once let's reach out and grab it.
+>> -Yeah!
+>> -Together we'll nab it.
+>> -We'll hitchhike, bus, or yellow cab it.
+>> -Cab it?
+>> -Movin' right along, footloose and fancy free.
+>> -Getting there is half the fun come share it with me.
+>> -Movin' right along.
+>> -We'll learn to share the load.
+>> -We don't need a map to keep this show on the road.
+>> -Hey, Fozzy, I want you to turn left if you come to a fork in the road.
+>> -Yes, Sir.
+Turn left at the fork in the road.
+Kermit?
+>> -I don't believe that.
+Movin' right along, we've found a life on the highway.
+>> -And your way is my way.
+>> -So trust my navigation.
+>> -Movie stars with flashy cars, and life with the top down.
+>> -We're storming the big town.
+-Yeah.
+Storm is right.
+Should it be snowing?
+>> -No, I don't think so.
+>> -Movin' right along.
+>> -Footloose and fancy free.
+>> -Be ready for the big time
+>> -Is it ready for me?
+
+>> -Movin' right along.
+Movin' right along.
+Movin' right along.
+Movin' right along.
+
+-Maybe you better pull over.
+-Yes, Sir.
+Oh, look at that.
+>> [END PLAYBACK]
+>> DAVID MALAN: We'll see Yale in 2015.
+>> [APPLAUSE]
+
+>> So now some thank yous.
+Suffice it to say there's an entire family, both in front of
+and behind the camera, in this class that makes everything work ultimately.
+And I'd like to acknowledge a few, and then the entire staff
+by way first of Colton, whose EDM has permeated the start of lectures
+for some number of weeks now.
+As well as the entire production team, who's been making
+everything look so beautiful this year.
+Dan in Chile, and Andrew, and Cheng, and Colton, and Ramon, and Barry in back,
+and Kenny and everyone who's been involved behind these cameras,
+making everything possible.
+To Gabriel, as well, our head teaching fellow.
+>> [APPLAUSE]
+
+>> If you didn't already know, Gabriel actually
+found CS50 by way of the production team's videos.
+Indeed growing up in Brazil a few years back,
+he discovered that all of CS50's material was online,
+and he dropped me a kind note asking if he
+might be able to translate it to Portuguese for his classmates.
+And indeed he did, ultimately, lecturing to some 50 students, his classmates,
+in high school.
+Followed by 150 students the next year, and wonderfully his dad
+was in fact filming the whole thing so you can find Gabe's lectures of CS50
+in Brazil online as well.
+>> And now Davon here, Davon here has been running the course,
+and has been making everything run so smoothly,
+and without him we could not manage the team that we now have.
+And then of course, Rob Bowden.
+>> [APPLAUSE]
+
+>> Rob's now been with the course some five years,
+having approached me sophomore year with an interest
+in getting involved in the class.
+And then became assistant head TF, and then Head TF, and then Preceptor.
+And now, believe it or not, the very distinguished role
+of Member of Technical Staff, which in the computer world
+actually carries with it some weight.
+And so that understatement is actually meant to be of the highest regard
+to Rob.
+>> Allison, of course, who's been leading our official sections on camera once
+a week, and making sure there's a resource available
+online for students who are unable to tune-in in person.
+And then, of course, a TF, who I think has been at every single office hours
+this year, including these here, these here, those here as well.
+And indeed [? Zamila, ?] who has walked everyone through the course's problem
+sets, and without whom, we could not expect, I dare say, so much.
+>> And then lastly, Cheng here, who is known
+for much more than these elephants, which
+have been appearing at most every lecture.
+Indeed Cheng recently got together with CS50's production team
+to put together this thank you for the entire team,
+by way of a little segment we call, Cheng On The Street.
+>> [VIDEO PLAYBACK]
+>> [MUSIC PLAYING]
+>> -This is Cheng with Cheng on the Street.
+And today, I'm here at CS50's Quiz One Grading
+Party, where the staff members of CS50 have gathered to grade quiz one.
+I wouldn't really consider it a party, but you get the idea.
+I'll be asking them some questions about their experiences this semester,
+and maybe a few technical questions, then we'll solve them.
+>> -I don't think I'm ready for this.
+>> -It's OK.
+>> -OK.
+-How many bits are in a byte?
+>> -4, 8.
+>> -What does PHP stand for?
+>> -PHP?
+Hypertext protocol.
+>> -Is it a protocol, though?
+-I don't know.
+Is it?
+>> -Eh, eh.
+Buzzer.
+>> -I know that P stands for PHP.
+>> -So where does it stop?
+>> -It never stops.
+>> -It has to stop at somewhere.
+-No, it doesn't.
+-Acronyms simplify to a word.
+-No, mm-mm. [? Recouragin? ?]
+-This is a serious question.
+[LAUGHTER]
+What comes next in this sequence of numbers?
+2, 4, 8, 16, 32, 955.
+>> -I thought you were going to say 64, but OK.
+-What's the next number in the sequence?
+-CS50.
+-That's not even a number.
+-I have no clue.
+-None of you are right.
+Please, go back to grading.
+What's 2 to the power of 64?
+-Oh, jeez.
+I should know this.
+
+>> -I don't know.
+-OK.
+
+>> [LAUGHTER]
+
+>> -How many stress balls does it take to fill Sanders Theater?
+>> -Too many.
+>> -You can never have too many stress balls.
+>> -Am I right?
+What's the correct answer?
+-There is no correct answer.
+-I'm sure there is.
+-It depends on the size of the stress ball.
+Do you know who Rob Bowden is?
+>> -Yes.
+He has better hair this year than he did previous years.
+So it was a little difficult recognizing him, but I managed it.
+>> -Is he the buff guy?
+>> -Yeah.
+-OK.
+Yeah, I like him.
+>> -Now that you mention that, I have a question for you.
+>> -All right.
+>> -What's Rob Bowden's bench press?
+>> -IT max.
+>> -What is his max bench press?
+-You.
+
+>> -Thank you so much to CS50's TFs, CAs, producers, designers, researchers,
+and everyone else who's been involved both in front of and behind the camera
+here in CS50.
+We surely could not do this without you, and we cannot wait to welcome new
+members to the staff.
+-Everyone at this table, can we get a hug?
+>> -Thank you.
+>> -Thank you very much, staff.
+Thank you for becoming staff.
+This concludes our interview.
+Thank you for being on staff this year.
+>> -Thank you so much.
+>> -Thank you.
+>> -No, no, thank you.
+>> -Did I do a good job or what?
+>> -You did wonderfully.
+This was Cheng, with Cheng on the Street, and this was CS50 2014.
+>> -What did we talk about?
+We just had this conversation.
+This is not a toy.
+>> [MUSIC PLAYING]
+
+>> [END PLAYBACK]
+>> [APPLAUSE]
+
+>> DAVID MALAN: So CS50 is indeed now recruiting
+for TFs, course assistants, producers, designers,
+and any number of other roles that enable this to go on behind the scenes.
+And now, for something a little special.
+As you know, Colton has introduced his EDM to the class,
+but today he got the band together and CS50, before we bring some students up
+on stage, I give you Colton, Gabe, and Taylor.
+>> [MUSIC PLAYING]
+
+>> COLTON: Feel my way through the darkness.
+Guided by a beating heart.
+I can't tell where the journey will end.
+But I know where to start.
+>> Try to tell me I'm too young to understand.
+Say I'm caught up in a dream.
+
+Life will pass me by if I don't open up my eyes.
+That's fine by me.
+>> So wake me up when it's all over.
+When I'm wiser and I'm older.
+All this time I was finding myself and I didn't know I was lost.
+So wake me up when it's all over.
+When I'm wiser and I'm older.
+All this time I was finding myself and I didn't know I was lost.
+
+>> I tried carrying the weight of the world.
+But I only got two hands.
+Hope I get the chance to travel the world.
+I don't have any plans.
+Wish that I could stay forever this young.
+Not afraid to close my eyes.
+Life's a game made for everyone and love is a prize.
+>> So wake me up when it's all over.
+When I'm wiser and I'm older.
+All this time I was finding myself and I didn't know I was lost.
+Everybody!
+So wake me up when it's all over.
+When I'm wiser and I'm older.
+All this time I was finding myself and I didn't know I was lost.
+Didn't know I was lost.
+Didn't know I was lost.
+
+>> [APPLAUSE]
+
+>> DAVID MALAN: Coming this year to the CS50 Fair, live music as well.
+So now, our last opportunity for a bit of audience participation.
+For this we need six students and three staff.
+Let's see here, OK, you're practically jumping out of your chair.
+Come on up.
+>> OK.
+How about you two together over here, come on up.
+And how about you two and you one, come on up.
+Let's grow the teams a bit.
+OK.
+Right there.
+Come on.
+Yeah.
+You, come on down.
+That's going to be hard.
+>> OK.
+OK.
+Fine, come on down.
+See you in a few minutes.
+All right, so come on over here.
+We're going to get two more chairs and let's do Nick,
+and Alison, and this Yale student over here, and Rob Bowden, come on up.
+Meanwhile, if Cheng could join me on stage.
+
+>> If you guys would like to form two student teams, and one staff team.
+And Cheng, if you could distribute these chairs here, I'll get the board ready.
+This is incredibly awkward.
+OK.
+Make your way to a chair there.
+>> Come on over.
+
+Come on down.
+
+And I think the Yale student will be playing for the staff team.
+Excellent.
+We should have enough chairs, hopefully.
+If not, we'll grab another.
+Where do we need it?
+Over here, come on over.
+All right.
+>> CHENG GONG: Do we need more staff?
+>> DAVID MALAN: No, no.
+It's going to be two student teams and one Harvard/Yale staff team.
+All right, so we do have this tradition of playing Jeopardy,
+or really, our own version of Jeopardy where we just ask questions and expect
+answers.
+But the questions we're going to ask were not written by us,
+they were written by you.
+You may recall a rather long form for Problem Set A.
+>> [LAUGHTER]
+
+>> I have to admit, most of them didn't make it into quiz one.
+We got maybe 500 questions asking, what is HTML?
+What is HTTP?
+What is CSS?
+So they weren't exactly the most challenging of questions,
+but we went through hundreds and hundreds of questions
+to sample the following.
+>> So Cheng here has kindly offered to run the board.
+We'll go ahead here and call this Team One, Team Two, and Team Three.
+And let's say that Team Three has won the toss,
+so you guys are going to glance to your left or above you, pick a week,
+and pick a dollar amount.
+>> We will then ask the question, and Cheng will
+award you, or deduct from you the requisite points.
+Team Three, what would you like?
+
+I'm hearing a lot of Week 0 here.
+>> [LAUGHTER]
+STUDENT 1: Can we pick any?
+DAVID MALAN: Any category, any amount.
+STUDENT 2: Week 0, 500.
+DAVID MALAN: You're putting more thought into choosing the question
+than I wrote into selecting them All right, so what did you say?
+OK.
+And then the first hand that goes up will
+be considered the one who has buzzed in.
+What is the difference between global and local variables?
+I saw Team Two.
+
+STUDENT 3: Global-- do we just speak into the microphone?
+
+Global is for the entire scope of the program,
+whereas local is just defined within an isolated part.
+DAVID MALAN: Let's take a look.
+We're going to hold you to the answer that your classmates gave.
+If you click on the text, SCOPE in all caps.
+>> [LAUGHTER]
+
+DAVID MALAN: I think we're going to have to take this literally.
+So we're not going to give those points.
+We're going to expect exactly what your classmates gave.
+So unfortunately, we're at minus 500, but you're still in control.
+But you're still in control-- now you're in control-- well, no.
+You're still in control.
+>> STUDENT 2: OK.
+DAVID MALAN: You're still in control.
+Yeah, let's go for 500 again.
+OK.
+Week 1, 500, Cheng.
+What are the data types and their sizes?
+>> [LAUGHTER]
+
+>> DAVID MALAN: Oh, I saw a hand over here first.
+Rob Bowden.
+
+>> ROB BOWDEN: A char is 1 byte, a short is two bytes, an int is 4 bytes,
+a long is 4 bytes, a long long is 8 bytes, a char star is 4 bytes,
+an int star is 4 bytes, a long long star is 4 bytes.
+DAVID MALAN: Cheng, what is the correct answer?
+
+ROB BOWDEN: Oh, float and double.
+
+DAVID MALAN: You left out the part of the reference sheet,
+but I think we should give it to him for 500.
+ROB BOWDEN: Yeah.
+
+STUDENT: This is biased!
+ROB BOWDEN: What are you talking about?
+
+>> DAVID MALAN: It's OK the points went-- that's right, Team One.
+I am not a good judge, apparently.
+All right, we're going to move on.
+You guys have control.
+Yale student.
+We'll do Week 4 for 500 points.
+
+I think I saw Team Three.
+STUDENT 1: You free the memory.
+DAVID MALAN: You free the memory?
+Free it.
+We'll give it to you.
+
+All right, Team's One and Three are tied, Team Three has control.
+What category would you like?
+
+>> STUDENT 2: Week Two, 500.
+>> [DAILY DOUBLE ALARM]
+>> DAVID MALAN: Amazing.
+STUDENT 2: Everything?
+DAVID MALAN: You get to choose your amount.
+STUDENT 1: Why not?
+STUDENT 3: Yes.
+STUDENT 4: All in.
+STUDENT 2: 500.
+DAVID MALAN: 500?
+STUDENT 2: Yes.
+DAVID MALAN: 500, Daily Double.
+STUDENT 3: No, you can't.
+DAVID MALAN: Cheng?
+No!
+>> [CHEERING]
+
+>> DAVID MALAN: 500 and control of the board.
+We have--
+>> ROB BOWDEN: So a double was a yes or no question?
+>> [LAUGHTER]
+>> DAVID MALAN: We have time for one or two more questions in Single Jeopardy.
+
+OK.
+
+Team Three.
+Week 0, for 100.
+What team are you on?
+STUDENT 5: I'm Two.
+DAVID MALAN: OK.
+Team Two.
+>> STUDENT 5: You use the Say block in MIT Scratch to say, hello, world.
+>> [LAUGHTER]
+
+>> DAVID MALAN: Minus 100.
+All right, one more question in Single Jeopardy.
+You guys are still in control.
+
+>> STUDENT 2: Week 3, 100.
+>> DAVID MALAN: Week Three, 100.
+What is the--
+ROB BOWDEN: Team Three.
+DAVID MALAN: Team Three?
+OK.
+We're going with Team Three.
+STUDENT 3: The best case scenario, or run time?
+Because the best case scenario is it's in order.
+
+>> DAVID MALAN: Let's see what the correct answer is.
+>> [LAUGHTER]
+
+>> DAVID MALAN: All right.
+Let's move on to Double Jeopardy.
+>> ALEX TREBEK (RECORDING): This is Jeopardy.
+>> DAVID MALAN: Double Jeopardy, in this Double Jeopardy
+we have the categories of Week 5, 6, 7, 8, and 9.
+>> STUDENT 3: Where did our points go?
+Where did our points go?
+
+>> DAVID MALAN: We are going to manually adjust.
+There we go.
+Team Two had 2,000?
+OK.
+All right, so now we tossed the coin again
+and we're giving control to Team Two.
+Go ahead and choose your category and amount.
+
+>> STUDENT 2: We'll go Week 6, 1,000.
+>> DAVID MALAN: Week 6, 1,000.
+How does the stack grow?
+Team Two.
+>> STUDENT 5: You add a new function into Scope.
+>> DAVID MALAN: Add a new function to Scope.
+It grows up.
+>> [LAUGHTER]
+
+>> DAVID MALAN: All right, but you're still in control.
+>> STUDENT 5: All right, someone else pick.
+>> STUDENT 6: I'll pick.
+DAVID MALAN: It is all relative.
+Even though we tend to draw the stack as growing up,
+you'll recall that the addresses actually grow in a different direction.
+But just needed to make Rob happy there.
+All right, Team Two.
+>> STUDENT 4: Week 8, 1,000.
+>> DAVID MALAN: Week 8 for 1,000.
+True or false, is HTML a programming language?
+
+Is there another judge who can decide?
+>> ROB BOWDEN: It was all me.
+>> DAVID MALAN: All right, Rob has called.
+>> ROB BOWDEN: It is not, so false.
+DAVID MALAN: Rob says false, and the answer is no.
+[LAUGHTER]
+
+CHENG GONG: Wait, wait, wait.
+Wait, wait, wait.
+>> DAVID MALAN: All right, Yale student?
+STUDENT 2: It was a poorly written question, it said true or false,
+and then it was a question.
+
+I object.
+DAVID MALAN: Noted.
+We have time for one more Double Jeopardy question.
+Team Two.
+
+>> STUDENT 6: Week 9, 1,000.
+>> DAVID MALAN: Week 9 for 1,000.
+What's the difference between ID and class?
+Team Three?
+Team Three.
+>> STUDENT 3: You can apply ID to only one type of thing in HTML,
+but you can apply class too many different things.
+>> [APPLAUSE]
+DAVID MALAN: OK.
+We'll give it to you.
+
+So if we proceed to Final Jeopardy, I think, Team Three just wins, right?
+So let's do one more question.
+One more question, Double Jeopardy.
+>> So at least we can pull-- that's not going to help.
+It might help Team One.
+All right, who's in control?
+Not me, apparently.
+OK.
+You guys.
+Yes, you just got it right.
+
+>> STUDENT 2: Week 9, 200.
+>> DAVID MALAN: Well played, Week 9, 200.
+What symbol do all PHP--
+>> STUDENT 2: Rob.
+>> DAVID MALAN: Rob?
+ROB BOWDEN: Cash tag.
+[LAUGHTER]
+
+DAVID MALAN: All right, let's proceed.
+Let's proceed to Final Jeopardy.
+Let's have everyone come up with an answer,
+and we'll have you write it on this slip of paper as we play some music.
+And then we'll pretend like this was going according to plan.
+>> All right, so Final Jeopardy category is Week 12.
+You all have to decide-- I didn't bring pens, no.
+
+Pens, please.
+Thank you.
+All right, OK.
+No more pens, please.
+
+OK.
+So Team One is at 0, Team Two is at 0, and Team Three is at 2.
+
+You can wager up to $2,000.
+So let's go ahead and make your wager.
+Wagers down.
+And now Cheng is going to reveal the question,
+then play some music until we adjourn.
+>> [JEOPARDY THEME PLAYING]
+
+>> DAVID MALAN: All right, let us begin here with Team Three.
+You wagered $1,000 and answered?
+>> STUDENT 1: 955.
+>> DAVID MALAN: 955.
+Team Two here wagered.
+STUDENT 7: $2,000.
+DAVID MALAN: $2,000 and your answer was?
+STUDENT 6: 955.
+DAVID MALAN: Team Three wagered $2,000, and your answer was?
+ROB BOWDEN: 955.
+DAVID MALAN: 955, which is correct.
+Which means our winner today, I think, is still just Team Three, right?
+Team Three takes the game!
+>> [APPLAUSE]
+
+>> DAVID MALAN: That then, is it for CS50.
+Thank you so much for CS50's team.
+Thank you so much!
+
+Thank you so much to our friends on Harvard time.
+This was CS50.
+>> [APPLAUSE]
+>> [MUSIC PLAYING]
+>> DAVEN FARNHAM: And now Deep Thoughts, by Daven Farnham.
+
+How am I supposed to figure out MySQL, if I can't even figure out my present?
+>> [CHUCKLING]

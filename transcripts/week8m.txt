@@ -1,0 +1,1084 @@
+>> [MUSIC PLAYING]
+
+>> DAVID J. MALAN: All right.
+This is CS50.
+This is the start of week eight.
+And you may recall that we left off last time looking at a new language
+altogether.
+In fact, one that's fairly lightweight and it's not even
+a programming language.
+It's a markup language that lets us actually structure and make web pages.
+And when you something else in conjunction with this--
+or you soon will, if you haven't already.
+We're going to use Cascading Style Sheets, or CSS, which
+is another type of language with properties and values
+that's going to let us do things like change the color
+and change the position and these kinds of tweaks.
+But today and onward, we start to focus on more powerful languages,
+actual programming languages like PHP.
+>> So PHP has been around for some time.
+And as you'll see, it was designed primarily
+early on for actual use in web development
+and actually generating web pages.
+So what kinds of features does a language
+need in order to make web pages dynamically with it?
+>> In other words, if you want to generate content dynamically-- like Facebook's
+Newsfeed, which changes constantly, or instant messages that pop up from time
+to time-- like what's the key piece of functionality
+you need in a programming language that would let you dynamically
+print new information to the screen?
+>> STUDENT: Code.
+DAVID J. MALAN: Code.
+OK.
+We'll take that.
+A little more precise.
+I mean, we could do this with C, frankly.
+It would be a pain in the neck.
+But-- is this commitment?
+>> STUDENT: Yeah.
+Variables, maybe?
+DAVID J. MALAN: Variables.
+OK, sure.
+Variables can certainly help us out.
+And even something simpler.
+We used it in the very first program of the very first day
+when we actually said "hello world."
+>> STUDENT: Print.
+>> DAVID J. MALAN: Print, right?
+Print, or printf in the world of C. So all this time,
+we've had at our disposal a language-- C,
+in particular-- and even Scratch for that matter that
+can generate strings of text.
+>> Well, if HTML, as we saw last week, is just a whole bunch of strings of text
+albeit with open brackets and closed brackets and some kind of rhyme
+and reason behind it, well then we could really
+start generating web pages either manually by typing them out in gedit
+or in Microsoft Word, for that matter-- we just need a text editor.
+>> Or we could write code, to your suggestion
+earlier, that would let us dynamically generate HTML,
+and that's what we're going to start doing with PHP
+and ultimately even with a language called JavaScript,
+is use one language to generate another.
+And indeed, this is what Facebook and many, many other sites
+do to actually dynamically display new information to you.
+>> So let's begin with this-- a cryptic looking line, but one
+that's actually pretty powerful.
+Thus far, we've been using C, which is a compiled language.
+And just a quick recap-- a compiled language has what characteristic?
+You obviously need to compile it, but what does that mean?
+Yeah?
+>> STUDENT: It needs to be assembled into machine code.
+>> DAVID J. MALAN: OK.
+It needs to be assembled into machine code.
+So you take your source code, which is sort of English-like.
+You convert that to something lower level,
+which is ultimately called object code-- 0's and 1's.
+And it's those 0's and 1's that a CPU, like those made by Intel,
+actually understand.
+>> Now, PHP and Python and Ruby and JavaScript and bunches of other
+languages are not compiled languages but interpreted languages,
+which means you just type them and then you don't turn them into 0's and 1's.
+You instead just provide then as input to someone else's program,
+called an interpreter.
+And that person's program has been designed
+to understand what each and every symbol in Python or PHP
+or Ruby or any number of other languages means.
+>> And so all we need is something like this.
+So in fact, I'm going to go over to the appliance
+here, just into any old window, and we're
+going to go ahead and open a file called, say, hello.
+Now previously, I might have saved this even with a file extension,
+but I'm going to do something even simpler here.
+I'm going to go ahead and start this file with this cryptic syntax.
+So "user, bin, env, for environment, php."
+>> This is simply one line of code that's going to tell my operating system,
+go find in your local environment whatever that is,
+wherever PHP is-- the interpreter-- and go ahead and use that interpreter
+to interpret the following code.
+Now, this is kind of an ugly feature of PHP.
+But in this language, any time you write PHP code,
+you need to have one of these ugly PHP tags demarcating the beginning
+of your code-- <?php.
+>> But below here, I can now do something quite simple, like printf hello comma
+world backslash n close quote, close parenthesis.
+And then just for good measure, I'm going
+to go ahead and close my php tag over here
+so that everything looks nicely pretty printed.
+>> And as soon as I click Save, gedit is actually smart enough
+to look at that very first line and realize, oh, you're writing PHP code.
+Let me syntax highlight it with the colors
+here so that it stands out a little more.
+But now I'm going to go down to my terminal window.
+I'll zoom in.
+>> This program was called "hello," so I'm going to do dot slash hello,
+but permission denied.
+And bash.
+We actually heard of that thing a couple weeks ago
+in the context of Shellshock, one of those bugs.
+>> But permission denied we've seen before, maybe in a different context.
+Does anyone recall how you might fix something
+where permission is denied like this?
+What's the command, at least?
+>> STUDENT: Chmod.
+DAVID J. MALAN: Yeah, chmod, for changing the mode of a file.
+And you'll get all the more used to this next week with a subsequent problem
+set.
+But for now, I'm going to change the mode not to be readable,
+but to give everyone executeability privileges, the ability
+to run this file.
+And I'm going to assign that to the file hello.
+>> If I now do dot slash hello enter, you see, in fact, my program, hello world.
+And what step did I clearly skip altogether?
+Compiling.
+So I just ran this program quite simply.
+>> And it turns out you can do this with a lot of syntax reminiscent of C.
+Let me go in to today's code, which I put into my vhost directory
+here, for real reasons we'll come back to.
+And I'm going to go into, let's say, conditions 1.
+>> And you'll see here, first and foremost, a whole bunch of comments.
+But this is actually a re-creation in PHP
+of a program we did in week one called conditions 1.c
+where the purpose in life of this program
+is apparently to ask the user for an integer
+and then do some fluffy analysis on it whereby
+you say if it's positive or negative or equal to zero.
+And I bring this up only because, except for maybe one little detail,
+it's indistinguishable so far from C.
+>> What's the one characteristic here that maybe jumps out
+at you as a little different?
+Maybe two things.
+Yeah?
+>> STUDENT: Dollar sign n?
+>> DAVID J. MALAN: Yeah.
+So dollar sign n is present.
+And dollar signs, as we'll see, are going
+to be a fix to the beginning of any variable in PHP.
+It's both good and bad-- good in that it's sort of obvious what's
+a variable, bad in that it's yet another thing to type.
+And there's one other thing we haven't quite
+seen, at least by this spelling. yeah?
+>> STUDENT: Readline.
+>> DAVID J. MALAN: Readline.
+Readline we didn't see, per se, in C, even though there exists something
+similar, but we've used getstring, and this is its counterpart.
+So if I go into this directory, which happens to be,
+as I'll explain in a bit in my vhost directory and my source A directory,
+and I go ahead and do dot slash conditions-- whoops-- dot slash
+conditions 1, you'll see, again, the same issue-- permission denied.
+>> So let me zoom in and do chmod a plus x on conditions, dot slash conditions.
+I'd like an integer, please, 50.
+And we could play this game all day long.
+It's going to behave exactly as it did in week one.
+>> OK so not all that different, except not just that slight bit of syntax,
+but at the top, I again had this line which
+allowed me to create something that looks like a C program called hello,
+called conditions 1.
+But it's not 0's and ones I'm executing directly.
+It's instead running this interpreter whose name
+happens to be identical to the language.
+The program is called PHP, and my code below line one is being passed into it.
+>> We can do another fairly simple example reminiscent of something
+we did weeks ago.
+Again, this is a sort of arbitrary chunk of code
+that apparently does what when you run it?
+What's this going to print, presumably?
+
+>> So initially on line 16, it's going to say x is now 2, probably.
+%d is the same as $i for printf.
+So then it's cubing, dot, dot, dot, in line 17.
+And then line 18 appears to call a function Cubed.
+And where is Cubed defined?
+>> Well, it looks like in line 25, so that's not all that different.
+I've got some comments above it, but for the most part,
+it's a fairly straightforward porting or conversion
+from the C program to the PHP version.
+But there are now a couple of differences that maybe should jump out.
+What else is different about how you might write this same program in C?
+>> STUDENT: [INAUDIBLE].
+>> DAVID J. MALAN: There's no prototype up top.
+So PHP-- and frankly, a lot of modern languages--
+are a lot smarter and more helpful than C compilers in that you
+can put the function up here, you can put a function down here,
+and the interpreter is going to do you the favor of reading
+the whole file before it decides that some function doesn't exist.
+So nice improvements years later.
+But there's also something else different or absent here.
+Yeah?
+>> STUDENT: [INAUDIBLE].
+DAVID J. MALAN: We don't have to declare the types of variables,
+so we'll see before long that there are different types in PHP,
+but you don't need to specify them, which also is both good and bad.
+And there's one other thing missing.
+>> STUDENT: There's no libraries.
+>> DAVID J. MALAN: There is no libraries.
+OK, so that's nice.
+We get a lot more out of the box.
+So there's actually a lot more things than I thought were different.
+How about way in back?
+What's that?
+Say it once more?
+>> STUDENT: Pointer.
+>> DAVID J. MALAN: No pointers.
+OK, at least in this example, no.
+That's fair.
+So there are not pointers in PHP actually in general.
+There are something called references, but we won't spend too much time there.
+And what else?
+>> STUDENT: Main.
+DAVID J. MALAN: Main.
+So this was the biggie I was thinking of.
+Notice there's no main entry point.
+You simply start writing your code.
+And this is actually going to be advantageous
+when we transition momentarily to actually using
+this same language for web-based programming, for which we
+don't want to have just one entry point.
+We might want to have a bunch of URLs, a bunch of different files
+all taking in user input and producing output.
+>> But here is the very disheartening example that I promised last time,
+namely in this folder here, misspellings.
+So in this file speller, which we won't spend too much time on, there is
+essentially a porting-- P-O-R-T. It's just the word given when, say,
+you convert from one language to another manually usually.
+>> This is a porting of PC version of speller from PSET 5.
+And I essentially tried to convert it line by line as closely as I can.
+So if you like this kind of thing, it actually is worth at some point
+pulling them both up side by side and seeing what's the same
+and what's different.
+But they're pretty darn similar.
+If you remember what speller even looked like,
+even though you didn't have to change this file,
+it's pretty similar structurally with just a couple
+of changes here and there.
+>> So this is only to say that it's pretty straightforward to convert speller
+from C to PHP.
+But in dictionary, there's something even more compelling.
+Let me go ahead and create my own dictionary.php file.
+So slightly different in that we'll call it .php instead of .c.
+Because this is a PHP file, I do-- slightly annoyingly-- have
+to start the file with a php tag like that.
+And I'm going to go ahead and define a few functions.
+Function called check, which is going to take in a word like before.
+But this argument's going to have a dollar
+sign because we're, again, using PHP.
+Another function from dictionary.c was load
+and it took in the name of a dictionary, so I'll get that function ready to go.
+>> Another one in dictionary.c was what?
+Size was one of the nicest ones, at least if you kept some variable around.
+so size just has to return a variable.
+And then there was unload.
+>> So there were these four functions in problem set 5
+that you needed to implement with some data structure or structures.
+So I promised that in PHP, we can declare
+a hash table, for instance, all that more easily.
+In fact, if I want a hash table, I'm just going to go like that
+and there's my hash table.
+And that's the note, disheartening, that we left off on last time.
+And you know what, if I wanted a variable for size, well,
+this one's not all that different from C,
+but I'm going to go ahead and do that.
+And notice no data type.
+And I'll go back later and actually add some comments here.
+But what about load?
+>> If dollar sign dictionary is the name of my file
+and I actually want to load words into this table now,
+I can actually do something fairly simple.
+One-- and this is minorly annoying-- in PHP,
+you have to specify inside of a function if you
+want to access some global variable that's defined outside.
+>> But that's not particularly interesting right now.
+What's more interesting is this for each construct that I mentioned last time.
+And it turns out that PHP has a function called file whose purpose in life
+is to open a file and read in all of its lines into an array
+and hand them back to.
+>> Which is to say I can do dictionary so that now effectively when I call file,
+this is going to hand me back an array of words from the file.
+It's not all that good.
+It's still going to be a line of words, something linear.
+But I can go ahead and iterate over each of these words using
+that syntax we saw briefly last time.
+And you'll see it more in the upcoming PSET.
+>> But now I have a loop iterating over each word in the dictionary.
+And on each iteration, recall I'm calling the current word "word."
+And all it's going to take to put a word into the dictionary is
+going to be word guess "true."
+That's my insert function.
+That's my load function for my dictionary.
+Now it's a bit of a cheat because, you know what, there's actually
+backslash n's at the end of the words that I should probably get rid of,
+but that's not a problem because PHP has a function called chop which literally
+chops off one character at the very end.
+So no problem there.
+We've gone ahead and actually shortened that to just this.
+And now I should probably keep track of size, so let's at least do this--
+size++.
+I can do that as before.
+And then this is probably going to work just fine, so that's return true.
+Done.
+PSET 5.
+>> [LAUGHTER]
+>> DAVID J. MALAN: OK.
+We're going to do that again with the next PSET, too.
+So what about size?
+Well, this one hopefully is about as you would expect last time,
+although I have to do this stupid global thing.
+It's just an artifact from the language's design.
+>> But check is a little more interesting.
+So if I passed in dollar sign word, I first
+want to have access to that global variable table.
+And now if I want to check if a word is there,
+I can simply say if it is true that the following is set in the table,
+then go ahead and return true; else, return false.
+Done.
+The other half of PSET 5.
+>> All right, so again, I'm cutting a few corners.
+In fairness, I should probably spend a few more seconds
+on this implementation.
+And I probably shouldn't mock all the hours you put on the PSET so much.
+So strtolower is a function.
+Something similar existentialist in C, at least for characters,
+but PHP's got a whole string version.
+>> That's going to force everything to lowercase, which some of you
+might have done to canonicalize what you were putting in your dictionary.
+And now you can do this in C, too.
+This has nothing to do with PHP.
+>> But any time you have a Boolean condition,
+like something on line 10 there, which is only
+going to evaluate to true or false, and your if else clearly
+is returning true or false, I could simply really make this sexier
+and just do something like this.
+So that there's my check function.
+Right, if the Boolean returns a true or a false,
+let's just return it straight away.
+>> And there's a few other tweaks I could make here and there.
+Load-- unload, by the way, that's done.
+Nothing to do there.
+Since all of the memory in PHP and many other languages
+is actually managed for you.
+So whereas in C, as you've learned painfully,
+anything you malloc or calloc or realloc, you have to free yourself.
+Anything you fopen, you have to fclose, so that resources are ultimately freed
+and tools like Valgrind don't notice and don't complain,
+which is a good thing to run on them.
+>> But surely, there must be some catch, right?
+Otherwise, we kind of wasted a whole bunch of weeks.
+So there's any number of reasons why we sort of take this trajectory,
+but there is a trade-off.
+Right, this has been thematic.
+>> So what might a trade-off here moving, from C to PHP?
+Feels like all win so far other than a bit of ugliness here or there.
+Yeah.
+What's that?
+>> STUDENT: [INAUDIBLE] memory.
+DAVID J. MALAN: Speed.
+OK.
+Well, my speed was pretty fast.
+Right?
+But speed of execution of the program?
+OK, so that's a fair point.
+>> So as it would happen, I in advance cued up both my try solution, the one
+I had on the big board was a try-based solution,
+and I have that in this directory here.
+So I in a moment, I can go ahead and run this on the King James Bible,
+hitting Enter.
+And this is hopefully correct implementation at the end,
+gives me time in total of 0.38 seconds for that
+one somewhat arbitrary example.
+>> And if I now go into this second terminal window
+here where I first opened gedit, let me go into today's code-- which, again,
+is in this directory here-- and let me go ahead and run speller.
+So just to be clear, this is the PHP version.
+I'm just showing the top of it here.
+>> So if I do speller of tilde CS50 PSET 5 texts, King James, enter.
+
+It's still faster than writing it in C, but the total time
+is, notice, 0.93, whereas my C-based implementation was 0.38.
+So it's a non-trivial difference.
+>> And this is just on one file.
+If you were to run the two programs versus the big board
+and have a whole bunch of inputs tested, this would surely add up.
+And if we had even larger data sets, this, too, would add up all the more.
+So yes, paying some price of speed is indeed the case.
+What else?
+
+Yeah?
+>> STUDENT: Amount of RAM use.
+>> DAVID J. MALAN: Amount of RAM use.
+So I didn't give one second thought when writing this PHP
+version as to how much memory I was using.
+I'm completely deferring that to PHP itself and whoever wrote that program.
+And that might be OK, but if I actually really
+care about squeezing as much performance out of my program or out of my website
+or out of whatever tool I'm building, maybe
+PHP, indeed, is not the right language.
+>> And in fact, that is why, for instance, many web servers--
+the actual programs that serve up web content--
+are not written in PHP or in Python or Ruby.
+They are written, like you'll now do with PSEt 6,
+in C so that you can squeeze every bit of performance out of it
+and really exercise fine-grain control over what's
+going on underneath the hood and not just take it
+for granted some higher level data structure.
+>> Consider, after all, whoever in PHP implemented
+that notion of a hash table-- it's actually more
+properly called an associative array-- does he or she have any idea what kind
+of inputs you are going to be putting into the structure?
+So obviously not, right?
+It's a generic tool in the toolkit that's
+provided to anyone who wants to use it, and so surely it
+can't be optimized ultimately for exactly what you want to do.
+>> So trade-offs-- development time might differ, performance might differ,
+complexity or memory usage might differ.
+And so what you'll find increasingly is that there's
+going to be different tools for the trade.
+And in fact for a super majority of people's final projects in this class,
+believe it or not, C is not going to be the right language to use.
+>> And in fact, one of the takeaways ultimately for any class like this
+is to get you thinking about, well, what should you pull off
+the shelf when you want to solve some problem.
+And indeed, we'll cross this bridge even more as we look at more languages
+even beyond today.
+>> So let's transition now to perhaps a more familiar context
+for using a language like PHP.
+It's somewhat common to use at the command line, writing scripts
+like I did, but it's much, much more common.
+And it was intended to be used in the form of files that typically end
+in .php-- but that's not a prerequisite--
+that themselves generate web content.
+>> So let me go ahead and open a few examples I prepared in advance.
+And these are actually sort of true stories in that one of the first things
+I ever did myself after finishing CS50 and maybe, I think,
+CS51 years ago is my roommate and I were helping
+to run the freshman intramural sports program, which, at the time,
+had freshman registering for various sports by filling out a piece of paper,
+as it was called, walking across the yard to Wigglesworth,
+and dropping it in some proctor's door drop.
+And then he or she would go through them and then actually email us manually
+that we were registered for some sport.
+>> So clearly, an opportunity for improvement.
+These days, you might turn to just Google Forms, but back in the day,
+we had to actually reach for-- this wasn't even that long ago-- reach
+for a programming language that wasn't PHP.
+At the time, it was something called Perl,
+which has gone out of vogue since.
+But the idea is the same.
+>> And I essentially sat down to try to port goes Perl versions to PHP,
+but in full disclaimer, did not give any thought to the aesthetics just yet.
+So here is a web page.
+This is a file.
+If I zoom in, its apparently called froshim0.php
+just because it's our first example in this series.
+And notice that it has what appears to be a very ugly HTML form,
+but a form is interesting because it allows
+me to provide user input to the browser.
+>> Now last time when we had a form, to whom did we submit our query parameter,
+the queue parameter as it was called?
+So to Google, right?
+We totally punted on the idea of doing anything with that input.
+>> But today, we start producing output.
+And the behavior I'm going to see here initially is pretty trivial.
+David, I'll check off gender here, say Matthews here.
+I won't be captain.
+I'm going to click Register.
+And notice that the URL has changed to register-0.php,
+and then there's this ugly text here.
+I gave no thought to the formatting of this.
+>> But what is interesting is that three values were apparently passed in.
+This is PHP's sort of equivalent to printf--
+we'll see what it's really called in a bit-- that just prints out
+what you passed into it.
+So this suggests that that form had at least three fields to it,
+and you saw me type them in.
+One was my name, one was gender, one was dormitory.
+And captain didn't even get sent to the server because I didn't check it.
+>> So this is to say apparently, when you submit things on the web,
+not only does the URL sometimes change-- sometimes it doesn't.
+In fact, the file name changed, but what is absent from the URL
+that we did see last time with Google.
+Yeah?
+>> STUDENT: No query string
+>> DAVID J. MALAN: There's no query string.
+There's no question mark something.
+There's no question mark q equals cats, as we did last time.
+And there's certainly no question mark name equals
+David or dorm equals Matthews, so where is that all going?
+>> Well, let me go back to gedit here and open up the first of those files
+in my vhost, local host, public directory here and go into froshim0.
+So it turns out that almost all of this page is just HTML.
+And this might be unfamiliar to you, but it soon will be more so with PSET 6
+and PSET 7 and PSET 8.
+But this is just an HTML page.
+>> And the interesting stuff seems to be over here.
+A form tag whose action attribute has a value of register 0.
+That's why when I submit this, it goes to that file.
+But method is different today-- post.
+So it turns out there's at least two methods on the web used
+to send information from browser to server.
+Get puts it in the URL.
+Post puts it elsewhere.
+And when and why might you actually want a website
+to use post then instead of get, just intuitively?
+Any website.
+What kind of data should be passed just by inference now via post as opposed
+to get, if we've seen the two differences?
+STUDENT: [INAUDIBLE] secure.
+DAVID J. MALAN: If you want something to be secure.
+So you might type a password into a website, a credit card
+into a website would kind of these suboptimal
+if the browser put that value inside of the URL.
+Why?
+You see it, which doesn't seem to be such a big deal,
+but odds are you pretty frequently walk away from your computer or use computer
+labs, and so someone else or even a roommate
+could easily walk up and see that private information.
+When you send an email via the web, you probably
+don't want that data ending up in the URL as well.
+And so there's any number of reasons why we might want to put it here.
+And photos-- right, I can't even quite imagine how you would take a graphic,
+like a JPEG, and put it into a URL.
+You could do it.
+There's ways of encoding it, but it's just not straightforward like that.
+>> So register 0 is actually very underwhelming.
+All it says literally is this.
+It prints out inside of some HTML tags the following.
+I've got a PHP tag here nested inside of a pre tag.
+"Pre" just means pre-formatted text, mono-spaced, like a typewriter.
+>> Printr is a print recursive function.
+And then there's this interesting thing here.
+And we'll come back to this because there's others,
+but dollar sign underscore post appears to be
+a variable in PHP in which anything you send from browser to server
+gets stored for you.
+And we'll see how to get at that information before long.
+>> But first, let's go back to a slightly different example.
+Going into register-- or rather, froshims1.php,
+which looks a little different.
+I took a little more effort with formatting,
+even though it's still pretty ugly.
+But I'm going to go ahead and type in "David" now.
+Male.
+We'll check "captain" this time.
+We'll do Matthews.
+And register.
+>> And this time it says, hm, not really.
+All right, so what's register 1?
+Let me go into open register 1 and-- hm.
+All right, so this is interesting, and this
+is a stepping stone now toward more interesting programs.
+>> Notice the top of this file has a PHP tag as well as some comments.
+And these are, for now, a distraction so let's just get rid of those comments
+just like they're in C. And I claim with this chunk of code with a comment
+that this code is validating the submission.
+>> Well, it turns out that variables like dollar sign
+underscore post are called super globals.
+They're like these special global variables
+that are just omni-presently available within your program.
+And you can use square bracket notation to index into them not using numbers
+like 0, 1, 2, 3, but actual words.
+>> So you can think of dollar sign underscore post as sort of a hash table
+that you could pass a key into, a lookup word in-between the square brackets,
+and it's going to give you back the value that the user actually provided.
+PHP has a function called empty that just
+says yes or no, this variable is empty or not.
+We have these double bars, which just means or, like in C.
+>> So in effect, this line 4 is just saying if the user didn't give a name
+or didn't give a gender or didn't give a dorm, go ahead and redirect him
+or her via this line here.
+So this is a little cryptic, but this just means literally
+go back to this location, so it punts the user
+back to wherever he or she came from.
+But it's a little inelegant in that I hard coded it.
+>> But what if this if condition does not evaluate to true?
+What if the user did give me his or her name and dorm and gender?
+That if condition's not going to evaluate to true,
+so I don't hit the exit in line 7.
+So what happens?
+And this is what's interesting about PHP.
+>> You can drop into and out of PHP mode, so to speak.
+If you want some code to execute, you can open and close a PHP tag
+and put code there like I've done here.
+As soon as you close the PHP tag, the server
+is just going to spit out whatever you put there.
+And indeed, this was part of the original design of PHP,
+for better for worse, was this commingling of code and markup
+language.
+And we'll see that this very quickly devolves into a mess.
+And so we'll do better than this ultimately, but just
+notice the ease with which I'm actually able to execute some logic.
+>> But still a bit underwhelming.
+Let's open up version two of Frosh IMs, which
+apparently submits to register2.php.
+So this file's actually going to look almost the same.
+I'm going to go to Frosh IMs 2 .
+But in Frosh IMs 2, let's see what happens.
+>> David, click the radio button, as it's called; Matthews, no captain.
+Register.
+You are registered.
+Not really.
+Oh wait, we just did that example, didn't we?
+All right, stand by.
+We'll do the three.
+Clearly something's about to happen with Gmail.
+We'll get there.
+>> So Frosh IMs 3 looks like this.
+No different.
+But when I do David, male, Matthews, and register, this third and final version
+claims, quite simply, you are registered really.
+That's sort of immaterial.
+But I claim with this third and final version
+I have now recreated exactly what my roommate and I built for the Frosh IMs
+program years ago.
+And it was simple.
+There was no database, no Excel spreadsheet.
+But more importantly, there was no more paper
+because what we did with this program was to actually email the proctor, who
+was previously receiving these things via forms.
+>> And apparently we've programmed this in such a way that when someone registers,
+John Harvard's account emails the proctor-- or himself in this case,
+John Harvard-- with the following text-- "This person just registered."
+Name is David, captain is blank; gender, male; and dorm, Matthews.
+>> So what happened there?
+Well, the file in question here is apparently register3.php.
+And if I open this, you'll see both the power of code like this
+and also, frankly, the insecurity of a system like email.
+I have just effectively pretended to be John Harvard in the following way.
+>> I have the open php tag up top, which just says here comes some PHP code.
+Down here, turns out there are libraries in PHP.
+You just don't need to include header files as much.
+You get more with the kitchen sink, so to speak.
+>> But this time in line 4, I do want to special library called
+PHP mailer, which is something you can install for free in many systems.
+Down here I'm validating the submission just
+by checking did the user give me a name, a gender, and a dorm.
+And if so, go ahead and instantiate a mailer.
+>> You can think of this as being a line of code that just allocates.
+It's like malloc, but it's a little sexier
+in that you mention not just malloc and some generic number.
+You say give me one of these, give me a new one of these.
+>> And if you've programmed in Java or C++ or other languages,
+you might have seen this.
+But the short of it, if unfamiliar, this line
+puts into dollar sign mail a special struct called
+an object that has built-in email functionality.
+And in fact, notice and similar syntax.
+>> This is not a pointer, per se.
+PHP just uses the same syntax.
+This line is saying use SMTP-- Simple Mail Transfer
+Protocol, which is just the protocol used to send mail.
+This is specifying use Harvard's SMTP server, which
+is somewhere here on campus.
+>> This is saying what TCP port number to talk to,
+and I just figured that out by googling or by asking the help desk.
+And then because Harvard uses some system security on the mail server--
+at least to encrypt traffic between you and it,
+even though anyone can send to it-- I'm going to turn on the TLS protocol
+for keeping this secure.
+>> But this is where things get a little scary.
+I can just arbitrarily say that I am jharvard,
+and I can just arbitrarily email myself here.
+And then I can specify a subject with this line here.
+>> And this just looks ugly, but it's just a bunch of concatenation.
+Turns out PHP has a super useful symbol, like some languages, the dot operator,
+which just literally concatenates string after string after string,
+and you don't have to malloc or figure out the total length of the string.
+You just do it.
+And indeed, because I'm concatenating in all of these things with these dots,
+that's why the email I sent looked as it did.
+>> And then lastly here, I'm sending mail.
+So if this is false, I'm just going to die,
+which is a function that just prints to the screen some error message.
+But it is, in fact, calling the send function.
+Otherwise, if all of this fails, it redirects me back here.
+>> And why did I see that I'm registered really?
+Well, it happened right here.
+So I bring this up for a couple of reasons.
+>> One, this is exactly how if you build some website for a final project
+or for the real world, this is how you send email reminders
+to your customers or your subscribers.
+This is how you send password reminders.
+This is how you send people messages that they have a new Facebook
+message pending or something like that.
+>> But it also speaks to the fact that this could
+have been very well from Davin or anyone else.
+And I say this kind of with a smile because I'm
+quite sure what's going through several of your minds at this point.
+But this is one of those do as I say, not as I do kind of things,
+because it is trivial to forge emails like this.
+But as you may have seen or read in the Crimson,
+of late it's also pretty trivial for people
+to trace them back to some origin.
+And ask me some time, perhaps at CS50 lunch, how I first
+got acquainted very closely almost to the ed board many years
+ago when I discovered how the internet worked.
+So in any case-- slightly after the ed board did.
+>> So in any case, there is a whole bunch of super globals,
+as they're called here, one of which we saw-- dollar sign underscore post.
+There's a counterpart called get, which is where stuff from a URL
+ends up going.
+And there's a whole bunch of others, too-- session and server and cookie.
+We'll come back to cookie some other time,
+but session is kind of cool because right now-- up until now--
+everything we've done with a web browser is sort of stateless, so to speak.
+I can click around, access files on the server, something
+happens on the screen, but then the connection closes.
+The Internet Explorer or the Firefox icon stops spinning
+and you just see what that web page contains.
+>> So HTTP is stateless in that once it makes a connection,
+gets some data, that's it.
+No more connection, unlike Skype, unlike Facetime, unlike GChat, which
+maintains a constant connection to the server.
+The web is fundamentally disconnected, though we'll
+see before long how we can simulate things
+like Facebook chat and GChat, which maintain the illusion--
+or actually do maintain a constant connection using
+more modern technology.
+>> But if I go to, say, counter.php, this is another simple example,
+as we'll see, that currently thinks I visited the site zero time.
+But if I simply reload the page, it somehow knows I was here before.
+If I reload again, it knows I was here before.
+And again and again and again and again.
+>> So there's some plus-plussing going on, but notice
+the little thing spins ever so briefly up top and then disconnects,
+so it's not like I have a constant connection to my appliance.
+Well, if I go into counter.php, notice how simple it is.
+I first call this special function that we'll soon
+start taking for granted called session start.
+Start a session.
+>> And a session henceforth is just going to be a bucket, like a shopping
+cart in which you can put values and kind of trust as a programmer
+that they're going to be here when that user comes back-- a second
+later, an hour later, even a year later, so long as he or she doesn't clear
+their cookies, as we'll eventually see.
+And now I just have an if condition here.
+So if the following key, called counter, is set inside
+of this super global-- this hash table, if you will-- called session,
+then go ahead and grab the value from the session-- think
+of this as a shopping cart-- and store it
+in a temporary variable called counter.
+>> Otherwise, if that value counter was not set in the so-called shopping cart,
+just initialize it to 0.
+Lastly, down here, go and put back into the shopping carts or the session
+the value of counter +1.
+So it turns out that this special container here--
+which, again, is one of these associated arrays, an array that you can index
+into words instead of numbers-- persists even after the user goes away.
+Again, I'll go back to the page now.
+It's been a minute or so.
+But it remembers that I've been here 19 times before.
+This is my 20th visit.
+>> And so this is going to be key to implementing any website that remembers
+that you're logged in, that you put something literal in your shopping cart
+to buy or that you have some number of messages pending.
+Anytime you want to remember information,
+we'll see that PHP, like several other languages,
+provides us with this illusion of state even though, as you'll see in PSET 6,
+as you're making HTTP requests from client to server, that's it.
+Once you get back that response, there's nothing more
+coming back from the server by default.
+But we'll see how to work around that.
+>> Well now, let's try to clean this up a little bit.
+We've seen a few different examples there.
+Oh, and as an aside, for those familiar or unfamiliar,
+the reason that the Frosh IMs example went
+from looking really ugly to slightly-- well,
+still ugly-- to slightly less ugly though still ugly
+is because if we look at the source code here,
+it turns out that I have this at the very top of the file.
+>> Turns out that bootstrap is one of many freely available libraries out there
+that exist not for programming languages always, but for CSS or for JavaScript
+or HTML or any number of languages.
+>> And these folks here-- originally came out
+of Twitter-- just have a whole bunch of styles.
+It's a massive file here that someone wrote,
+or someone's wrote, over time that specifies colors and formatting
+and whatnot so that I can kind of borrow their syntax
+and not have to figure out how to lay out my form.
+This is also minified so that a computer can
+understand it but not necessarily a human.
+So that's just why the stylization there changed.
+>> But let's now do better in terms of design,
+because if we stay down this road too long,
+our code's going to get messy and messier.
+So let's focus on these examples here.
+The last for today.
+>> So here is a super simple version 1.0 of CS50's website.
+It only has links to lectures and syllabus,
+and it's using that unordered list tag-- the UL tag that we used last time.
+And if in fact, if I open up View Page Source,
+you'll see that this is really, really simple HTML.
+And in fact, even though this is a PHP file underneath the hood,
+it's still just spitting out only HTML for now.
+>> So if I click on Lectures, we see this happen.
+And if I click on week zero, we see this.
+And if I click on Wednesday, we see this.
+And this apparently was the PDF of the slides from that day.
+All I've done is link with an anchor tag to this URL here.
+>> So this is only to say this is a pretty simple version of CS50's website.
+Let's see how it's implemented.
+If I go into the mvc0 directory, we'll see a few files.
+One is a README, so if some of this is too fast,
+you can just poke around more leisurely later.
+And notice in here is an index.php file.
+It turns out that if you yourself, the human,
+don't specify a final name in a URL, the web server usually
+infers some default name for you.
+An index dot something is generally the default.
+>> So that's why a moment ago when I visited this URL here,
+no file name, no file extension, no period in the URL.
+It just knew somehow magically to look for index.php.
+It's just a convention.
+Could be called anything.
+>> So if I now go into index.php, you'll see
+that, indeed-- let's get rid of the comments
+here because there's really nothing interesting to it--
+this is just hard coded HTML.
+So that's consistent, though, with my claim
+that you can commingle HTML and PHP.
+There's no actual programming logic in here.
+>> And the other files are pretty much just as uninteresting.
+It's just hard-coded week one here to week one m and week one w,
+for Monday and Wednesday.
+And then if I open up week zero, notice it's almost identical.
+>> And that's kind of a key takeaway.
+Notice just how redundant this is.
+These files barely change, and yet I pulled one of these copy/paste jobs
+where I took one file-- presumably in week zero-- copied it
+when week one came around, and tweaked a few values.
+We should probably be able to do better than this.
+>> So let's go back up to mvc and go into version one.
+And notice I've got a few files, because what
+was common to all of those files just a moment ago-- if I go back to version 0,
+let's go back into index, and just postulate--
+once I get rid of the comments-- what part of this page
+is presumably in every one of my files?
+Just call it out.
+Which lines are duplicated probably across all of these pages?
+Yeah?
+>> STUDENT: [INAUDIBLE].
+>> DAVID J. MALAN: 1 through 9.
+Yeah, absolutely.
+1 through 9, except maybe 8 changes a little bit because CS50
+becomes lectures or week zero or something.
+But almost identical.
+So all this stuff is just kind of copied and pasted.
+And there's a couple other lines I can think
+of that are probably identical across all the files.
+>> STUDENT: 12 and 13.
+DAVID J. MALAN: Yeah.
+Sure, 12, 13, and 14 probably, just because the interesting stuff
+is happening on lines 11 and 10, so it would seem.
+So let's look at version 1, which tries to improve on this.
+In version 1 of this mvc example-- we'll explain what mvc means in a moment--
+if I go into index, it kind of looks a little confusing now.
+It's not quite as simple as before.
+>> But once you start to read it carefully, it's
+pretty straightforward what it's doing.
+Apparently line 1 and line 8 have replaced
+all of the stuff you just identified-- though just for good measure,
+I left the ULs there just in case some days didn't have a list of things.
+And so require is kind of like pound include in C. It copies and pastes
+the contents effectively right here into this file.
+>> So in header.php, as you might infer from its name,
+is going to be the header of the page.
+It's kind of orphaned here.
+It only has the top to it, but there's no more content below.
+>> And if I look at footer meanwhile, which was the other file mentioned--
+this one's even less interesting, but again, it's common to everything.
+So this is the footer.
+This is the header.
+This is the file that's changing, so why not
+try to factor out the commonality with these two lines here?
+>> But we can clean this up a little further.
+I'm going to go ahead and open up version two where
+we'll see that there's a new file, helpers.php.
+We'll see what that is in a moment.
+Let's go to index, as the entry point as before.
+>> And now notice I'm requiring helpers.php, not header or footer.
+But helpers is kind of like helpers.c and helpers.h from PSET 2
+or PSET 3 long ago when you actually did search and find for that PSET,
+and you had all of your code for sorting and searching in a separate file.
+That's what's going on here.
+>> And now line 3 looks a little different.
+And it's just one line.
+To make this even more clear, I could just
+do this to be stylistically consistent with everything else we've done.
+But that's not really changing the functionality.
+It's just one line of real code.
+>> Apparently, there's a function somewhere called render header,
+and this is where things get pretty powerful.
+Notice that inside of its parentheses is what other piece of syntax?
+
+It's probably a little hard to say, but notice there's-- I'll put some white
+space.
+There's square brackets.
+>> And square brackets we saw a bit ago in the context of associative arrays,
+which are, again, like hash tables.
+And if you think now to C, the order of arguments into a function
+has to always be the same.
+You have to remember what the order is-- x, y, z or z, y, x--
+and you have to always provide them in the same order or look them up
+if you've forgotten.
+>> But this seems to be a clever way of passing an arbitrary key value
+pairs whereby title is the name of an argument in this case
+and CS50 is its value.
+And the fact that I have these square brackets
+here means that I could also pass in something
+like a week is 1 or 0 or 2 or 3.
+So we've parameterized this function in such a way
+that it can take multiple inputs, but for now it's just the one.
+>> If I now go into helpers.php, notice what it's doing.
+This is a little bit of new functionality,
+but for now just take on faith that this is
+the syntax with which you define a function in PHP.
+You literally say function.
+You don't specify a return type, and that's consistent
+with the variable detail earlier where you don't really strongly type.
+>> This just specifies that, by default, this
+takes an associative array as an argument.
+And you know what?
+If the user doesn't pass one in, assume a default value.
+>> This is a feature that C doesn't have for us, which is nice, because now
+data, even if you don't give it anything,
+is going to be an array but an empty one.
+And as an aside, extract just does something funky
+where it takes all of the keys from this associative array, all of the things
+you could put in square brackets, and creates variables out of them
+so that we can ultimately have access to them in footet.php and header.php.
+That's a little abstract, so let me point this out.
+>> In index.php, notice that I'm passing in a key value pair of title
+with a value of CS50.
+If I now look at helpers.php, notice that RenderHeader
+is extracting that data that I'm passing in, and then requiring header.php.
+What I've done is sort of a poor man's implementation now of the following.
+>> If I open up header.php, notice that I've no longer hard
+coded the word CS50 in this header file.
+I've put this admittedly atrociously named function, HTML special chars,
+in there.
+But notice what I've done.
+I've got open HTML.
+I then have open head and open title.
+>> And then inside of the title's open and close tags, I have a bit of PHP code.
+And this is a nice but of syntax, which just means echo out.
+It literally means this-- echo the following--
+but this is sexier to write.
+Echo out the title that's been passed in.
+>> But what do you think HTML special char is all about,
+especially if you have some prior HTML experience?
+What characters might be dangerous to pass in to a page
+where you're dynamically generating the web page with code like this?
+
+Let me go to this file, version two, and see if I can't induce this.
+>> Version two is this.
+And notice everything is fine, working well.
+But suppose I go into index.php and I specified that the title of my page
+is not CS50.
+It is open bracket script alert hello world, close single quote,
+close parenthesis, semicolon, open bracket, slash script.
+>> Script, as we'll eventually see, is a tag
+that you can use to use of another programming language called
+JavaScript inside of a web page.
+And now notice the logic here.
+Here is a key called title.
+Here is it's crazy long value now.
+>> But if I go to the helpers page- or rather, the header page,
+I'm calling this function on that title first.
+So if I now reload this page, I see this, which looks ridiculous,
+but it's safe.
+It just looks stupid.
+>> But suppose instead I had forgotten this.
+And mark my words, a nonzero number of you will forget to do this
+and you'll get some industrious student or friend coming up
+to you at the CS50 fair or anonymously at night poking around on your website
+and essentially injecting code unbeknownst to you into your site
+somehow.
+>> Because if I simply spit out title here and title
+there-- well, if title literally looks like this and PHP
+as a language that can spit out other languages text,
+this is literally going to replace this tag with,
+of course, what I put elsewhere.
+>> So if I now go here and reload after undoing those safety mechanisms,
+now I have hello world here.
+Now that's not all that big of a deal, but you could do something
+a little more malicious here, like there's
+other tags-- as we'll see once we spend more time in JavaScript-- like location
+dot href gets, quote, unquote, HTTP business.com, but the opposite of that
+from the other day.
+And now you can induce a web page to actually go immediately
+to this web page here.
+>> And actually, I don't want to even go to business.com
+because I don't want to know what that is.
+But this, too, will trigger code to be injected into this page.
+So this is only to say that even though we're introducing super early on some
+of these more complex structures, it's all toward an end of making sure
+that your code is not exploitable.
+>> So now a third version here.
+It's getting a little fancier.
+I didn't really like-- the anal side of me
+was getting a little annoyed by the fact that I had a function called
+RenderHeader and RenderFooter that were almost identical.
+So it occurred to me, why don't I parameterize these functions
+into just one called render, have it take a second argument
+like the name of the template, the final to render-- either header or footer?
+And then optionally, if I want to pass in some key value pairs
+like I do for the title for the header but not for the footer,
+I could do that.
+>> And so now if I go into helpers.php, it's a little more complex.
+And I'll wave my hands at the details, but it's just one function.
+So that's a step toward a better design.
+>> We can take this one step further.
+If I go into my fourth version of this, notice now
+that I'm doing something even more kind of cryptic.
+And I know this is a lot to absorb at once,
+but we're just kind of cleaning things up.
+Now I'm putting my helpers file into a folder called
+includes-- just an arbitrary name where I want to put stuff
+that I want to include-- and then the rest of this is the same.
+>> But if I look now in gedit, notice that I've gotten rid
+of all of those other files and I've moved them, for instance, into here.
+And then in templates, I have this here, too.
+And so this is all now toward a step of using a much better design pattern.
+And we're very quickly going to move away
+from PHP's default functionality, which we started here with,
+where you just commingle PHP, and your HTML, and your CSS,
+and you just spit it out and you go about your way.
+It's not going to be very maintainable.
+Just like in C, we started using multiple files and multiple functions
+and factoring things that out.
+We'll do the same here.
+And in fact, in the fifth and final version here, I did one other thing.
+You can even use dot dot, which, again, is just the parent directory.
+To be even more security conscious, because if I look at the listening
+here for fifth and final version, notice that I have one directory here called
+public, and then on the same level, so to speak,
+I've got includes and templates and then that text file readme.
+>> And the reason I've structured it like this-- and so many web
+hosts, especially those $5 a month ones or $10 month ones,
+if you've ever had one of these services-- what so many of them do
+is they just expect you to dump all of your files into one directory,
+like we did already with this very first example.
+>> But as soon as you start building more sophisticated sites that just store
+data you care about and files you care about, actually organizing things
+correctly and with more security consciousness in mind can
+we start to defend against all of the friends
+that you have either in or outside of this class who,
+as soon as you start making programs yourself on the web,
+are going to start picking on you and on them.
+>> And so we'll look ultimately at this design.
+This is just a picture that depicts the following.
+We're going to put all of our programming logic in one or more files,
+and we're going to just start calling those controllers.
+It's where the brains of our websites actually are.
+Then we're going to have views, and views
+are as simple as just separate files-- called templates, often.
+They just have the aesthetics of my page,
+what I want the page to look like-- the colors and the layout
+and the positions of all of the variables.
+>> And then more interesting that we'll eventually get to
+is the model, which is going to be just the word we slap on other technologies
+that we bring into the picture, like actual databases,
+so that when you want to save information,
+you don't just send an email to your proctor or to yourself,
+you actually store it in a database using another language known as SQL.
+And so we'll leave here today and pick up with this on Wednesday
+and introduce databases then.
+>> [MUSIC PLAYING]

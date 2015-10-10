@@ -1,0 +1,1153 @@
+>> [MUSIC PLAYING]
+DAVID J. MALAN: All right.
+This is CS50, and this is the end of Week 2.
+So today, we're going to continue our look
+at how we represent things underneath the hood-- moving away
+from numbers like integers and floating point values
+and focusing on strings and ultimately more interesting programs.
+But we'll also take a look at a couple of domain-specific problems--
+the first of which will be involving cryptography,
+the art of scrambling information, in which you see above here
+is a picture of Radio Orphan Annie's secret decoder ring from yesteryear.
+>> This is actually very primitive form and child-friendly form of cryptopgraphy
+whereby this ring has two disks-- one inside and one outside.
+And by rotating one of those, you can essentially line up letters like A
+through Z with other letters like B through A. In other words,
+you can literally rotate the alphabet, thereby coming up with a mapping from
+letters to letters so that, if you wanted to send a secret message
+to someone like Annie, you could write down your message and then rotate
+the letters, whereby, if you mean to say "A," you instead say "B,"
+you mean to say "B," you instead say "C"--
+or something a little more clever than that-- and then, ultimately,
+so long as Annie has this decoder ring, she can decode the message.
+Now, you may recall, in fact, that this was used in a very famous film that
+plays ad nauseum during the Christmas season.
+Let's take a look here.
+RALPHIE PARKER: "Be it known to all in summary
+that Ralph Parker is hereby appointed a member of Little Orphan Annie Secret
+Circle and is entitled to all the honors and benefits occurring thereto."
+>> RALPHIE PARKER (NARRATING): Signed Little Orphan Annie.
+Countersigned, Pierre Andre!
+In ink.
+Honors and benefits, already at the age of nine.
+>> [MUSIC PLAYING]
+>> [RADIO CHATTER]
+RALPHIE PARKER: Come on.
+Let's get on with it.
+I don't need all that jazz about smugglers and pirates.
+RADIO ANNOUNCER: Listen tomorrow night for the concluding adventure
+of The Black Pirate Ship.
+Now, it's time for Annie's Secret Message for you members
+of the Secret Circle.
+Remember kids, only members of Annie's Secret Circle
+can decode Annie's secret message.
+>> Remember, Annie is depending on you.
+Set your pins to B-2.
+Here is the message-- 12, 11, 2--
+RALPHIE PARKER (NARRATING): I am in my first secret meeting.
+RADIO ANNOUNCER: --25, 14, 11, 18, 16--
+RALPHIE PARKER (NARRATING): Oh, Pierre was in great voice tonight.
+I could tell that tonight's message was really important.
+>> RADIO ANNOUNCER: --3, 25.
+That's a message from Annie herself.
+Remember, don't tell anyone.
+>> [PANTING]
+RALPHIE PARKER (NARRATING): Ninety seconds later, I'm
+in the only room in the house where a boy of nine
+could sit in privacy and decode.
+Ah.
+"B."
+>> [CHUCKLES]
+>> RALPHIE PARKER (NARRATING): I went to the next.
+"E."
+The first word is "be."
+Yes!
+It was coming easier now.
+"U."
+>> [CHUCKLES]
+>> RANDY PARKER: Aw, come on, Ralphie.
+I gotta go!
+>> RALPHIE PARKER: I'll be right down, Ma.
+Gee whiz.
+"T." "O." "Be sure to." "Be sure to" what?
+What was Little Orphan Annie trying to say? "Be sure to" what?
+MOTHER: Ralphie, Randy has got to go.
+Will you please come out?
+>> RALPHIE PARKER: All right, Mom!
+I'll be right out!
+RALPHIE PARKER (NARRATING): I was getting closer now.
+The tension was terrible.
+What was it?
+The fate of the planet may hang in the balance.
+>> MOTHER: Ralphie, Randy's got to go!
+>> RALPHIE PARKER: I'll be right out, for crying out loud!
+RALPHIE PARKER (NARRATING): Almost there!
+My fingers flew!
+My mind was a steel trap.
+Every pore vibrated.
+It was almost clear!
+Yes!
+Yes!
+Yes!
+Yes!
+>> RALPHIE PARKER: "Be sure to drink your Ovaltine."
+Ovaltine?
+A crummy commercial?
+>> [MUSIC PLAYING]
+>> RALPHIE PARKER: Son of a bitch.
+>> [LAUGHING]
+>> DAVID J. MALAN: So that then is a glimpse at what cryptography
+can be for this-- a drink from yesteryear.
+So a quick announcement.
+If you are free this Friday at 1:15 PM and would
+like to join us for CS50 lunch, head to this URL here.
+First come, first serve as usual.
+But over time, we'll make sure that most anyone who'd like to participate
+may schedule-wise.
+>> So strings.
+We have Zamyla-- whom you've now met most likely
+in Problem Set 1-- whose name is spelled thus.
+And suppose you typed her name into a computer program that's
+using something like getString.
+In order to retrieve those keystrokes, how
+do we go about representing a string, a word, a paragraph,
+or multiple letters like these here?
+>> We talked last time about integers and problems
+that arise with integer overflow and floating point values
+and problems that arise within precision.
+With strings, we at least have a bit more flexibility
+because strings-- just in the real world--
+can be a pretty arbitrary length.
+Pretty short, pretty long.
+But even then, we're going to find that computers can sometimes
+run out of memory and not even store a big enough string.
+>> But for now, let's start to visualize a string as something in these boxes
+here.
+So six such boxes, each of which represents a character or "char."
+So recall that "char"-- c-h-a-r-- is one of the built-in data types in C.
+And what's nice is that you can use that sort of as a building block,
+a puzzle piece, if you will, to form a larger type of data that we'll continue
+to call a "string."
+>> Now, what's useful about thinking about things like strings in this way?
+Well, it turns out that we can actually leverage this structure
+to actually access individual characters in a pretty straightforward way.
+I'm going to go ahead and create a file called "stringzero.c,"
+but you can call it whatever you'd like.
+And on the course's website is already this example in advance,
+so you don't need to type everything out.
+>> And I'm going to go ahead and first do int main void.
+And within a few days, we'll start to tease apart
+what void is here, why it's int next to main, and so forth.
+But for now, let's continue to copy paste that.
+>> I'm going to declare a string called s.
+And I'm going to return from GetString whatever the user types in.
+This is going to be a simple program, no instructions,
+I'm just going to blindly expect that the user knows
+what to do to keep it simple.
+>> And now I'm going to have a for loop.
+And inside of my for loop I'm going to have int i gets zero.
+And i is, again, just a convention, an index variable for counting,
+but I could call this whatever I want.
+I'm going to do i is less than-- well Zamyla's name is six letters long.
+So I'm going to hard code that there for now.
+>> And then i++.
+And now inside of these curly braces I'm going to do printf,
+and I want to print one character at a time.
+So I'm going to use %c for perhaps the first time.
+And then I want to print each character on its own line.
+So I'm going to put a little backslash n there.
+Close quote.
+>> And now I want to do something here.
+I want to print out the specific letter in the string,
+s, as I'm iterating from zero on up to six.
+In other words, I want to print the i'th character of s.
+Now how can I do this?
+>> Well much like the boxes in this representation here,
+kind of, conjure up the notion of boxing letters in, you can similarly do that
+syntactically in C by simply specifying, I want to print out s's i'th character.
+Using the square brackets on your computer's keyboard
+that on a US keyboard are generally above your return key.
+>> So this isn't quite right yet, as you may have noticed.
+But I'm going to kind of blindly forge ahead here.
+And I'm going to do make string 0.
+But before I do this, let's see if we can't anticipate some common mistakes.
+Is this going to compile?
+No, I'm missing a whole bunch of things.
+Libraries I heard.
+>> So which header files might I want to add here?
+Yeah.
+>> AUDIENCE: You need standard I/O [INAUDIBLE]
+>> DAVID J. MALAN: Excellent.
+So I need standard I/O. For what purpose do I want standard I/O?
+For printf.
+So include stdio.h.
+And you also propose that I include the CS50 library for what reason?
+To have strings.
+So we'll see what CS50's library is doing
+to create this notion of a string.
+But for now, you can just think of it as an actual data type.
+>> So that seems to be a little cleaned up.
+And now I'm going to go ahead and indeed do make string 0.
+Compiled.
+So that's good.
+So ./string0 let me zoom in so we can see more closely what's happening.
+Enter.
+Z-A-M-Y-L-A enter.
+And we've printed out to Zamyla's name.
+>> So that's pretty good.
+So now let's go ahead and run this program again,
+and type out Daven's full name.
+Surprise, surprise.
+Enter.
+Hmm.
+We have not printed Daven's full first name correctly.
+Now this should be obvious in retrospect because of what,
+sort of, stupid design decision?
+>> Yeah, I hard coded the six inside of my for loop.
+Now I did that only because I knew Zamyla's name
+was going to be six letters.
+But surely this isn't a general solution.
+So it turns out we can dynamically figure out the length of a string
+by calling a function called strlen.
+>> Again, deliberately succinctly named just
+to make it more convenient to type.
+But that's synonymous with getting the length of a string.
+I'm going to go back into my terminal window and re-run the compiler.
+But it's yelling at me.
+Implicitly declaring library function strlen with type unsigned int const--
+I'm lost.
+Completely.
+>> So, especially as your eyes start to glaze over
+with error messages like this, focus honestly on the first few words.
+We know the problem is in line 8, as indicated here.
+And it's in string-0.c.
+Implicitly declaring library function strlen.
+So that is generally going to be a pattern of error messages.
+Implicitly declaring something.
+>> So in short, what have I seemed to have done with respect to line 8, here.
+What might be the solution be even if you've never used strlen yourself?
+>> AUDIENCE: Part of a different library?
+DAVID J. MALAN: Part of a different library.
+So it is declared, so to speak.
+It is mentioned in some file other than stdio.h and CS50.h.
+Now where is it defined?
+To be honest, you either have to just know this off the top of your head,
+or you Google this and find out.
+Or know this, I've opened up in the CS50 appliance the terminal program, which
+is just the big, full screen version of what's in the bottom of gedit's window.
+>> And it turns out that there's a similarly succinct command, called
+man for manual, where if you type in the name of a function and hit Enter,
+you'll get back fairly arcane documentation.
+It's just text that generally looks a little something like this.
+It's a little overwhelming at first glance.
+But frankly I'm going to let my eyes glaze over
+and only focus on the part I care about for the moment.
+>> Which is this.
+Which looks structurally like something I'm familiar with.
+Indeed the man page, so to speak, will tell you
+in what header file a function like strlen is defined.
+So I'm going to go back now to gedit.
+And I'm going to go ahead and add in here #include 
+and save the file.
+>> I'm going to clear the screen with Control L If you've been wondering.
+And I'm going to re-run make string.0, compiles this time.
+./string.0 Zamyla.
+That seemed to work Let me go ahead and rerun it with Davenport.
+Enter.
+And that, too, seemed to work.
+>> So we can do a little better than this, though, we can start to tidy things
+up just a little bit.
+And I'm going to actually introduce one other thing now.
+I'm going to go ahead and save this in a different file.
+And I'm going to call this file string1.c just
+to be consistent with the code you'll be able to find online.
+>> And let's focus in on exactly the same code.
+It turns out that I've been kind of taking
+for granted the fact that my laptop, and in turn, the CS50 appliance
+has a lot of memory, a lot of RAM, a lot of bytes of space
+in which I can store strings.
+>> But the reality if I typed long enough, and enough keystrokes,
+I could in theory type in more characters
+than my computer physically has memory for.
+And this is problematic.
+Much like an int can only count so high, in theory,
+you can only cram so many characters into your computer's RAM or Random
+Access Memory.
+>> So I had better anticipate this problem, even
+though it might be a rare corner case, so to speak.
+Doesn't happen that often, could happen.
+And if it happens and I don't anticipate and program for it,
+my program could do who knows what.
+Freeze, hang, reboot, whatever.
+Something anticipated might happen.
+>> So what I'm going to do now, henceforth really,
+is before I ever blindly use a variable like s that
+has been assigned the return value of some other function like getstring,
+I'm going to make sure that its value is valid.
+So I know only from having read CS50's documentation for getstring,
+which ultimately we'll point you at, that getstring returns a special symbol
+called NULL, N-U-L-L in all caps, if something goes wrong.
+>> So normally, it returns a string.
+But otherwise if it returns N-U-L-L-- we'll eventually see what that really
+means-- that just means something bad happened.
+Now this means, much like in Scratch, I can check a condition here in C,
+if s does not equal NULL.
+So if you've not seen this before, this just means does not equal.
+>> So it's the opposite of equal equals, which, recall,
+is different from single equals, which is assignment.
+So if s does not equal NULL, only then do
+I want to execute these lines of code.
+So in other words, before I dive in blindly
+and start iterating over s, and treating it
+as though it is a sequence of characters, I'm going to first check,
+wait a minute, is s definitely not equal to this special value, NULL?
+>> Because if it is, bad things can happen.
+And for now, assume that bad things happening means your program crashes,
+and you can't necessarily recover.
+So frankly, it looks uglier.
+it's kind of confusing now to glance at.
+But this will become more familiar before long.
+>> But I'm going to propose now one other improvement.
+That's an improvement to correctness.
+My program is now more correct, because in the rare case that not enough memory
+exists, I will handle it, and I'll just do nothing.
+I at least won't crash.
+>> But let's do a final version here.
+And a file called string2.c.
+I'm going to paste that same code for just a moment,
+and I'm going to highlight this line, 11, here, for just a moment.
+Now the reality is that smart compilers like Clang could fix this for us
+behind the scenes without our ever knowing.
+But let's think about this fundamentally as a problematic design.
+>> This line of code is, of course, saying, initialize some variable i to 0.
+That's pretty straightforward.
+And what again is this statement, here, i++, doing?
+We've seen it before, but we didn't really talk about it.
+>> AUDIENCE: Incrementing i.
+>> DAVID J. MALAN: Incrementing i.
+So on every iteration through this loop, every cycle,
+you're incrementing i by one.
+So it gets bigger, and bigger, and bigger until the loop terminates.
+How does it terminate?
+Well there's this middle condition which we've used before.
+You've seen and in walkthroughs in the P set.
+>> But what is this saying?
+Do the following loop so long as i is less than what?
+AUDIENCE: The length of the string.
+DAVID J. MALAN: The length of the string.
+So it translates pretty cleanly to English in that sense.
+Now the problem is that every time I iterate through this loop in theory,
+I'm asking this question.
+Is i less than the string length of s?
+Is i less than the string length of s?
+>> Now is i changing on each iteration?
+It is.
+Because of the ++.
+So every iteration i is getting bigger.
+But is s getting bigger, or smaller, or changing at all?
+No.
+So in terms of design, one of the axes along which we try to evaluate code
+in the class, this feels kind of stupid.
+>> Like you are literally, on every iteration
+of this loop asking the same damn question again,
+and again, and again, and literally it is never going to change.
+At least if I'm not touching s and trying to change the contents of s.
+So I can do a little better than this.
+>> And what I'm going to do is not declare just one variable i,
+but a second variable I'll arbitrarily, but conventionally, call it n.
+Assign n equal to the string length of s.
+And then over here, I'm going to do a clever little optimization, so
+to speak, that at the end of the day is no more correct or no less correct
+than before.
+But it's a better design.
+In the fact that I'm using less time, fewer CPU cycles, so
+to speak, to answer the same question, but just once.
+>> Any questions on that general principle of improving,
+say, a program's efficiency?
+Yeah?
+AUDIENCE: Why do you use the [INAUDIBLE]?
+DAVID J. MALAN: Good question.
+So why do we put the ++ on the end of i instead of the beginning of the i?
+In this case, it has no functional impact.
+And in general, I tend to use the postfix operator
+so that it's a little more clear as to when the operation is happening.
+>> For those unfamiliar, there is another statements whereby you could do ++i.
+These are functionally equivalent in this case
+because there's nothing else around that incrementation.
+But you can come up with cases and lines of code
+in which that makes a difference.
+So generally, we don't even talk about this one.
+Because frankly, it makes your code sexier, and sort of slicker,
+and fewer characters.
+But the reality is it's a lot harder, I think, even for me to wrap my mind
+around it sometimes, the order of operations.
+So as an aside, if you really don't like this,
+even though this is kind of sexy looking, you can also do i+=1,
+which is the uglier version of the same idea for postfix incrementation.
+>> I say this and you should make fun of it,
+but you will come to see code as something beautiful before long.
+>> [LAUGHTER]
+>> DAVID J. MALAN: Right?
+Yeah.
+Question in the middle.
+>> AUDIENCE: Do you need to say int n?
+DAVID J. MALAN: You do not need to say int n.
+So because we have already said int, you do not need to say it again.
+The catch is that n has to be the same data type as i.
+So that's just a convenience here.
+Yeah.
+>> AUDIENCE: Can you go over the print character s bracket i again?
+DAVID J. MALAN: Absolutely.
+So %c, recall from last time, is just a placeholder.
+It means put a char here.
+backslash n, of course, just means put a line break here.
+So that just leaves, now, this piece of new syntax.
+And this is literally saying, grab the string called s and go get its
+i'th character, so to speak.
+>> And I keep saying i'th character because on each iteration of this loop
+it's as though we are printing out, first s bracket 0,
+as a programmer might say.
+Then s bracket 1, then s bracket 2, then 3, then 4.
+But of course it's a variable, so I just express it with i.
+>> Key, though, is to realize, especially if you've not
+been acclimating to this world of programming, where we all
+seem to count from zero, gotta start counting from zero now.
+Because strings, first character, the z in Zamyla is for better or for worse
+going to live at location number zero.
+>> All right, so let me bring us back here to Zamyla
+and see what's really going on underneath the hood.
+So there's this notion of type casting.
+You might have actually played with this already,
+maybe for the hacker edition of P set one.
+But type casting just refers to the ability in C and some other languages
+to convert one data type to another.
+>> Now how might we see this pretty straightforwardly?
+So this, recall, is the beginning of the English alphabet.
+And the context, recall, from like a week ago is ASCII.
+The American Standard Code for Information Interchange.
+Which is just a really long way of saying a mapping from letters
+to numbers, and from numbers to letters.
+>> So A through M here, dot dot dot, lines up with, recall,
+the decimal number 65 on up.
+And we didn't talk about this explicitly,
+but surely there's similar numbers for lowercase letters.
+And indeed, there are.
+The world decided some years ago that little a, lowercase a,
+is going to be 97.
+And little b is going to be 98, and so forth.
+>> And for any other key on your keyboard, there's
+going to be a similar pattern of bits.
+Or equivalently, a decimal number.
+So the question at hand, then, is how can we
+actually see this underneath the hood?
+So I'm going to go over to gedit again.
+And rather than type this one from scratch,
+I'm going to go ahead and just open up something
+from today's code called ASCII zero.
+>> And ASCII zero looks like this.
+So let's wrap our minds around this.
+So first, I've commented the code, which is nice.
+Because it's literally telling me what to expect,
+display a mapping for uppercase letters.
+Now I don't quite know what I mean by that, so let's infer.
+>> In English, maybe somewhat techie English,
+what does line 18 appear to be doing for us?
+Just line 18.
+What's it inducing?
+What's it going to kick off here?
+>> AUDIENCE: A loop.
+>> DAVID J. MALAN: A loop.
+And how many times is that going to iterate?
+AUDIENCE: [INTERPOSING VOICES] six times.
+DAVID J. MALAN: Not six times.
+AUDIENCE: 26 times.
+DAVID J. MALAN: 26 times.
+Yeah, sorry.
+26 times.
+Why?
+Well, it's a little weird, but I've started counting from 65.
+Which is weird, but not wrong.
+It's not bad per say.
+And I'm doing that only because, for this example,
+I'm kind of anticipating that capital A was 65.
+Now this is not the most elegant way to do this, to kind of hard code
+esoteric values that no one is ever expected to remember.
+>> But for now, notice that I'm doing this up through 65 plus 26.
+Because apparently I don't even want to do the arithmetic in my head.
+So I'll let the compiler do it.
+But then on each loop, each iteration of the loop, I'm incrementing i.
+>> So now this looks a little cryptic.
+But we should have the basic building blocks with which to understand this.
+%c is just a placeholder for a char.
+%i is a placeholder for an int.
+And it turns out that by using this new syntax, this parenthetical, so
+to speak, so a data type inside a parentheses,
+I can force the compiler to treat i not is an integer, but as a char.
+>> Thereby showing me the character equivalent of that number.
+Now down here, this code is pretty much identical.
+I just wanted to make super explicit the fact
+that I'm starting at 97, which is lowercase a.
+On up through 26 more letters.
+And I'm doing-- again, casting i, so to speak.
+Or type casting i, so to speak.
+>> From an int to a char.
+So the end result is going to be, frankly, information we already know.
+I'm going to make ascii-0 dot-- not dot c.
+Notice, you probably made that mistake as I just did accidentally.
+Make ascii-0.
+Now I'm going to do ./ascii-0.
+I'll zoom in, and unfortunately it's going to scroll off the screen.
+But we see an entire chart where a maps to 97, b maps to 98,
+and if we scroll up further A, of course, maps to 65.
+So this is only to say that what we've been preaching,
+there is this equivalence, is in fact the case in reality.
+So a quick modification of this.
+Let me open up ascii-1.c.
+And notice this clever, sort of, clarification of this.
+This is ascii-1.c, and notice this crazy thing.
+>> And this really gets to the heart of what computers are doing.
+Even though we humans would not count in terms of letters--
+I don't start thinking, all right a then b,
+and use those to count physical objects.
+You can certainly say that I want to initialize some variable called c--
+but I could have called this anything-- so c is initialized to capital A.
+>> Because at end of the day, the computer doesn't care what you're storing,
+it only cares how you want to present that information.
+How do you want the computer to interpret that pattern of bits?
+So this is not something I would generally recommend doing.
+It's really just an example to convey that you can absolutely
+initialize an integer to a char.
+Because underneath the hood of a char, of course,
+is just a number from 0 to 255.
+>> So you can certainly put it inside of an int.
+And what this also demonstrates is that we
+can convert from one type to another, here,
+ultimately printing the same thing.
+And in fact, this I will fix online-- was meant to say this, again, here.
+Let me clean this up online, and we'll see in an online walkthrough as needed,
+what was intended there.
+>> OK.
+So last example now involving a's and b's and then we'll
+take things up a notch.
+So with a's and b's and c's in the capitalization
+and the equivalence thereof, let's take a look at this example, here.
+Another code example.
+We'll open one that's already made, so we
+don't have to type it all out from scratch.
+>> And notice in anticipation we're using multiple header
+files, among which is our new friend, string.h.
+Now this looks, at first glance, a little cryptic.
+But let's see if we can't reason through what's going on here.
+First I get a string from the user, and I put that string in a variable
+called s.
+Copy paste from before.
+In line 22, I'm apparently doing exactly what
+I did a moment ago, I'm iterating over the characters in s.
+>> And the new tricks here are using string length, the minor optimization
+of storing the string length in n, rather than calling strlen again,
+and again, and again.
+And just checking that i is less than n.
+Now here, things get a little interesting.
+But it's just an application of this same new idea.
+What in English does s bracket i represent?
+>> AUDIENCE: Counting each character [INAUDIBLE].
+>> DAVID J. MALAN: Counting each character.
+And even more succinctly, s bracket i represent what?
+Would you say.
+Not to put you on the spot here.
+>> AUDIENCE: Well--
+DAVID J. MALAN: So if the word is-- if the string is Zamyla, which starts--
+AUDIENCE: --you deal with the characters separately--
+DAVID J. MALAN: Good.
+Exactly.
+The square bracket notation allows you to access each character individually,
+so s bracket 0 is going to be the first character in the string.
+s bracket 1 is going to be the second, and so forth.
+So the question I'm asking, here, in this condition is what?
+Is the i'th character of s greater than or equal to lowercase a?
+And what does this mean, here, with the double ampersands?
+AUDIENCE (TOGETHER): And.
+DAVID J. MALAN: And.
+It's just equivalent to this.
+And is not a keyword in C, you have to use, annoyingly, ampersand ampersand.
+And this, conversely, is asking is s's i'th character less than or equal
+to lowercase z?
+And again, here's where understanding the underlying
+implementation of a computer makes sense.
+Notice that, even though I have the dot dot dot over there,
+looks like a through z in lowercase are all contiguous values up from 97 on up.
+>> And same for uppercase starting at 65.
+So the takeaway, then, is that in English,
+how would you describe what line 24 is doing?
+Yeah?
+>> AUDIENCE: On 24 it's checking to see whether each character is a lowercase.
+DAVID J. MALAN: It's checking whether each character is a lowercase letter.
+So even more succinctly, is the i'th character of s lowercase?
+That's all we're expressing here logically,
+a little cryptically, but ultimately pretty straightforwardly.
+Is s's i'th character lowercase?
+>> If so, and here's where things get a little mind bending
+for just a moment, if so, go ahead and print out a character.
+So this is just a placeholder, but what character?
+Why am I doing s bracket i minus this expression here?
+>> Well notice the pattern here.
+The actual numbers don't matter so much.
+But notice that 97 is how far away from 65?
+>> AUDIENCE: 32.
+>> DAVID J. MALAN: 32.
+How far away is 98 from 66?
+>> AUDIENCE: 32.
+>> DAVID J. MALAN: Little c from big C?
+32.
+So there's 32 hops from one letter to another.
+So frankly I, could simplify this to that.
+But then I'm kind of hard coding this low level understanding
+that no reader is ever going to understand.
+So I'm going to generalize it as, I know the lowercase letters are bigger.
+I know the capital letters are smaller values, ironically.
+>> But this is effectively equivalent to saying subtract 32 from s bracket i.
+So in the context of these letters, if the letter
+happens to be a, lowercase a, and I subtract 32,
+what effect does that have, mathematically, on lowercase a?
+AUDIENCE: Capitalizes--
+DAVID J. MALAN: Capitalizes it.
+And indeed, this is why our program is called capitalize zero.
+This program either capitalizes a letter,
+after checking if it is indeed a lowercase letter.
+Otherwise, in line 30, what do I do if it's not a lowercase letter that I'm
+looking at at a particular iteration in the loop.
+Just print it out.
+>> So don't change stuff that's not even lowercase.
+Restrict yourself to little a through little z.
+Now this is fairly arcane.
+But at the end of the day, this is how we, once upon a time,
+had to implement things.
+If I instead open capitalize one, oh thank god.
+There's a function called to upper that can
+do everything we just did at a fairly low level.
+>> Now to upper is interesting because it is declared in a file,
+and you would only know this by checking the documentation,
+or being told, say, in class, where it exists, in a file called ctype.h.
+So this is another new friend of ours.
+And to upper does exactly what its name suggests.
+>> You can pass in, as an argument, between these parentheses, some character.
+I'm going to pass in the i'th character of s using our fancy new notation
+involving square brackets.
+And take a guess, what is the return value of to upper apparently going
+to be?
+A capital letter.
+A capital letter.
+>> So if I pass in lowercase a, hopefully, by definition of to upper,
+it's going to return an uppercase A. Otherwise,
+if it's not a lowercase letter in the first place, I just print it out.
+And indeed, notice the second friend here.
+Not just to upper exists, but is lower, which
+actually answers that question for me.
+>> Now whoever wrote these things, 10s of years ago, you know what?
+Implemented to upper and is lower using code like this.
+But again, consistent with this idea of abstracting away,
+sort of, lower level implementation details.
+And standing on the shoulders of people who came before us, using functions
+like to upper and is lower, which wonderfully enough are nicely
+named to say what they do, is a wonderful paradigm to adopt.
+>> Now, it turns out that if I read the man page for, say, to upper,
+I learn something else.
+So man toUpper.
+It's a little overwhelming.
+But notice, here's that mention of the header file that I should use.
+As an aside, because this is misleading, the function
+uses ints instead of chars for reasons of error checking.
+But we'll perhaps come back to that in the future.
+>> But notice, here, to upper converts the letter c to uppercase if possible.
+So that's pretty straightforward.
+And now let's be a little more specific.
+Let's look at the part of the man page under return value.
+The value returned is that of the converted letter.
+Or c, if the conversion was not possible,
+where c is the original input.
+Which I know from here, from the argument to to upper.
+>> So what is the takeaway of this?
+The value returned is that of the converted letter,
+or c, the original letter, if the conversion was not possible.
+What improvement can I therefore make to my code's design?
+Yeah?
+>> AUDIENCE: You can remove the else.
+DAVID J. MALAN: I can remove the else statement,
+and not just the else statement.
+>> AUDIENCE: You can remove [INAUDIBLE].
+>> DAVID J. MALAN: I can remove the whole fork
+in the road, the if else altogether.
+So indeed, let me open the final version of this,
+capitalize-2 and notice just how, if you will, sexy, the code is now getting,
+in that I've reduced from some seven or so lines to just four,
+the functionality that I intended by simply calling to upper,
+passing in s bracket i, and printing out, with the placeholder %c,
+that particular character.
+>> Now arguably, there is a bug, or at least the risk of a bug,
+in this program.
+So just to come back to an earlier takeaway,
+what should I probably also do in this program to make it more robust,
+so that there's no way it can crash, even in rare cases?
+AUDIENCE: Make sure it's not NULL.
+DAVID J. MALAN: Make sure it's not NULL.
+So really, to make this super proper, I should do something like,
+if s is not NULL, then go ahead and execute
+these lines of code, which I can then indent like that,
+and then put in my close brace.
+So good tying together of the two ideas.
+Yeah?
+AUDIENCE: Could you use a do while loop, instead?
+DAVID J. MALAN: Could I do a do while loop?
+AUDIENCE: --you want to make sure that you actually [INAUDIBLE].
+DAVID J. MALAN: Could you use a do while?
+Short answer, no.
+Because you're about to introduce another corner case.
+If the string is of zero length.
+If for instance, I just hit Enter, without ever typing Zamyla.
+I'm going to hand you back an actual string, as we'll eventually see,
+that has zero characters.
+It's still a string, it's just super short.
+But if you use a do while, you're going to blindly
+try to do something with respect to that string,
+and nothing's going to be there.
+>> AUDIENCE: Well, if you did do [INAUDIBLE] while s--
+DAVID J. MALAN: Oh I see, keep getting a string from the user.
+So short answer, you could, and keep pestering
+them to give you a string that's short enough to fit in memory.
+Absolutely.
+I just chose not to.
+If they don't give me the string I want, I'm quitting, I'm giving up.
+But absolutely, for that purpose, you could absolutely do that.
+>> So the library's header files that we're now familiar with are these, here.
+Standard I/O, CS50.h, string.h, ctype.h, and there are, indeed, others.
+Some of you have discovered the math library in math.h.
+But let me introduce you, now, to this resource that CS50 staff, Davin,
+and Rob, and Gabe particular have put together.
+That will soon link on the course's website.
+It's called CS50 reference.
+>> Which just to give you a quick taste of it, works as follows.
+Let me go to reference.cs50.net.
+You'll see on the left hand side an overwhelming list
+of functions that come with c.
+But if I care, for the moment, about something like strlen,
+I can type it there.
+It filters down the list to just what I care about.
+I'm going to click it.
+And now on the left, you'll see what we hope
+is a more straightforward, human friendly explanation of how
+this function works.
+>> Returns the length of a string.
+Here's a synopsis, here's how you use it in terms of the header file,
+and in terms of what the function looks like in terms of its arguments.
+And then here, returns the length of a string.
+But for those of you more comfortable, you can actually click more comfy,
+and the contents of this page, now, will change
+to be the default values of what you get by using the man page.
+>> In other words, CS50 reference is a simplification
+of man pages by the staff, for students.
+Particularly, those less comfortable and in between, so that you
+don't have to try to wrap your mind around, frankly,
+some fairly cryptic syntax and documentation sometime.
+>> So keep that in mind in the days to come.
+So here, again, is a Zamyla.
+Let's now ask a question that's a little more human accessible.
+Thanks to Chang, who's been printing more elephants
+nonstop for the past few days.
+We have an opportunity to give at least one of them away.
+If we could get just one volunteer to come on up to draw on the screen.
+How about here?
+>> Come on up.
+What is your name?
+ALEX: Alex.
+DAVID J. MALAN: Alex.
+All right.
+Alex, come on up.
+We're about to see your handwriting on the screen here.
+All right, nice to meet you.
+>> ALEX: Nice you meet you.
+>> DAVID J. MALAN: All right.
+So, super simple exercise.
+Bar is not high to get an elephant today.
+You are playing the role of getstring.
+And I'm going to just tell you the string that you've gotten.
+And suppose that you, getstring, have been called.
+And the human, like me, has typed in Zamyla, Z-A-M-Y-L-A.
+Just go ahead and write Zamyla on the screen as though you have gotten it
+and stored it somewhere in memory.
+>> Leaving room for what will be several other words-- that's OK, keep going.
+>> [LAUGHTER]
+>> So Zamyla, Excellent.
+So now suppose that you, getstring, are called again.
+And therefore, I provide you, at the keyboard, with another name, Belinda.
+All right.
+And now the next time getstring is called, I type in something like Gabe,
+G-A-B-E. You're really taking to heart random access memory.
+Which is drawing everything completely randomly.
+OK.
+>> [LAUGHTER]
+ALEX: Sorry my handwriting is bad.
+DAVID J. MALAN: No, that's OK.
+And how about Rob, R-O-B. OK.
+Good.
+So I didn't anticipate you would kind of lay things out in this way.
+But we can make this work.
+So how did you go about laying out these chars in memory?
+In other words, if we think of this rectangular black screen
+as representing a computer's RAM, or memory.
+>> And recall that RAM is just a whole bunch of bytes,
+and bytes are a whole bunch of bits.
+And bits are somehow implemented, generally
+with some form of electricity in hardware.
+So that's sort of the layering we've talked about
+and can now take for granted.
+How did you go about deciding where to write
+Rob versus Gabe versus Belinda versus Zamyla?
+>> ALEX: I just did it in the order that you told me.
+>> DAVID J. MALAN: And that is true.
+But what governed where you put Belinda's name and Gabe's name?
+>> ALEX: Nothing?
+DAVID J. MALAN: [LAUGHS] So that works, that's fine.
+So computers are little more orderly than that.
+And so when we implement-- stay there for just a moment-- when we actually
+implement something like getstring in a computer,
+Zamyla might be laid out pretty much like you did on the screen, there.
+>> And what is key to notice here, what Alex did,
+is there is kind of a demarcation among each of these words, right?
+You didn't write Z-A-M-Y-L-A-B-E-L-I-N-D-A-G-A-B--
+in other words, there's some kind of demarcation which seems to be,
+sort of, random spacing between these various words.
+But that's good, because we humans can now
+visualize that these are four different strings.
+It's not just one sequence of lots of characters.
+So a computer, then, meanwhile, might take a string like Zamyla,
+put each of those letters inside of a byte of memory.
+But that number is much bigger, of course, than six characters.
+>> There's a whole bunch of RAM.
+And so henceforth, this grid of boxes is going
+to represent what Alex just did here on the screen.
+And now, Alex, we can offer you a blue or an orange elephant from Chang.
+ALEX: I'll take a blue elephant.
+DAVID J. MALAN: A blue elephant.
+So a big round of applause, if we could, for Alex here.
+>> [APPLAUSE]
+>> ALEX: Thank you.
+DAVID J. MALAN: Thank you.
+So the takeaway is that, even though the pattern kind of changed over time, here
+on the board, there was this demarcation among the various strings
+that Alex got for us.
+Now computers, frankly, could do the same thing.
+They could kind of plop strings anywhere in RAM.
+Up here, over here, down here, down here.
+>> They could do exactly that.
+But, of course, that's probably not the best planning.
+Right?
+If I kept asking Alex to get names, probably he'd
+put some more down here, maybe up here, over here, over here, eventually
+over here.
+But with a bit more planning, certainly, we could lay things out more cleanly.
+And indeed, that's what a computer does.
+>> But the catch is that if the next string I get
+after Zamyla is something like the Belinda,
+propose where we might write the letter b with respect to this grid?
+Where would you go?
+To the right of the a, below the z, below the a?
+What would your first instincts be?
+AUDIENCE: Below the z.
+DAVID J. MALAN: So below the z.
+And that's pretty straightforward, right?
+It's kind of neat, it's what we do on a keyboard when we hit Enter,
+or an email when making a bulleted list of things.
+But the reality is that computers try to be more efficient,
+and cram certainly as much data into RAM as possible,
+so that you don't waste any bytes.
+So that you don't waste any screen real estate.
+And the problem, though, is that if we literally put the letter
+b after a, how are we going to know where Zamyla's name ends
+and the Belinda's name begins?
+So you humans just proposed, well, hit the Enter key, essentially.
+Put it down below.
+Or even as Alex did, just start writing the next name below the previous one,
+and below that one, and then below that one.
+That's a visual cue.
+>> Computers have another visual cue, but it's a little more succinct.
+It's this funky character.
+Backslash 0, which is perhaps reminiscent of backslash n,
+and so forth, now.
+The special escape sequences.
+Backslash 0 is the way of representing eight zero bits in a row.
+0000 0000.
+>> The way you express that is not to hit the number zero on your keyboard,
+because in fact that is an ASCII char.
+It looks like a number, but is actually a decimal number
+that represents the circular glyph, the circular typeface.
+Meanwhile, backslash zero means, literally
+put eight zero bytes here for me.
+>> So this is somewhat arbitrary.
+We could've used any pattern of bits, but the world
+decided some years ago, that to represent
+the end of a string in memory, just put a whole bunch of zeros.
+Because we can detect that.
+Now that means that no letter of the alphabet can be represented with zeros.
+>> But that's OK, we've already seen that we're using 65 on up in 97 on up.
+We didn't get anywhere close to all zeros.
+So Belinda in a computer's memory is actually going to go here.
+I've drawn it in yellow just to draw our attention to it.
+And notice, too, this is completely arbitrary.
+I've drawn it as a grid.
+Like, RAM is just some physical object.
+It doesn't necessarily have rows and columns, per se.
+It's just got a whole bunch of bytes implemented in hardware somehow.
+But if after Belinda I typed in Gabe's name,
+he's going to end up here in memory, and if I typed in Daven's name,
+for instance, he's going to end up here.
+And I can continue to write even more names.
+>> Unfortunately, if I try to write a super long name,
+I might eventually run out of memory.
+In which case, getstring is going to return NULL, as we said.
+But thankfully, at least in this visual here, we didn't get quite that far.
+>> Now what's nice is that this general idea of treating things
+as being in boxes is representative of a feature of C
+and a lot of languages, known as an array.
+An array is another type of data.
+It's a data structure, if you will.
+Structure in the sense of it really, kind of, looking like a box, at least
+in your mind's eye.
+An array is a contiguous sequence of identical data types,
+back to back to back to back.
+>> So a string, in other words, is an array of chars.
+An array of characters.
+But it turns out you can have arrays of bunches of things.
+In fact, we can put even numbers in an array.
+So the form in which we're going to start
+declaring this data structure known as an array
+is also going to use square brackets.
+But these square brackets are going to have different meaning in this context.
+>> And let's see it as follows.
+Suppose that I opened up a new file here.
+And I save this as ages.c.
+And I'll save this in my folder here.
+And now I'm going to go ahead and start typing something
+like include CS50.h, include stdio.h, int main void.
+And then inside of here, I want to first have an int called age.
+>> And I'm going to use that to get an int from the user for his or her age.
+But this program is meant to be used by multiple people, for whatever context.
+I've got a line of people.
+All of them have to type in their age for maybe some, I don't know,
+competition, or event that they've arrived for.
+So the next person, I need another variable.
+>> Because if I just do age gets getInt, that's
+going to clobber, or overwrite the previous person's age.
+So that's no good.
+So my first instinct might be, oh, all right,
+if I want to get multiple people's ages-- let's call this age1,
+int age2 gets int, int age3 gets getInt.
+And now I'm going to use some pseudocode code here.
+>> Do something with those numbers.
+We'll leave for another day what we're doing there, because we only
+care for the moment about age1, age2, age3.
+Unfortunately, once I compile this program
+and put it in front of actual users, what's the fundamentally poor design
+decision I seem to have made?
+Yeah?
+AUDIENCE: [INAUDIBLE]
+DAVID J. MALAN: Yeah, I haven't even tried
+to figure out how many ages do I actually care about?
+If I have fewer than three people here, and therefore fewer than three ages,
+I'm still blindly expecting three.
+God forbid four people show up.
+My program just won't even support them.
+>> And so this, long story short, is not a good habit.
+Right?
+I was essentially copying and pasting code and just tweaking
+the variable names.
+And, my god, if you had, not three ages, but 10, or 100, or even 6,500
+undergraduates, for instance.
+This is not going to be particularly elegant code, or sustainable.
+You're going to have to rewrite the program every time
+your number of people changes.
+>> So thankfully, in our actual ages.c file for today,
+we have a more clever solution.
+First, I'm going to borrow the construct we've used a few times,
+this do while loop, in order to get the number of people in the room.
+I'm just going to pester the user, again and again, until he or she gives me
+a value of n that's a positive integer.
+>> I could have used, last time's get positive int.
+But we don't have that for real, so I went ahead
+and re implemented this idea.
+Now down here, this is the new trick.
+In line 27, as the comments in line 26 suggests,
+declare an array in which to store everyone's age.
+>> So if you want to get, not one int, not two ints, but a whole bunch of ints.
+Specifically n integers, were n might be three, might be 100, might be 1,000.
+The syntax, quite simply, is to say, what data type do you want?
+What do you want to call that chunk of memory?
+What do you want to call the grid that looks like this pictorially?
+>> And in brackets here, you say how big you want the array to be.
+And so earlier, when I said the syntax is a little different here,
+we're still using square brackets, but when I'm declaring an array,
+the number inside of the square brackets means
+how big do you want the array to be.
+>> By contrast, when we were using s bracket i a moment ago, s, a string,
+is indeed an array of chars, but when you're not declaring a variable,
+as with this keyword here, you're simply getting
+a specific index, a specific element from that array.
+Once we know that, the rest of this is straightforward.
+If new I'm first going to print out what's the age of person number i.
+Where I just say person number one, person number two, person number three.
+>> And I'm just doing arithmetic, so that like normal people,
+we count from one for this program, and not from zero.
+Then I call getint, but I store the answer in ages bracket i.
+Which is the i'th age in the array.
+So whereas last time we were treating these boxes as chars for Zamyla's name,
+and others.
+Now, these boxes represent 32 bits, or four bytes
+in which we can store an int, an int, an int.
+All of which, again, are the same data type.
+>> Now I do something silly, like time passes, just
+to justify writing this program.
+And then down here, I again iterate over the array saying a year from now,
+person number one will be something years old.
+And to figure out that math-- I mean, this
+is not very complicated arithmetic-- I just add one to their age.
+Just to demonstrate, again, this.
+>> Just as I can index into a string, s, so can I index into an array of ages,
+like that there.
+So where is this going to be taking us?
+So we will see, ultimately, a few things in the days to come.
+One, all this time, when writing your own programs,
+like Mario, greedy, credit.
+You've been typing the name of the program and hitting Enter.
+And then getting the user's input.
+>> With getString, getInt, getLongLong, or the like.
+But it turns out that C supports something called command line
+arguments, which is going to let us actually get at words that you type,
+at the blinking prompt, after your program's name.
+>> So in the days to come, you might type something like Caesar,
+or ./caesar number 13, thereafter.
+We'll see how that works.
+Because indeed, in problem set two, we're
+going to introduce you to a little something
+reminiscent of Ralphie's challenge earlier of cartography.
+The art of scrambling information.
+This, in fact, is very reminiscent of what Ralphie did.
+>> This is an example of an encryption algorithm called rot13, R-O-T 13.
+Which simply means rotate the letters in the alphabet 13 places.
+And if you do that, you'll see now what is, perhaps, a familiar phrase.
+But the way we're going to use this, ultimately, is more generally.
+>> In P set two, in the standard edition, you'll implement a couple of ciphers,
+one called Caesar, one called Vigenere.
+Both of them are rotational ciphers, in that somehow you
+turn one letter into a different letter.
+And Caesar is super simple.
+You add one, you add 13, or some number up to 26.
+Vigenere does that on a per letter basis.
+So Vigenere, as you'll see in the spec, is more secure.
+>> But at the end of the day what you'll be implementing and P set two,
+is that key that you use both for encryption and decryption.
+Referring to the process of turning plain text, some original message,
+into cypher text, which is something encrypted.
+And then decrypting it again.
+>> In the hacker edition, meanwhile, you'll be
+tasked with something similar in spirit, where we'll give you
+a file, from a typical Linux, or Mac, or Unix computer called etsy
+password, which contains a whole bunch of usernames and passwords.
+And those passwords have all been encrypted, or hashed,
+so to speak, more properly as you'll see in the spec.
+>> And the hacker edition will challenge you with taking an input like this,
+and cracking the password.
+That is, figuring out what the human's password actually was.
+Because, indeed, passwords are generally not stored in the clear,
+and generally passwords should be hard to guess.
+That's not often the case.
+>> And what I thought we'd do is conclude with a couple minutes
+glance at a particularly poor choice of passwords
+from a film you might recall fondly.
+And if not, you should rent.
+>> [VIDEO PLAYBACK]
+>> -Helmet, you fiend, what's going on?
+What are you doing to my daughter?
+>> -Permit me to introduce the brilliant young plastic surgeon,
+Doctor Phillip Schlotkin.
+The greatest nose job man in the entire universe and Beverly Hills.
+>> -Your Highness.
+>> -Nose job?
+I don't understand.
+She's already had a nose job.
+It was her sweet 16 present.
+>> -No, it's not what you think.
+It's much, much worse.
+If you do not give me the combination to the air shield,
+doctor Schlotkin will give your daughter back her old nose.
+-[GASPS] Nooooooooooooo.
+Where did you get that?
+>> -All right.
+I'll tell, I'll tell.
+>> -No, Daddy, no.
+You mustn't.
+>> -You're right my dear.
+I'll miss your new nose.
+But I will not tell them the combination no matter what.
+>> -Very well.
+Doctor Schlotkin, do your worst.
+>> -My pleasure.
+>> -No!
+Wait, wait.
+I'll tell.
+I'll tell.
+>> -I knew it would work.
+All right, give it to me.
+>> -The combination is one.
+>> -One.
+>> -One.
+-Two.
+-Two.
+-Two.
+-Three.
+-Three.
+-Three.
+-Four.
+-Four.
+-Four.
+-Five.
+-Five.
+-Five.
+-So the combination is one, two, three, four, five.
+That's the stupidest combination I ever hear in my life.
+That's the kind of thing an idiot would have on his luggage.
+>> -Thank you, your highness.
+>> [REMOTE CLICKS]
+>> -What did you do?
+>> -I turned off the wall.
+>> -No, you didn't, you turned off the whole movie.
+>> -I must've pressed the wrong button.
+>> -Well, put it back on!
+Put the movie back on!
+>> -Yes, sir!
+Yes, sir.
+-Let's go, Arnold.
+Come, Gretchen.
+Of course you know I'll have to bill you for this.
+-Well?
+Did it work?
+Where's the king?
+>> -It worked, sir, we have the combination.
+-Great.
+Now we can take every last breath of fresh air from planet Druidia.
+What's the combination?
+>> -One, two, three, four, five.
+>> -One, two, three, four, five?
+-Yes.
+-That's amazing.
+I've got the same combination on my luggage.
+Prepare Spaceball 1 for immediate departure.
+>> -Yes, sir.
+>> -And change the combination on my luggage.
+[DOOR CLOSING SOUND]
+[CLINK OF DOORS HITTING HELMET]
+-Ahh.
+[END VIDEO PLAYBACK]
+DAVID J. MALAN: That's it for CS50, we'll see you next week.
+NARRATOR: And now, Deep Thoughts, by Daven Farnham.
+>> DAVEN FARNHAM: Coding in C is so much harder than Scratch.
+printf, Scratch was a lie.
+>> [LAUGHTER SOUNDBITE]

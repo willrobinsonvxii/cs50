@@ -1,0 +1,1066 @@
+>> [MUSIC PLAYING]
+>> SPEAKER 1: All right, this is CS50, and this is the start of week four,
+and as you may have heard or read, the world has been ending.
+Going all around the internet has been knowledge and awareness
+of a bug in a program, a programming language called Bash.
+This has been wonderfully branded as Shellshock, or the Bash door,
+but articles like these have not been uncommon.
+And in fact, many of them bring back memories of Heartbleed,
+which you may have noticed in the press back this past spring, which
+was similarly fairly dramatic.
+Now of those of you here today, how many of you have,
+even if you don't understand what it's all about, heard of Shellshock?
+All right, and how many of you have computers that are vulnerable?
+OK, there should be far, far more hands up right now, for reasons we shall see.
+>> Let's take a look at what's been going on in the media
+and then explain it a bit here for us technically.
+>> SPEAKER 2: Security experts have warned that a serious flaw could
+be about to affect hundreds of millions of the world's web users.
+So what exactly is the bug that's been dubbed Shellshock, and what does it do?
+Well, Shellshock is also known as the Bash bug, the software it exploits.
+Hackers use the virus to scan vulnerable systems running Linux and Unix
+operating systems and then infect them.
+Bash is a command line shell.
+This lets users issue commands to launch programs and features within software
+by typing in text.
+It's typically used by programmers, and shouldn't be open to the wider world,
+though Shellshock changes that.
+>> Well, worringly, some analysts warn it could be a bigger threat,
+because Shellshock allows complete control of an infected machine,
+whereas Heartbleed only allowed hackers to spy on computers.
+It's so serious, it's been rated a 10 out of 10
+for severity by the National Vulnerability Database.
+2/3 of all web servers are at risk, including some Mac computers.
+Well, make sure you patch your systems now.
+Anyone hosting a website running the affected operating systems
+should take action as soon as possible.
+Anyone who can afford it should look to their monitoring and web application
+firewalls to look out for any attacks.
+SPEAKER 3: Worst thing that could happen is
+that somebody would write code that would automatically go and scan
+the internet and would affect all of these computers.
+And once they do that, well, the worst thing they could do
+is just delete everything, or shut the sites down.
+So we could see damage from that point of view,
+where we would have malicious people who just decide to cause havoc
+by bringing systems down or deleting files, and things like that.
+SPEAKER 2: Some say this is one of the most difficult to measure
+bugs in years, and it may take weeks or even
+months to determine its ultimate impact.
+>> SPEAKER 1: So all of that is true, but the funny thing is, almost all
+of the imagery you just saw, except for maybe the keyboard,
+has nothing to do with the bug whatsoever.
+Servers and wires and so forth, it's sort of tangentially related,
+but at the core it's actually pretty familiar what's going on here.
+In fact, let me go into our CS50 appliance.
+Let me go ahead and maximize the terminal window here.
+And you guys have been using this, or the embedded version thereof,
+in gedit in order to write programs, type commands, and so forth,
+and this is actually, and has been for weeks, Bash, B-A-S-H.
+This is the Bourne-again shell, which is just a fancy way of saying,
+this is a program that has a blinking prompt, effectively,
+that sits there waiting for input for you.
+And it's the command line interface via which
+you guys have been running commands and ultimately compiling and then running
+programs.
+>> But Bash is also a programming language in the following sense.
+You know that there are commands like cd and ls and also clang and others,
+but you can define your own commands by implementing them in Bash.
+Now we're not going to go into great detail
+as to Bash the programming language, but know, for instance, that at the moment,
+there's no command called "hello."
+So it can be found in one of these packages.
+It's not installed on my computer.
+Ask your administrator.
+But if I want there to be a program called "hello" in Bash or at my prompt,
+I can actually use syntax that's quite like C. It's not quite the same,
+but it looks pretty similar to a function, albeit missing some details.
+Nothing seems to happen, but now if I type "hello,"
+you can actually write a program, not in C, not in Java,
+not in another programming language, but in Bash itself.
+>> Now the key here is that I wrote the name I wanted to give this new command,
+and the parentheses are also symbolic of this being a function.
+As an aside, you can also do fun things, and in fact, even on Mac OS,
+this is a program called Terminal.
+It comes built into anyone's computer that has a Mac in this room,
+and you can do similar things in Mac OS, but you can go more beyond that.
+And this is a little tangential, but it's kind of fun.
+I was reminded this morning, when thinking this through,
+of a little game I used to play with one of CS50's former TFs
+whereby any time he would walk away from his keyboard with his screen unlocked,
+I would execute a command like this-- "say hello."
+And now any time he came back to his keyboard after I cleared the screen
+and he would sit down, try to do some work,
+list the contents of his directory--
+>> [AUDIO PLAYBACK]
+>> -Hello.
+Hello.
+>> SPEAKER 1: So, in fairness, it wasn't actually "hello."
+It was usually something more akin to that--
+[AUDIO PLAYBACK]
+-Beep.
+SPEAKER 1: --that I would-- so his computer would
+swear at him any time he actually sat down at his keyboard.
+And very quickly he figured out not to leave his screen unlocked.
+But this suggests the sort of stupid fun that you
+can have with something like Bash.
+But it's a little more serious, to be sure, than that.
+And in fact, this is one of the most dangerous and long-lasting bugs
+that has really hit the world globally.
+This bug has been around for some 20 years,
+and you'll be struck in just a moment by its relative simplicity.
+>> So this is a representative command that if you
+own a Mac, literally right now when you have your lid open,
+you can try typing into that program called Terminal.
+Terminal is under Applications Utilities--
+for once, Windows users don't have to worry about this particular threat--
+but those of you with Macs can type this into a window like I'll do here,
+and if you do type that into this program
+called Terminal, like I'll do now, if you see the word "vulnerable,"
+your computer is vulnerable to exploitation.
+>> Now what does that actually mean?
+And this is admittedly some pretty crazy syntax,
+but let's at least draw out some of the interesting aspects.
+So there's some syntax that looks a little familiar, at least from C
+and programming more generally.
+I see some parentheses, semicolons, curly braces, and such,
+but it turns out that this stupid thing here in yellow
+is essentially a function that does nothing.
+The colon means do nothing, and the semicolon means stop doing nothing.
+So inside of these curly braces, the fact
+that I have an equal sign to the left, this
+is essentially creating a command, or a variable,
+called x, and assigning it that yellow bit of code there.
+That could be something like "echo hello" or "say beep" or something
+akin to that.
+But notice if your eyes wander further to the right,
+there's more to this line than just the end of that semicolon.
+"Echo vulnerable," and then beyond that there's even more.
+Another semicolon, bash -c:.
+>> So long story short, this line of code is
+sufficient for compelling a computer that's
+vulnerable to doing something that you want it to do,
+because there's a bug in Bash whereby even though Bash was supposed to stop
+reading lines of command right there after the yellow text,
+for a 20-plus year old bug, Bash has actually been reading
+beyond that semicolon and pretty much doing what it is told.
+>> So what's the implication of that ultimately?
+I just said "echo hello" or "echo vulnerable,"
+but what if you did something actually malicious, like rm -rf *,
+which you might not have ever typed before,
+and frankly you probably shouldn't too soon,
+because you can do a lot of damage with it.
+Why?
+rm does what, of course?
+Removes.
+* means what?
+All.
+So it's a so-called wild card, so it means
+delete everything in the current directory.
+-r happens to mean recursive, which means if what you're deleting
+is a directory, and inside of there is other files and other directories,
+recursively dive into there and delete all of that.
+And -f is the worst of them all.
+Anyone know what -f means here?
+Force.
+So force means, even if this is a bad idea,
+do it without prompting me for further confirmation.
+So, you know, we laugh at this, but frankly, I probably
+type this multiple times a day, because the reality
+is it's the fastest way to delete a whole bunch of stuff.
+But even I have done some damage.
+>> But if you were to trick a computer into defining some stupid variable
+or function called x, but then tricking the computer into executing
+beyond the boundaries of that function, beyond that semicolon,
+you could indeed trick a computer into executing something like rm -rf
+or the Email command or the Copy command.
+Anything literally you can do with the computer, whether it's deleting files,
+creating files, spamming someone, attacking some server remotely,
+if you can express it with a command, you
+can trick a computer into doing that.
+>> Now what's an example of how you might do this?
+Well, there's a lot of computers on the internet running Bash.
+All of us Mac users are among them.
+A lot of Linux servers are among them as well, and Unix servers.
+Windows again gets relatively off the hook
+unless you've installed special software.
+Now a lot of servers, for instance, run web servers,
+and in fact Linux is perhaps the most popular operating system
+to run on computers on the internet that are serving up web pages.
+Now as we'll see later in the semester, when
+you send a request from your browser-- Chrome,
+Internet Explorer, whatever-- to a remote server,
+it turns out that even though you just typed www.example.com,
+your browser is sending a message that's a little more arcane, like this.
+>> But notice a little something strange.
+The first two lines I've never seen before,
+but they don't look particularly threatening.
+But notice what I've stolen for the third line here.
+If a bad guy were to send a message like this from his or her computer
+to a vulnerable Mac or a vulnerable Linux server,
+the funny thing is that Bash, that simple little command prompt,
+is omnipresent and is often used to essentially execute
+the contents of a message that it receives.
+And by that logic, you can trick a web server, therefore,
+by sending something like User-Agent, which usually
+is supposed to say the name of your browser.
+User-Agent Chrome, User-Agent Internet Explorer, User-Agent Firefox, this
+is just your browser's way of identifying itself.
+But if a bad guy very cleverly says, mm-mm, I'm
+not going to tell you what my browser is,
+I'm instead going to send you this cryptic-looking thing with an rm -rf
+* in it, you can literally trick a vulnerable web server on the internet
+into executing exactly that in there for deleting all of the files.
+And frankly, that's not even the worst of it.
+You can do anything.
+You could start a distributed denial of service attack
+if you sent this message to whole bunches of web servers
+and then had them all descend, for instance, on Harvard.edu servers,
+and you can sort of bang the heck out of them
+by a network traffic that was otherwise triggered by this bad guy.
+>> So, long story short, almost everyone in this room who owns a Mac
+is vulnerable to this.
+The silver lining is that unless you're running a web server on your laptop,
+and unless you've actually configured it to allow something like SSH into it,
+you're actually safe.
+It's vulnerable, but there's no one trying to get into your laptop,
+so you can sort of rest assured.
+However, Apple will soon be updating a fix for this.
+The world of Linux has already released a number of fixes for Fedora and Ubuntu
+and other versions of Linux, and indeed if you run update 50 in the appliance,
+even that too will be updated and corrected.
+But that too has not really been vulnerable,
+because unless you've tinkered with the appliance
+and made your laptop publicly accessible on the internet, which is not
+by default, you've actually been fine because
+of firewalling and other techniques.
+>> But it's an extreme example of a bug that we've lived for for literally 20
+years, and who knows if someone all this time has known about it?
+And in fact, this is one of the fundamental challenges
+that we'll see later in the semester about security,
+is that just like in the real world, the good guys are at the disadvantage.
+To keep the bad guys out, we have to make sure that every door is locked,
+that every window is secure, that every point of entry into a home
+is secure to keep the bad guys out.
+But what does the bad guy have to do to actually compromise your home
+and steal from you?
+He or she just has to find one unlocked door, one broken window, or something
+along those lines, and it's the same thing in computer security.
+We can write millions of lines of programming code
+and spend hundreds or thousands of hours trying to get it correct,
+but if you make just one mistake in correctness,
+you can put the entire system and indeed in this case, the entire internet
+and world at risk.
+>> So if you'd like to learn more about this, go to this URL here.
+There's no need for action tonight unless you're
+among those more comfortable that have been running your own web
+server, in which case you should, in fact, update your software.
+>> And this too is the title of a speech, and now a paper,
+that we've linked on the course's website for today.
+It was by a fellow named Ken Thompson, who
+was accepting a very famous award in computer science,
+and he gave this speech some years ago, essentially on this same topic.
+Asking folks the question, should you really
+trust, ultimately, the software you've been given?
+For instance, we all have been writing programs,
+and we've been compiling them with Clang.
+And to your knowledge, have you written any programs for CS50 where there's
+a back door of sorts, there's a way that a bad guy, if running your program,
+could take over your computer?
+Probably not, right?
+Mario, and Greedy, and Credit.
+These are all pretty small programs.
+You'd have to be pretty bad if you actually
+made your whole computer vulnerable after writing 10 or 20 lines of code,
+or at least unaware of some of the security implications.
+Now I say that facetiously, but we're going to see today
+and this week it's actually really, really easy
+to be bad and make even short programs vulnerable.
+>> But for now, at least, realize that the question being asked here
+is about Clang in a compiler.
+Why have we been trusting Clang for the past two or three weeks?
+Who's to say that whoever wrote Clang didn't have an "if" condition in there
+that essentially injected some zeros and ones into every program it compiles
+that would let him or her access your computer when you're asleep
+and your laptop lid is open and your computer is running?
+Right?
+We have this sort of honor system right now where we trust that Clang is legit.
+You trust that the appliance is legit.
+You trust that literally every program on your Mac or PC is trustworthy.
+And as this simple bug suggests, even if it's not malicious,
+that's absolutely not likely to be the case.
+>> So you should be scared as hell.
+Frankly, there's no simple solution to this other
+than a sort of societal awareness of the increasing complexity
+that we're building on top of our computer systems,
+and how increasingly vulnerable we might very well be.
+>> Now with that said, Breakout.
+So Breakout is problem set three, and Breakout is a game from yesteryear
+that you might recall, but for us in problem set three,
+it allows us to take things back up a notch
+so that when we are writing programs, even in a Terminal window like this,
+we can actually run, ultimately, graphical programs not
+unlike those we had access to in Scratch.
+So this is the staff's implementation of Breakout,
+which is just this brick-breaking game, that you move your paddle back
+and forth, and you hit the ball against those colored bricks up top.
+So this is bringing us sort of back to where
+we were able to be very quickly with Scratch, and now with C,
+implementing our own graphical user interfaces.
+>> But more than that, this problem set represents the first
+in which we're giving you a bunch of code.
+And in fact, I bring explicit attention to this, because especially
+for those less comfortable, this problem set, at least at first glance,
+is going to feel like we've taken it up a notch.
+Because we've given you, for some of the search
+and sorting problems in the pset, a bunch of code that we wrote,
+and a couple of comments that say "to do,"
+where you have to fill in the blanks.
+So not too scary, but it's the first time
+we're handing you code that you need to first read, understand, and then add to
+and complete it.
+>> And then with Breakout, we're going to do the same,
+giving you a few dozen more lines of code that, frankly, give you
+a lot of the framework for the game but stop short
+of implementing the bricks and the ball and the paddle,
+but we do implement some other features.
+And even that at first glance, again, especially if less comfortable,
+might seem particularly daunting and you think there's so many new functions
+you need to wrap your mind around, and that's true.
+But keep in mind, it's quite like Scratch.
+Odds are you didn't use all of the puzzle pieces in Scratch.
+Odds are you didn't care to wrap your mind around all of them
+because all it took was a quick glance to understand, oh,
+that's what I can do with that puzzle piece.
+And indeed, in problem set 3 spec, we'll point you
+at the documentation that will introduce you to some new functions,
+and ultimately the programming constructs you use.
+Conditions, loops, variables, and functions
+will be identical to what we've seen thus far.
+>> So indeed, what we'll give you is some sample code that
+lets you create a window that looks not unlike this,
+and ultimately turn it into something quite like this.
+So take advantage of CS50, discuss office hours and more,
+and take comfort in the fact that the amount of code you have to write
+is actually not all that much.
+The first challenge is just to acclimate yourself to some code we've written.
+>> Any questions on pset3, Shellshock, or otherwise?
+>> AUDIENCE: It seemed like going through with Breakout
+that the code is almost an object-oriented style,
+but I thought C was an object-oriented program.
+SPEAKER 1: An excellent question.
+So in looking through the distribution code, the code
+we wrote for pset3, for those familiar, it
+looks like it's a little object-oriented.
+Short answer is, it is.
+It's an approximation of how you might do object-oriented code using
+a language like C, but it is still ultimately procedural.
+There are no methods inside of the variables, as you'll see.
+But it is reminiscent of that.
+And we'll see that feature again when we get to PHP and JavaScript
+toward the end the semester.
+But for now, think of it as a hint of what's to come.
+Good question.
+All right.
+So merge sort was how we left things last time.
+And merge sort was cool in the sense that it was so much faster,
+at least based on the cursory tests we did last week, than, say, bubble
+sort, selection sort, insertion sort.
+And what was neat too is just how succinctly and cleanly
+you can express it.
+And what did we say it was an upper bound on the running time of merge
+sort?
+Yeah?
+>> AUDIENCE: n log n?
+>> SPEAKER 1: n log n, right. n log n.
+And we'll come back to what that really means or where that comes from,
+but this was better than what running time
+that we saw for bubble selection and insertion sort?
+So n squared. n squared is bigger than this,
+and even if it's not quite obvious, know that log n is smaller than n,
+so if you do n times something smaller than n,
+it's going to be less than n squared.
+It's a bit of intuition there.
+But we paid a price for this.
+It was faster, but a theme that started to emerge last week was this tradeoff.
+I got better performance time wise, but what
+did I have to spend on the other hand, in order to achieve that?
+>> AUDIENCE: Memory.
+SPEAKER 1: Say again?
+AUDIENCE: Memory.
+SPEAKER 1: Memory, or space more generally.
+And it wasn't super obvious with our humans,
+but recall that our volunteers were stepping forward and stepping
+back as though there's an array here, and as though there's
+a second array here that they could use, because we
+needed someplace to merge those folks.
+We couldn't just swap them in place.
+So merge sort leverage is more space, which
+we didn't need with the other algorithms,
+but the upside is that it's much faster.
+And frankly, in the real world space these days-- RAM, hard disk space--
+is relatively cheap, and so that's not necessarily a bad thing.
+>> So let's take a quick look, a little more methodically, at what we did
+and why we said it was n log n.
+So here are the eight numbers and the eight volunteers we had last time.
+And the first thing that Merge Sort told us to do was what?
+AUDIENCE: Divide in two.
+SPEAKER 1: Say again?
+AUDIENCE: Divide in two.
+SPEAKER 1: Divide in two, right.
+This is very reminiscent of the phone book, of divide
+and conquer more generally.
+So we looked at the left half.
+And then once we said, sort the left half of the elements,
+what did we next say?
+Sort the left half of the left half, which allowed us to,
+after dividing in two, focus on four and two.
+>> How do you sort a list now, in yellow, of size two, using Merge Sort?
+Well divide it in half, and sort the left half.
+And this was where things got a little stupid briefly.
+How do you sort a list that's of size one, like this number four here?
+It's sorted.
+You're done.
+>> But then how do you sort a list of size one when it's the number two?
+Well, same thing, but now what was the third and the key step in Merge Sort?
+You had to merge the left half and the right half.
+And once we did that, we looked at four, we looked at two.
+We decided all right, obviously two comes first,
+so we put two in its place, followed by four.
+And now you have to kind of rewind, and this is sort of characteristic
+of an algorithm like Merge Sort, rewind in memory.
+What was the next line of the story?
+What should I be focusing on next?
+The right half of the left half, Which is six and eight.
+>> So let me just step through this without belaboring the point too much.
+Six and eight, then six is sorted, eight is sorted.
+Merge them together like that, and now the next big step
+is, of course, sort the right half from the very first step of this algorithm.
+So we focus on one, three, seven, five.
+We then focus on the left half.
+The left half of that, the right half of that, and then merge in one and three.
+Then the right half, then left half of it, then the right half of it.
+Merge it in, and now what step remains?
+Merge the big left half and the big right half, so one goes down there,
+then two, then three, then four, then five, then six, then seven, then eight.
+>> So now why is this ultimately revealing, especially if n and logarithms more
+generally rather escape you, at least in recent memory?
+Well, notice the height of this thing.
+We had eight elements, and we divided it by two, by two, by two.
+So log base two of eight gives us three.
+And trust me on that if a little hazy on that.
+But log base two of eight is three, so we've done three layers of merging.
+And when we merged elements, how many elements
+did we look at on each of those rows?
+A total of n, right?
+Because to merge the top row, even though we did it piecemeal,
+we ultimately touched every number once.
+And in the second row, to merge those lists of size two,
+we had to touch each element once.
+And then here really clearly in the last row,
+we had to touch each of those elements once, but only once,
+so herein lies, then, our n log n.
+>> And now just to make things a little more formal for just a moment, if you
+were to now analyze this at a sort of higher level
+and try to decide, well how might you go about expressing
+the running time of this algorithm just by looking at it and not
+by using a contrived example?
+Well, how much time would you say a step like this in yellow would take,
+if n<2 return?
+That's a big O of what?
+So I'm seeing one, so one step, maybe two steps because it's if
+and then return, but it's constant time, right?
+So we said O(1), and that's how I'll express this.
+T, just be running time.
+n is the size of the input, so T(n), just a fancy way
+of saying the running time given input of size n
+is going to be on the order of constant time, in O(1).
+>> But otherwise, what about this?
+How would you express the running time of this yellow line?
+T of what?
+You can kind of cheat here and answer my question cyclically.
+So if the running time in general we just say is T(n).
+And now you're kind of punting here and saying, well, just sort the left half,
+and then sort the right half.
+How might we symbolically represent the running time of this yellow line?
+T of what?
+What's the size of the input?
+n over two.
+Why don't I just say that?
+And then this is another T(n/2) and then again, if I merge two sorted halves,
+how many elements am I going to have to touch total?
+n.
+So I can express this, just to be kind of fancy,
+as the running time in general.
+T(n) is just the running time of T(n/2), plus T(n/2), left half and right half,
+plus O(n), which is probably n steps, but maybe, if I'm using two fingers,
+it's twice as many steps, but it's linear.
+It's some number of steps that's a factor of n,
+so we might express this as this.
+And this is where now we'll punt to the back of our high school math textbook
+we're that recurrence ultimately ends up equaling this, n times log n,
+if you actually do out the math more formally.
+>> So that's just two perspectives.
+One numerically with a hard-coded representative example
+using eight numbers, and a more general look at how we got there.
+But what's really interesting here is, again, this notion of cycling.
+I'm not using for loops.
+I'm kind of defining something in terms of itself,
+not only with this mathematical function,
+but also in terms of this pseudo code.
+This pseudo code is recursive in that two of its lines
+is essentially telling it to go use itself to solve a smaller
+problem of smaller size, and then again and again
+and again until we whittle it down to this so-called base case.
+>> So let's actually draw a more compelling take-away from this as follows.
+Let me go into gedit and take a look at some of today's source code,
+in particular this example here.
+Sigma 0, which apparently adds the numbers one through n.
+So let's see what's familiar and unfamiliar here.
+First we have a couple of includes, so nothing new there.
+Prototype.
+I'm a little hazy on this after few days,
+but what did we say a prototype of a function is?
+AUDIENCE: [INAUDIBLE].
+SPEAKER 1: What's that?
+AUDIENCE: We announce it.
+SPEAKER 1: We announce it.
+So you are teaching Clang, hey, not actually implementing this yet,
+but somewhere in this file, presumably, is going to be a function called what?
+Sigma.
+And this is just a promise that it's going to look like this.
+It's going to take an integer as input-- and I can be more explicit
+and say int n --and it's going to return an int,
+but semicolon means, mm, I'll get around to implementing this a little later.
+Again, Clang is dumb.
+It's only going to know what you tell it top to bottom,
+so we need to at least give it a hint of what's to come.
+>> Now let's look at main here.
+Let's scroll down here and see what main is doing.
+It's not that long of a function, and in fact the construct here is familiar.
+I declare a variable n, and then I pester the user again and again
+for a positive integer using getInt, and only exit out of this loop
+once the user has complied.
+Do While, we've used to pester the user in that way.
+Now this is interesting.
+I declare an int called "answer."
+I assign it the return value of a function called "sigma."
+I don't know what that does yet, but I remember declaring it a moment ago.
+And then I'm passing in the value that the user typed in, n,
+and then I report the answer.
+Well let's scroll back for just a moment.
+Let's go ahead into this directory, make sigma 0, and actually run this program
+and see what happens.
+So if I go ahead and run this program, ./sigma-0,
+and I type in a positive integer like two, Sigma,
+as the Greek symbol implies, is just going to add up all the numbers from
+zero on up to two.
+So 0 plus 1 plus 2.
+So this should hopefully give me 3.
+That's all it's doing.
+And similarly, if I run this again and I give it the number three,
+that's 3 plus 2, so that's 5, plus 1 should give me 6.
+And then if I get really crazy and start typing in bigger numbers,
+it should give me bigger and bigger sums.
+So that's all.
+>> So what does sigma look like?
+Well, it's pretty straightforward.
+It's how we might have implemented this for the past couple of weeks.
+"int" is going to be the return type.
+Sigma is the name, and it takes a variable m instead of n.
+I'll change that up top.
+Then this is just a sanity check.
+We'll see why in a moment.
+Now I declare another variable, sum, initialize it to zero.
+Then I have this For loop iterating, apparently for clarity,
+from i=1 on up to an =m, which is whatever the user typed in, and then I
+increment the sum like this.
+And then return the sum.
+>> So a couple of questions.
+One, I claim in my comment that this avoids risk of an infinite loop.
+Why would passing in a negative number induce, potentially, an infinite loop?
+>> AUDIENCE: You'll never reach m.
+>> SPEAKER 1: Never reach m.
+But m is passed in, so let's consider a simple example.
+If m is passed in by the user as negative one.
+Irrespective of main.
+Main protects us from this too, so I'm just
+being really anal with sigma to also make sure
+that the input can't be negative.
+So if m is negative, something like negative one.
+What's going to happen?
+Well, i is going to get initialized to one,
+and then i is going to be less than or equal to m?
+>> Stand by.
+That was-- let's not, let's nix this story.
+I didn't ask that question, because the risk that I am alluding to
+is not going to happen because i is always going be greater than-- OK,
+I retract that question.
+OK.
+Let's focus only on this part here.
+Why did I declare some outside of the loop?
+Notice on line 49 I've declared i inside of the loop,
+but online 48 I've declared some outside.
+Yeah.
+AUDIENCE: [INAUDIBLE].
+SPEAKER 1: Sure.
+So first and foremost I certainly don't want to declare and initialize sum
+to zero inside of the loop on every iteration,
+because this would clearly defeat the purpose of summing up the numbers.
+I would keep changing the value back to zero.
+And also, what's another more arcane reason for that same design decision?
+Yeah.
+>> AUDIENCE: [INAUDIBLE].
+SPEAKER 1: Exactly.
+I want to access it outside of the loop too on what line?
+On 53.
+And based on our rule of thumb from a couple of lectures ago,
+variables are scoped, really, to the curly braces that encompass them.
+So if I don't declare sum inside of these outer curly braces,
+I can't use it in line 53.
+Put another way, if I declared sum in here, or even within the
+For loop, I could not access it in 53.
+The variable would effectively be gone.
+So a couple of reasons there.
+But now let's go back and see what happens.
+So sigma gets called.
+It adds up 1 plus 2, or 1 plus 2 plus 3, and then returns the value,
+stores it in answer, and printf here is why I'm seeing on the screen.
+So this is what we'll call an iterative approach, where iteration just
+means using a loop.
+A For loop, a While loop, a Do While loop, just doing something again
+and again and again.
+>> But sigma is kind of a neat function in that I could implement it differently.
+What about this, which just to be kind of cool,
+let me really get rid of a lot of distraction
+because this function is really quite simple.
+Let's whittle it down just to its four core lines
+and get rid of all the comments and curly braces.
+This is kind of a mind-blowing alternative implementation.
+All right, maybe not mind-blowing, but it's kind of sexier, all right,
+to look at this so much more succinctly.
+With just four lines of code, I first have this sanity check.
+If m is less than or equal to zero, sigma makes no sense.
+It's only supposed to be in this case for positive numbers,
+so I'm just going to return zero arbitrarily
+so that we at least have some so-called base case.
+>> But here's the beauty.
+The entirety of this idea, adding the numbers from 1 to n, or m in this case,
+can be done by kind of passing the buck.
+Well, what is the sum of 1 to m?
+Well, you know what?
+It's the same as the sum of m plus the sum of 1 to m minus 1.
+Well you know what?
+What's sigma of m minus 1?
+Well, if you kind of follow this logically, it's the same as m minus 1
+plus sigma of m minus 2.
+So you can kind of just-- this is like, if you're just
+trying to annoy a friend and they ask you a question,
+you kind of respond with a question, you can kind of keep passing the buck.
+But what's key is that if you keep making the question smaller and smaller
+and smaller, you're not asking what's sigma
+of n, what's sigma of n, what's sigma of n?
+You're asking what's sigma of n, what's sigma
+of n minus 1, what's sigma of n minus 2?
+Eventually your question is going to become what?
+What is sigma of one or zero, some very small value,
+and as soon as you get that, your friend,
+you are not going to ask the same question again,
+you're just going to say, oh it's zero.
+We're done playing this sort of stupid cyclical game.
+>> So recursion is the act in programming of a function calling itself.
+This program, when compiled and run, is going to behave exactly the same way,
+but what's key is that inside of a function called sigma,
+there is a line of code wherein we're calling ourselves,
+which would normally be bad.
+For instance, what if I first compiled this, so make sigma--
+make sigma 1 ./sigma-1.
+Positive integer, please, 50 1275.
+So what the function seems to be, based on one test, correct.
+But what if I get a little dangerous and delete the so-called base case,
+and just say, well I'm just making this more complicated than it is.
+Let's just compute the sigma by taking m and then adding
+in sigma of m minus one?
+Well, what's going to happen here?
+Let's zoom out.
+Let's recompile the program, save it, recompile the program,
+and then ready ./sigma-1 zooming in, enter positive integer please, 50.
+How many of you are willing to fess up to seeing that?
+>> OK.
+So this can happen for a number of reasons,
+and frankly this week we're about to give you more of them.
+But in this case, try to reason backwards
+what might have happened here?
+Segmentation fault, we said last time, refers to a segment of memory.
+Something bad happened.
+But what was it mechanically that went awry
+here because of my removal of that so-called base case,
+where I returned a hard-coded value?
+What do you think went wrong?
+Yeah.
+>> AUDIENCE: [INAUDIBLE].
+SPEAKER 1: Ah.
+Good question.
+So the size of the number that I was summing up
+got so big that it exceeded the size of the memory space.
+Good idea, but not fundamentally going to cause a crash.
+That might cause integer overflow, where the bits just flip over
+and then we mistake a really big number for like a negative number,
+but that itself won't cause a crash.
+Because at the end of the day an int is still 32 bits.
+You're not going to accidentally steal a 33rd bit.
+But a good thought.
+Yeah.
+>> AUDIENCE: [INAUDIBLE].
+SPEAKER 1: The method never stops running,
+and indeed it calls itself again and again and again and again
+and again, and none of those functions ever
+finish because their sole line of code calls themself again and again
+and again.
+And what's really happening here, and now we
+can kind of draw this pictorially.
+Let me go over to a picture for just a moment.
+This is a picture, that will eventually flesh out
+in more detail, of what's going on inside of your computer's memory.
+And it turns out that on the bottom of this picture
+is something called the stack.
+This is a chunk of memory, a chunk of RAM,
+that's just used any time a function is called.
+Any time you, a programmer, call a function,
+the operating system, like Mac OS, Windows, or Linux,
+grabs a bunch of bytes, maybe a few kilobytes, maybe few megabytes
+of memory, hands them to you, and then lets
+you run your function using whatever variables you need.
+And if you then call another function and another function,
+you get another slice of memory and another slice of memory.
+>> And indeed, if these green trays from Annenberg represent that memory,
+here's what happens the first time you call function sigma.
+It's like putting a tray like this on what's initially an empty stack.
+But then if that tray calls itself, so to speak,
+calling another instance of sigma, that's
+like asking the operating system, ooh, need a little more memory,
+give me that.
+And then it gets piled on on top.
+But what's key here is that the first tray is still there,
+because he invoked this second tray.
+Now meanwhile, sigma call sigma, that's like asking for more memory.
+Gets piled on over here.
+sigma call sigma, that's another tray that gets piled on here.
+And if you keep doing this, eventually, kind of map this visual
+to that chart, what's going to happen with the stack of trays?
+It is going to exceed the amount of memory your computer has.
+And as soon as this green tray exceeds the horizontal line
+above stack and above that word heap, which we'll come back to in the future,
+that is a bad thing.
+The heap is a different segment of memory,
+and if you let these trays pile and pile on,
+you're going to exceed your own segment of memory,
+and a program is indeed going to crash.
+>> Now as an aside, this idea of recursion, therefore,
+can clearly lead to problems, but it's not necessarily a bad thing.
+Because consider, after all, how-- and maybe
+this takes some getting used to --how elegant or how simple
+that implementation of sigma was.
+And we're not going to use recursion all that much in CS50,
+but in CS51, and really any class where you manipulate data structures
+like trees, or family trees, that have some hierarchy,
+it's super, super useful.
+Now, as an aside, so that you as aspiring computer scientists
+are familiar with some of Google's inside jokes, if you go to Google
+and you look up what is the definition of, say, recursion, enter.
+Uh-huh.
+As an aside, I pulled up a few.
+This was like 10 minutes of procrastination this morning.
+If you also Google "askew," notice by tilting your head slightly--
+and then this one is perhaps most atrocious of all
+since someone spent like their day implementing this
+some years ago-- come on.
+Oh, wait-- that's a bug.
+>> So running on one of the world's biggest websites
+are these stupid little Easter eggs.
+They probably consume a nontrivial number of lines of code
+just so that we can have little fun things like that.
+But at least now you get some of those inside jokes.
+>> Now let's take a look at some of the white lies we've been telling of late,
+and start to peel back some layers technically
+so that you really understand what's been going on
+and you can understand some of the threats,
+like Shellshock, that have now started to become
+on the forefront of everyone's attention, at least in the media.
+So here is a very simple function that returns nothing, void.
+Its name is swap.
+It takes in two variables and it returns nothing.
+Takes in a and b .
+So a quick demonstration.
+We brought these up.
+We might as well take a little break here for just a moment
+and have a little something to drink.
+If someone wouldn't mind joining me up here for just a moment.
+How about you in the maroon shirt?
+Come on up.
+Just the one today.
+Thank you, though.
+All right, and we have coming up who here?
+What's your name?
+>> SPEAKER 4: Laura.
+>> SPEAKER 1: Laura.
+Come on up.
+So Laura, very simple challenge today.
+Nice to meet yo.
+All right.
+So we have some milk over here and we have some orange juice over here
+and some cups that we borrowed from Annenberg today.
+>> SPEAKER 4: Borrowed.
+SPEAKER 1: And going to go ahead and give you half a glass of this.
+All right.
+And we'll give you half a glass of the milk.
+Oh, and just so that you can remember what this was like,
+I remembered to bring this up and on today.
+Okay.
+If you wouldn't mind, let's see, we can put them over your own glasses
+if you want.
+This'll be the world from Laura's eyes.
+All right.
+So your goal, given two cups of liquid here, milk and orange juice,
+is swap the two contents so that the orange juice goes into the milk cup
+and the milk goes into the orange juice cup.
+>> SPEAKER 4: Do I get another cup?
+SPEAKER 1: I'm so glad you asked, though it would have been much better footage
+if you hadn't asked.
+But yes, we can offer you a third cup that's empty, of course.
+All right.
+So swap the contents there.
+Very nice.
+Very good.
+You're doing this remarkably carefully.
+And step three.
+All right.
+Excellent.
+A big round of applause would be good for Laura.
+All right.
+We have a little parting gift for you, but let me take these.
+Thank you so much.
+So a simple example, though, to demonstrate that if you do
+want to swap the contents of two containers,
+or let's call them variables, you need some temporary storage
+to stage one of the contents in so that you can actually do the swap.
+So indeed, this source code up here in C is representative of exactly that.
+If the orange juice was a and the milk was b, and we wanted to swap the two,
+you could try something creative by pouring one into the other,
+but that probably wouldn't end particularly well.
+And so we use a third cup, call it tmp, T-M-P by convention,
+and put the contents of the OJ in that, then swap one cup,
+then put the OJ into the original cup, thereby
+achieving, exactly as Laura did, the swap.
+>> So let's do exactly that.
+Let me go ahead and open up an example that's
+actually called "no swap," because this is not
+as simply done as you might think.
+So in this program, notice that I'm using stdio.h, our old friend.
+I have the prototype for swap up there, which
+means its implementation's probably down below,
+and let's see what this main program's going to do for me.
+I first declare int x gets one, and int y gets two.
+So think of those as OJ and milk, respectively.
+And then I just have a printf saying x is this
+and y is this, just so I can visually see what's going on.
+Then I have printf claiming that I'm swapping the two,
+and then I print out a claim that they're swapped,
+and I print out x and y again.
+So down here in swap is exactly what Laura did,
+and exactly what we saw on the screen a moment ago.
+>> So let's go ahead and be sorely disappointed.
+Make no swap, and run no swap, zooming in on the output here.
+Enter x is 1, y is 2, swapping swapped.
+x is still 1, and y is still 2.
+So even though, frankly, this looks exactly like, albeit more technically,
+what Laura did, didn't seem to work.
+So why is that?
+Well, it turns out that when we write a program like this
+that has both main, highlighted here, and then another function, like swap,
+highlighted here, which it calls, the world
+looks a little something like these trays a moment ago.
+When main first gets called, that's like asking operating system
+for a bit of memory for any local variables like x and y that main has,
+and they end up right there.
+But if main calls swap, and main passes to swap two arguments, a and b,
+orange juice and milk, it's not like handing the orange juice and the milk
+to Laura.
+What a computer does, is it passes copies of the orange juice
+and copies of the milk to Laura, so that what's ultimately inside of this tray
+is the value one and two, or OJ and milk, but copies thereof,
+so that at this point in the story, there
+is OJ and milk in each of these trays.
+There's a one and a two in each of these trays,
+and the swap function is indeed working.
+It's swapping them inside of the second topmost tray,
+but that swapping has no impact.
+And based on just some basic principle we've
+talked about before, and indeed just a few minutes ago, what
+might explain why changing a and b inside of swap
+has no effect on x and y, even though I passed x and y to the swap function.
+What's the key word here that might simplistically explain?
+I think I heard it here?
+AUDIENCE: Return.
+SPEAKER 1: Return?
+Not return.
+Let's go with one other.
+What's that?
+>> AUDIENCE: [INAUDIBLE].
+>> SPEAKER 1: OK, so return-- we could make return work in the story,
+but there's an even simpler explanation.
+AUDIENCE: Scope.
+SPEAKER 1: Scope.
+I'll take scope.
+So scope, remember where our x and y declared.
+They're declared inside of main right up here.
+a and b, meanwhile, are effectively declared
+inside of swap, not quite in the curly braces but still
+in the general area of swap.
+And so indeed, a and b only exist within this tray
+from Annenberg, this second chunk of code.
+So we're indeed changing the copy, but that's not really all that helpful.
+>> So let's take a look at this a little lower level.
+I'm going to go back into the Source Directory,
+and I'm going to first zoom in here, and just
+to confirm that I'm in this bigger terminal window,
+the program's still behaving like that.
+Suppose now that this is not intentional.
+Clearly I wanted swap to work, so it feels like a bug.
+Now I could start adding a lot of printf's to my code,
+printing out x over here, y over here, a over here, b over here.
+But frankly, that's probably what you've been doing for a couple of weeks
+now, in office hours and at home when working
+on psets trying to find some bugs.
+But you'll see, if you haven't already, that problem set three introduces you
+to a command called GDB, where GDB, GNU debugger,
+has itself a whole bunch of features that can actually
+let us understand situations like this, but more compellingly,
+solve problems and find bugs.
+So I'm going to do this.
+Instead of ./noswap, I'm instead going to run GDB ./noswap.
+In other words, I'm going to run my program not in Bash, our new friend
+today.
+I'm going to run my program noswap inside
+of this other program called GDB, which is a debugger, which
+is a program that's designed to help you humans find and remove bugs.
+So if I hit Run here, there's an atrocious amount of text
+that you really never have to read.
+It's essentially a distraction from the prompt, which
+I'm going to hit Control-L to get up at the top there.
+This is the GDB prompt.
+If I want to run this program now, as this little cheat sheet on today's
+slide suggests, Run is the first commands that we meant to introduce.
+And I'm just going to type run up here inside of GDB,
+and indeed it ran my program.
+Now there's some additional outputs of the screen like this,
+but that's GDB just being anal and telling us what's going on.
+You don't really have to worry about these details right now.
+But what's really cool about GDB, if I do this again--
+Control-L clears the screen-- let me go ahead and type "break main," thereby,
+when I hit Enter, setting what's called a break point at noswap.c,
+line 16, which is where GDB figured out my program actually
+is, my function actually is.
+This we'll ignore for now but that's the address
+in memory specifically of this function.
+So now when I type run, notice what's cool here.
+My program breaks at the line I told GDB to pause execution at.
+So I don't have to now change my code, add some printf's, recompile it, rerun
+it, change, add some printf's, save it, recompile it, run it.
+I can just walk through my program step by step by step at human speed,
+not at Intel-inside kind of speed.
+>> So now notice this line appears here, and if I go back
+to my program in gedit, notice that that is actually
+the very first line of code.
+There's line 16 in gedit.
+There's line 16 within GDB, and even though this black and white interface
+isn't nearly as user friendly, this means
+that line 16 hasn't been executed yet, but it's about to be.
+So indeed if I type print x, not printf, just print x,
+I get some bogus value there of zero, because x hasn't been initialized yet.
+So I'm going to type next, or, if you want to be fancy, just n for next.
+But when I type next enter, now notice it moves on to line 17.
+So logically, if I've executed line 16 and I now type print x,
+what should I see?
+One.
+>> And now this is admittedly confusing.
+$2 is just a fancy way of, if you want to refer to that value later,
+you can say "dollar sign two."
+It's like a back reference.
+But for now, just ignore it.
+What's interesting is what's on the right of the equal sign.
+And now if I type next again and print y, I should see 2.
+I can also now print x again, and frankly,
+if I'm getting a little confused as to where I am, I can type list for list
+and just see some context around the point I'm actually at.
+And now I can type next, and there x is 1.
+Now I type next.
+Oh, y is 2.
+And again, it is confusing, because GDB's output
+is being commingled with my own output.
+But if you keep in mind, by glancing back and forth at your code
+or laying it out side by side perhaps, you'll
+see that really I'm just stepping through my program.
+>> But notice what happens next, literally.
+Here's line 22.
+Let me go over it, thereby moving on to 23, and if I print x now, still one.
+And if I print y now, still one.
+So this is not a useful exercise.
+So let's redo this.
+Let me go back up to the top and type run again.
+And it's saying the program that's being debugged
+has started already, started from the beginning.
+Yes, let's do this again.
+And this time let's do next, next, next, next, next,
+but now things get interesting.
+Now I want to step into swap, so I don't type next.
+I type step, and now notice it has jumped me to noswap.c line 33.
+If I go back to gedit, what's line 33?
+That's the first actual line of code inside of swap.
+Which is nice, because now I can kind of poke around and get curious
+as to what's going on truly in there.
+Let me print tmp.
+Whoa.
+Why does tmp have some crazy, bogus garbage value?
+AUDIENCE: It hasn't been initialized.
+SPEAKER 1: It hasn't been initialized.
+And indeed, when you run a program, you're given a whole bunch of memory
+by the operating system, but you haven't initialized any values,
+so whatever bits you're seeing here, even though it's
+this crazy big negative number, just means
+that those are the remnants from some previous usage of that RAM,
+even though I haven't myself needed it yet.
+So now I'm going to go ahead and type next, and if I now type print tmp,
+what should I see?
+Whatever the value of a was, a is the first argument, just
+like x was the first thing being passed in,
+so a and x should be the same, so print tmp should print me one.
+>> So what you'll see in problem set three is a tutorial of sorts on GDB,
+but realize that this is the beginning of a look at a tool that will actually
+help you solve problems so much more effectively.
+What we're ultimately going to do on Wednesday
+is start to peel back a few layers and remove some training wheels.
+That thing called string that we've used for some time,
+we're going to slowly take that away from you and start talking about
+something more esoterically known as char*,
+but we're going to do this nice and gently at first, even though pointers,
+as they're called, can do some very bad things if abused,
+by looking at a little claymation from our friend Nick Parlante from Stanford
+University, a professor in computer science who put together this preview
+of what's to come this Wednesday.
+>> [VIDEO PLAYBACK]
+-Hey, Binky.
+Wake up.
+It's time for pointer fun.
+>> -What's that?
+Learn about pointers?
+Oh, goody!
+[END VIDEO PLAYBACK]
+SPEAKER 1: That awaits you on Wednesday.
+We'll see you then.
+[VIDEO PLAYBACK]
+-And now, Deep Thoughts, by Daven Farnham.
+>> -Why are we learning C?
+Why not A+?
+>> [LAUGHTER]
+>> [END VIDEO PLAYBACK]

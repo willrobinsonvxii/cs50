@@ -1,0 +1,1121 @@
+
+>> [MUSIC PLAYING]
+
+DAVID J MALAN: All right, welcome back.
+This is CS50.
+This is the end of week seven.
+And it's the end of that scavenger hunt from problem set four
+that you might recall.
+After recovering all of those JPEGs of staff,
+you were challenged, if you'd like, to photograph yourself with as many
+of those folks as you can.
+We got a whole bunch of submissions over the past few weeks,
+indeed, quite a few right before noon today, some of which are those here,
+caught here in-- looks like-- Annenberg Hall at office hours, one here
+in Lowell House with Nick.
+Here's Ramon being caught on the phone.
+This was at a CS50 lunch.
+This was Jason Skyping with a more creative classmate,
+who phoned him this way.
+We don't know what this was.
+>> [LAUGHTER]
+>> DAVID J MALAN: But that's worth a gigabyte.
+Here is Chang, who literally ran off the stage
+to avoid being photographed one day, but was eventually caught.
+Here is Nick.
+Here is Nick.
+Here is Nick.
+
+And here is Alison down by the fields.
+And Zamyla even was found at a ballroom competition.
+So we will go through these photos, figure out
+who submitted the most the earliest, and reward
+one fabulous prize, as promised in the spec.
+And we'll also follow up about the space that was involved.
+>> A couple of announcements-- so lunch is, again, this Friday at 1:15 PM.
+If you'd like to join us, RSVP at that URL here.
+Jason appears again here from one of the sections a couple of years
+back, which happened to fall on Halloween.
+And indeed, he dressed as a pumpkin that particular year.
+If you watch this section of his from 2011 section
+eight, if you are curious, at CS50.tv, I think
+this was the year in which his air pump was working.
+>> If you then watch the similar section in 2012,
+you'll see this Jason much deflated, since the suit no longer functioned,
+which is only to say this Friday, if you'd
+like to carve a pumpkin with Daven and Gabe and others, RSVP to the heads
+at cs50.harvard.edu address.
+It promises to be great fun.
+Daven, we're told, has carved pumpkins all of his life.
+Gabriel from Brazil has never carved a pumpkin for Halloween.
+So be there with them as he learns.
+>> Seminars, meanwhile-- so you'll learn soon
+about what our expectations are for the final project, which essentially
+will boil down to designing and implementing
+most any project of interest to you, albeit subject to the approval
+and guidance from your teaching fellow.
+Toward the end of the semester, we introduce a number
+of seminars, which are optional classes led by the teaching fellows and Harvard
+staff, friends of the course across campus, on various topics that
+are tangential to the course's underlying syllabus
+but nonetheless applicable, fun, and different for potential final projects.
+>> For instance, first, if you'd like to register, head to that URL there.
+And this is the lineup for this year's seminars alone.
+But realize we have dozens of seminars from years past, all of which
+are linked in the Seminars menu option of the course's website.
+So if you're thinking about going beyond your comfort zone
+or picking up some new skills, for instance, programming iPhone
+apps with Swift, a new language from Apple or Objective-C
+or Android apps or programming [? cue ?] light bulbs, or any of the topics
+up here and more, due check out the registration page.
+>> So we began and concluded on Monday with looking at HTTP.
+So quick refresher-- HTTP, HyperText Transfer Protocol.
+But what does that really mean?
+
+What does that really mean?
+
+Is that a hand?
+
+I know you're just scratching your head.
+But you want to propose what HTTP is?
+
+>> AUDIENCE: How computers communicate with [INAUDIBLE].
+
+DAVID J MALAN: I missed the last part.
+How computers communicate with--
+>> AUDIENCE: Internet servers.
+DAVID J MALAN: Good-- with internet servers, and specifically, web servers.
+Because recall, there's a bunch of services on the internet, some of which
+you use probably daily between chat and message, chat, and web, and email,
+and the like.
+And HTTP is just the protocol that web browsers
+speak when communicating with web servers, and vice versa.
+And the analog in the human world might be,
+I extend my hand to shake some other human's and he or she
+acknowledges by extending his or her hand as well.
+So that's just a protocol, a set of conventions.
+>> And what indeed are those conventions?
+Well, it just boils down to sending messages back and forth,
+as we depicted here.
+And there's a couple of ways in which you can send these messages.
+And perhaps the most common is known as get.
+And we'll see a contrast to this before long.
+>> But a get request from a browser to server just looks like this.
+It's a bunch of text that it puts inside of a virtual envelope.
+On the outside of that envelope go a couple pieces of details.
+What needs to go on the envelope, so to speak,
+in order to get a request like this from me to a web server?
+Yeah.
+>> AUDIENCE: Your IP address.
+>> DAVID J MALAN: My IP address in the From field, so to speak,
+and of course, the recipient's IP address.
+But in the case of a web packet, we need a little more detail
+It's not sufficient just to send an envelope to a server,
+because that server might be listening for different types
+of internet traffic.
+So what else do we need besides the recipient's IP?
+
+Yeah?
+>> AUDIENCE: Is it TCP?
+DAVID J MALAN: Good.
+TCP--
+>> AUDIENCE: Address.
+>> DAVID J MALAN: Address, or port, as it's called.
+Close, but a TCP port number.
+And there's a bunch of these.
+But surely the most familiar should eventually
+be 80, which is the default one used for web traffic.
+And another familiar one soon will be 443,
+which is used for secure web traffic, URLs that start with https.
+>> So this is what goes inside of that envelope.
+And get/ just means, give me the default web page.
+Give me the root of the hard drive on that web server.
+And hopefully, the web server will respond with, OK
+and the number 200, which is just a convention saying, yes, all
+is indeed OK.
+Here's the page.
+The type of the web page is going to be text, but more specifically, HTML,
+which we're about to dive back into.
+And the dot dot dot just means, here is the HTML.
+And that's where we pick up the story today,
+actually writing HTML, HyperText Markup Language, which
+is the language in which web pages are written.
+It's not a programming language.
+There's no functions or loops or conditions.
+It's a markup language, as well again see today,
+that allows you to specify how to structure and stylize
+aesthetically a web page.
+>> So this was the one and only page we really
+looked at, if briefly, on Monday.
+And notice a few salient characteristics.
+There's a lot of open angled bracket and close angled bracket.
+In between those angled brackets are words.
+And we're going to start calling those words tags.
+So open bracket head and closed bracket head
+are the open and closed tags, or the start and end tags
+respectively, of an HTML element, as we'll call it, called head.
+And the same jargon applies to body in HTML and so forth.
+>> And what's nice is HTML-- and indeed, we'll
+spend terribly little time on it, because you'll mostly just figure out
+what features it has when you actually have a concrete problem
+to solve-- you'll find that a browser is pretty dumb.
+It's just going to do-- not unlike a computer-- what you tell it to do.
+And so when you have open bracket HTML at the very top
+there, that essentially just means, hey, browser,
+here comes a web page written in HTML.
+>> When it sees open bracket head, that just means,
+hey, browser, here comes the head, or the topmost portion of my web page.
+When it sees a closed bracket head, that just means, hey,
+that's it for the head.
+Standby for something else.
+And that something else is apparently going to be the body.
+And when you don't have a tag, like you have just hello, comma, world,
+that's just going to be raw text that ultimately is displayed in the screen.
+>> Now, you'll notice too the indentation here.
+You can probably infer how we're stylizing it.
+Every time I open a tag, so to speak, I indent.
+And every time I close a tag, I un-indent,
+similar in spirit to curly braces.
+And beyond that, I'm kind of using my judgment.
+Notice that I didn't bother hitting Enter inside of that title tag.
+Why?
+Well, I just decided it looked a little cleaner to me, the human,
+to just not bother doing that.
+So again, there's some judgment calls just
+like there is in C or any language.
+>> But notice too that this indentation lends itself to a mental model,
+not to over complicate it.
+But a tree, right?
+If you think of a web page, apparently written
+like this, as being nicely indented that way,
+you can almost think of the open bracket HTML closed bracket tag is demarcating
+the root of a node, a family tree style node in the style of the trees
+we looked at last Friday.
+>> And indeed, we have on the right here what we'll call a DOM, D-O-M, document
+object model, a fancy way of saying a tree that represents that HTML.
+And notice that HTML has, we'll say, like a family tree, two children.
+On the left is head.
+On the right is body.
+>> And just as a mindless thought exercise, head, of course, has how many children
+according to this structure?
+So just one, title-- and that's why we have
+the arrow going from head to the title.
+So it's as though that person in the family tree had just one offspring.
+And then title itself can be said to have a child too.
+>> Recall that the HTML had hello, comma, world beneath it.
+And I've simply drawn it within an oval instead of a rectangle just
+to convey semantically that even though it's a node in the tree, so to speak,
+it's sort of fundamentally different.
+It's not a tag.
+Or more properly, it's not an element.
+It's just a text node, if you will.
+But these are completely arbitrary human conventions.
+This is just now my way of representing what I'll as an aggregate
+call the document.
+>> And as an aside, the thing at the super top left hand corner,
+open bracket exclamation point doc type HTML, this looks like a tag,
+but it's the stupid corner case where that is just there, copied and pasted
+to indicate the browsers this is HTML version 5.
+The world keeps changing what the first line of code in a page should be.
+This just means version 5.
+So it doesn't quite look like the others.
+>> All right, so with that said, you'll now appreciate
+this fairly this stupid tattoo someone got.
+>> [LAUGHTER]
+>> DAVID J MALAN: All right, and now let's actually dive
+into doing something with this.
+You'll recall that last time I opened up the CS50 Appliance
+and I did something as simple as opening up gedit.
+And I saved the file even on my desktop-- nowhere special--
+as hello.html.
+
+>> So let me do that again-- hello.html Enter.
+And now in this file, I'm going to go ahead and replicate what we just
+saw-- doc type html Then I'm going to do open bracket html closed bracket.
+And then I'm going to preemptively open and close the tag.
+Why?
+Just so I don't forget later.
+It's just good practice, like opening and closing curly braces all at once.
+>> And then what came next?
+You can think of the tattoo.
+>> AUDIENCE: The head.
+>> DAVID J MALAN: The head.
+And then in here, I had the title, I think.
+And the title was arbitrarily, hello, world close title.
+And then down here, the body, of course-- then we close the body tag.
+And then just somewhat redundantly, I had the same thing down here.
+>> So I claim that this is a web page.
+This is something that could now live on the web,
+even though of course, it's literally living on my desktop right now.
+But indeed, if I minimize gedit, I'll see on my desktop its icon.
+Even though this is the appliance, you could do this on Mac OS
+without TextEdit or Windows with Notepad even.
+>> And if I go ahead and double click that even, and select-- well, let's
+not select that because Chrome's not opening.
+Let's go ahead and open Chrome.
+
+And then do Command-O for open And navigate to my desktop
+and open that file.
+That is how a browser interprets HTML, top to bottom, left to right.
+Hey, browser here's HTML.
+Here's the head.
+Here's the title.
+Here's the body.
+And indeed, this is how it renders that web page.
+>> But notice the URL.
+None of you could pull up this specific page on your laptops right now,
+even inside of your appliance via that URL,
+because file:// indicates it's actually on my file system, my hard drive,
+not yours.
+So this isn't all that useful.
+>> Let's now move toward using an actual web server.
+And it turns out the CS50 Appliance is more than just an environment where
+you can write C code and compile and run it like you've been doing.
+It also has been configured by the staff to represent a typical web
+server that's on the internet, one that you might pay for
+or one that's in the so-called cloud.
+>> And it's running standard free open source
+software, for instance, something called Apache, which is perhaps
+still the most popular web server software in the world
+that thousands of websites use today.
+And it also even has software like MySQL,
+which is a database server that we'll eventually get to,
+which is only to say I can start treating
+my appliance as a full fledged server that I'm not paying for elsewhere.
+It just lives on my own laptop for development and convenience purposes.
+>> So let's go ahead and take advantage of this.
+I'm going to go ahead and open up a terminal window.
+And I'm going to go ahead and move-- actually, first I'm
+going to navigate to my desktop.
+If I do ls, there's hello.html.
+
+And I'm going to go ahead and start using
+a new directory we've not used before today.
+>> hello.html-- I'm going to move to ../vhosts for virtual hosts--
+more on that in the future-- and then into a directory called localhost,
+which is the nickname given to almost any computer, whether it's a Mac, PC,
+or Linux computer, and then specifically into a directory that we,
+the staff already created for you when you downloaded the appliance called
+public.
+And as its name suggests, anything I put in this folder, in theory,
+is going to now be public, at least to people
+who have a direct connection to my computer.
+>> So now let me go ahead and do cd to that same directory
+so I can see what's going on and type ls.
+And indeed, that's the only thing in there.
+I claim now that because I have put this file hello.html inside of a directory
+called public inside of a directory called localhost inside of a directory
+called vhosts, which thanks to CS50 staff
+has been pre-configured to be the root of your web server,
+I can now hopefully do this.
+>> I'm going to open up a new tab.
+And I'm going to go not to file://.
+I'm going to use actual http/localhost, which
+again, is the nickname for my own server.
+And then I'm going to go to what file name, just to be clear?
+
+Where is this story probably going?
+
+hello.html.
+
+>> So in other words, I want to now this is my own computer, my own appliance,
+as though it's an actual server.
+Its nickname is localhost.
+But think of localhost as like Facebook.com google.com, whatever.
+It's just my local name.
+And then the final I want is in the root of the hard drive, so to speak,
+or the root of the web server, ergo the forward slash and then
+the file name hello.html.
+
+>> Let me zoom out and hit Enter.
+And indeed, there is now my web page.
+So it's slightly different.
+And it's just as underwhelming.
+This is the old version.
+Let me shrink the font back.
+This is the old.
+This is the new.
+But what's fundamentally happening now is that HTTP is being used.
+>> Let's make this a little more clear or, if you will, a little more complicated.
+Let me go to the bottom right hand corner of my appliance.
+And notice that all this time, there's been a number.
+That is the unique address of your CS50 Appliance.
+It's a private address, as implied by the 172.16,
+which just means only you physically can access this web server.
+Everything is firewalled and nicely protected from the rest
+of the world because of this addressing.
+>> And now notice though if I go to this address, not in my appliance,
+but in Mac OS-- I'm going to go back over here.
+This is my Mac now.
+And now I'm going to open up this version of Chrome here.
+And I'm going to go to http://172.16.25 / and I forget the rest-- 133.
+>> So I'm going to visit from my Mac that IP address /hello.html Enter.
+And now I see from my Mac that my CS50 Appliance, who's
+IP address is that number, is indeed behaving
+like a web server on the internet.
+It doesn't have a nice easy to remember name like Facebook.com,
+but it's using HTTP apparently, even though Chrome
+is kind of simplifying the world for us but not showing us HTTP.
+But this is indeed exactly that.
+Chrome is just saving some keystrokes these days.
+And that's what we now see.
+>> So that's all fine and good.
+But it's a pretty underwhelming page.
+Let me go in and do something a little different now.
+So let me go back to gedit.
+And instead of hello, world, let's put an image.
+And I claimed from before-- let me go into my localhost directory public.
+And let me go ahead and copy a whole bunch of files from today
+from my Dropbox folder into here.
+
+>> Now if I type ls, look at all these files
+that I've distributed by the course's website in advance of today,
+one of which is still hello.html.
+So there's that one.
+And recall this silly one from last time-- cat.jpg .
+So let me try to embed cat.jpg inside of my web page.
+>> I'm going to go ahead and do cat.jpg, save.
+Let me go back to Chrome.
+And let me zoom in the font and now reload.
+
+Oops, where I put this?
+
+Standby-- I still have the old version from my desktop open.
+So let me go into my vhost, my localhost, my public, and hello.html.
+
+So now let me go ahead and say cat.jpg inside of the body
+where I want it to be displayed and reload.
+Of course, this is not correct.
+>> So I need to tell the browser a little more deliberately what I want it to do.
+Simply typing the name is obviously not sufficient.
+So recall that there was another tag, image, img for short.
+That's just because humans don't like the type full words.
+And then we can do source="cat.jpg".
+
+>> And now I'm going to do one thing different here.
+Even though all of our tags thus far have
+had this notion of a start tag and an end tag,
+that doesn't really make sense for an image, right?
+An image is either there or not there.
+And so the humans have come up with a simpler convention.
+When you have a tag that can both start and end at the same time--
+it can be empty, so to speak-- just put the forward slash inside of the tag
+at the very end.
+
+Now let me go back to my browser.
+Hit Reload Damn, something's wrong.
+You've probably seen this occasionally on the web,
+even if it's not been your fault.
+It's the web server's fault.
+What odes this seem to indicate?
+
+It's broken.
+That's where the image belongs.
+Yeah?
+>> AUDIENCE: But it doesn't have access to the image.
+>> DAVID J MALAN: It doesn't have access to the image.
+That, or even worse, maybe it doesn't even exist.
+Let's see if we can't diagnose that.
+Recall from last time that if in Chrome, in the appliance,
+or even on your Mac or PC, you go to the Developer menu
+and go to the Developer Tools option, which probably you've
+not used much or ever.
+And if I go to Network and reload the page,
+let's actually look at the HTTP requests that are being made.
+>> It looks like hello.html is indeed OK, hence the 200.
+But cat.jpg is a 403.
+So it's not a 404.
+File probably exists.
+403 means forbidden.
+So this is a little confusing.
+I'm going to go back to my terminal window.
+Let me zoom in up here.
+And let me do an ls.
+There's those same files.
+>> Now let me do a ls-l, which you've probably
+used before to look at file sizes maybe or timestamps.
+And we see a whole bunch of overwhelming information.
+But notice a few details.
+Here's hello.html in this row here and here's cat.jpg.
+
+And it's just the appliance being user friendly by highlighting JPEG's
+in purple like this.
+But what else is different beside the file size and the file name?
+
+>> AUDIENCE: [INAUDIBLE].
+DAVID J MALAN: Yeah, there's two more R's over here.
+Notice what hello.html has going on.
+So it turns out that the name of this directory public is important.
+Anything in this directory is meant to be public.
+But it's not sufficient just to drop files in there.
+You also need to change the mode of the files,
+change the permissions of the file to proactively not
+be the default setting, which is that only I can read
+and write it, I being the owner.
+I want the whole world everybody to be able to read my file, so to speak.
+Read just means view it.
+>> And indeed, as you'll see in problem set seven, that's what these R's mean.
+These two R's mean let everyone else in the world also read it,
+especially now that it's in this directory.
+So the simplest way to fix this is to go to my prompt and do chmod for change
+mode and then do a+r, altogether, everyone, all, plus r for read,
+and then cat.jpg Enter.
+Nothing seems to happen, which usually means a good thing.
+So ls-l again-- now let's look at cat.jpg.
+And this permission seem to have changed.
+As an aside, if you make a mistake and you, for instance,
+just made your-- I don't know-- essay publicly accessible by accident,
+you can do the opposite, chmod a-r.
+
+Though frankly, it shouldn't be in the public directory
+anyway if that's the concern.
+>> So now let's go back to my browser and reload.
+
+And I'm going to click the little Ghostbusters
+symbol to clear that part of the screen so we can see new requests.
+And indeed, here is Grump Cat from before.
+But more importantly, technically, there is
+the number 200, which means we got it OK.
+All right, so that's all fine and good.
+But we're not making the best of websites,
+nor are we going to try too hard to make the fanciest of websites today.
+But let's at least do something super familiar before rattling
+off a few other tags.
+So suppose I don't just want a cat here.
+Suppose I actually want this cat to link to something.
+>> I might, for instance do something like this.
+
+a for anchor href for hyper reference equals--
+and let's just do something like www.google.com close
+quote close bracket.
+And now search for cats.
+Close anchor tag.
+So this has only one sort of fundamentally new detail.
+The tag of course, is different.
+It's the name a for anchor href or hyper reference.
+>> But more importantly, there's this syntactical feature here.
+This is what we'll start calling not a tag, but an attribute.
+And an attribute is something that modifies the behavior of a tag.
+And this attribute, href, means modify the behavior of this anchor
+so that when it's clicked, it goes to this URL here.
+And of course, that URL is Google.
+>> Meanwhile, what is this text here going to be?
+Well, that's going to be what the human actually
+sees as the underlined link, as simple as that.
+So let's try this.
+Let me save it.
+I'm still in hello.html.
+But in the versions online, you'll see the actual file names we pre-prepared.
+Let me go ahead and reload.
+And now it's a very underwhelming page still.
+But if I hover over there-- and it's a little small,
+but-- you can see in the bottom left hand corner of your screen,
+it's indeed going to google.com.
+And if I click that, it will whisk me way to the actual Google.
+>> But notice here an opportunity for exploitation, just as an aside.
+And we'll come back to other issues of security before long.
+Because there's this dichotomy between where you go and what you say,
+you could do something like this-- http://www.google.com.
+OK, and now if I reload after saving that page,
+it looks like I'm going to go to Google.
+But there's no reason I have to go to Google, right?
+I could actually go to something like badguy.com, reload the page over here.
+And notice, it still looks like Google.
+And only if I'm sharp enough to hover over here
+do I see it's even going to go to a different location.
+>> So if you've ever gotten an email, especially
+one from Paypal, or seemingly from Paypal
+asking you to log in to your account, this
+is why you should never ever click links in emails,
+frankly, any links in emails.
+If you know you have actual money in Paypal or Bank
+of America or Fidelity or any website, manually type it in.
+Because look how easy it is to trick someone into presenting what
+looks like a link.
+But it actually could go absolutely anywhere.
+>> And there's far greater threats than this.
+In fact, this is a bit of a tangent now, but one
+of the best ones I ever saw which has since been closed,
+is someone led people to-- so this might say,
+click here to log into your account, a bank account.
+And this was Bank of the West.
+
+>> So someone bought this.
+And it's a little easier to see it in a mono spaced font zoomed
+in on a 30-foot projector.
+But when it's small font in an email that you're receiving,
+this looks like bankofthewest.com, not bankofthevvest.com,
+which someone had paid $10 to buy.
+And then this led them to the equivalent of some bad website.
+>> And you'll see too-- actually we can do this-- if I go to the actual website,
+bankofthewest.com, again, recall from last time
+that if this is their web page and you're curious as to how it works,
+you can certainly go to Chrome's developer tools.
+And you can see all of the HTML nicely formatted there.
+>> But more to the point, you cam-- let's close
+this-- you can go to View Developer View Source.
+
+Why don't I just copy all of that And then I
+can go into my little gedit window here and make my own web page.
+Save this in hello.html.
+And probably this is going to break, because it's not this easy usually.
+But now if I reload my own page on my own CS50 Appliance and hit reload,
+OK, some stuff broke.
+But I'm pretty close to having my own banking website, right?
+All of this HTML--
+>> [LAUGHTER]
+>> DAVID J MALAN: --I didn't actually-- and you
+know there's someone out there who would actually click these links too.
+So clearly, some stuff broke.
+But that's going to lead us into a discussion,
+unnecessarily right now, as to what CSS, cascading style sheets, are,
+and how you actually download the other HTML files
+and JPEG files GIF files that the website might be using.
+But all of that is accomplishable.
+But it really boils down to these very simple heuristics.
+>> So now let's just skim through a couple of other examples of HTML
+just to give you a sense of what else you can do.
+For instance, this is list.html.
+Suppose I wanted to make a web page with a list of houses in the quad.
+I might use the ul tag for unordered list and then the list item child
+and then iterate over-- or list, rather-- the houses in question.
+>> And if I open this up, let's do this.
+Let's go not to hello.html, but to list.html.
+Damn it.
+How do I fix this?
+
+It's the same issue as before, right?
+So let me do chmod-- oops-- chmod a+r of list.html.
+
+And now if I go back to my browser and click Reload, there it is.
+So if you've ever wanted to make a bulleted list, you can do that.
+If you want to be super fancy and make an ordered list, not an unordered list,
+change those to ol, reload the page, and now the browser will number it for you.
+>> What else can we do?
+Well, a couple of others-- if you've got long paragraphs of text--
+for instance, some Latin text like this--
+and you want it in separate paragraphs, open p, close p for the paragraph tag.
+And do it again and again.
+And if I now open up this file, paragraphs.html, well, this
+is getting annoying.
+So now let's just go back to my prompt, chmod a+r r star .html--
+a nice little wild card so to speak.
+It should fix all of these problems for me.
+Let's reload.
+There's three paragraphs.
+>> And now let's go ahead and open up one other.
+How about table?
+You'll notice table looks a little more complex.
+But it's the same idea-- open tag, open tag,
+open, open, open, close tag, open tag.
+And these happen to stand for table, whose border is apparently
+going to be a thickness 1-- whatever that means-- table row, table
+data, which means a cell.
+And if I go back to my browser here and go to table.html,
+you can see something like this, hideous.
+But we'll get to the point where we can actually
+make things prettier than that.
+>> So let me stipulate for now.
+There's bunches of more tags.
+And HTML is wonderful to pick up because, frankly, all you need to do
+is look at existing web pages with which you're familiar.
+And you're like, oh, that's how they did this aesthetically.
+>> Or you can look up any online resource as to how HTML works,
+and you'll see that there's a whole vocabulary of other tags.
+But with the simple mental model alone that almost any tag you open
+has to be closed, it really does suffice to teach oneself
+HTML after understand these basic ideas of tags
+and attributes and the well-formedness that we've talked about,
+closing anything that we might open so that we don't confuse a browser.
+So let's now take this to a more interesting level
+by going to the actual.
+And let's go to my Mac here, to google.com.
+
+And now notice-- let's do this.
+I'm gong to go to Settings, Search Settings.
+I want to turn off this annoying instant results thing where it immediately
+starts responding to your typing.
+Let's do this older school so we actually see what's going on.
+>> So I'm going to save my Google settings here.
+And now notice-- I'm going to search for something like cats.
+And it's still doing auto complete here, but based on things
+people have typed in the past.
+But notice what's going to happen.
+>> In the URL at the moment is this, just google.com.
+And technically, it's slash.
+Google's just saving a character and not showing us that.
+They are showing us https, just to be super reassuring that we're
+at a secure or encrypted page.
+>> So let me go ahead and search for cats.
+Now this got really overwhelming quickly.
+Look at the length of this URL.
+But it turns out that most of this stuff in the URL is actually pretty useless.
+I'm going to start deleting things I don't understand.
+
+I see cats.
+I understand cats.
+I don't know why cats are there again.
+I really don't know what this nonsense is.
+So I'm just going to keep highlighting and deleting stuff
+that I don't understand, distilling the URL into just this.
+
+>> Now let me get enter again.
+It looks like Google still works.
+So for some reason, they're adding a lot of stuff to their URL's by default.
+But it's not strictly required.
+So what is nice about this?
+Well, let me go ahead and open up Chrome's Inspector.
+There's a little mouse shortcut for it.
+>> Go to the Network tab.
+And now let me reload this page once more.
+And I'm holding Shift.
+As an aside, browsers tend to cache or save
+information just for efficiency's sake.
+But usually, holding Shift and reloading will force everything
+to start over from the beginning.
+And that's what I want to do here.
+>> And notice all of these rows that just appeared.
+It turns out that in any given web page, there might be just one file
+involved-- hello.html-- or there might be 52, as in this case.
+When I visit google.com, apparently, my browser
+kicks off 52 separate HTTP requests.
+Why is that?
+>> Well, look at what's inside of this web page up top.
+There's not only text, but there's actual images
+of cats over to the right.
+There's a colorful logo up here at left.
+There's all of these icons for a microphone and so forth.
+There's a lot of pieces, building blocks, scratch pieces, if you will,
+to this web page.
+And what the browser is doing upon getting the very first file, which
+is this row here, it is essentially iterating over the HTML top
+to bottom, left to right, looking for things like image tags or other tags
+that are mentioning other files and when it sees them, goes and fetches them
+via HTTP, viable whole envelope metaphor,
+and then displays them in the appropriate location in the web page.
+>> But notice here if I focus on the first throw, search cats,
+notice that, indeed it's using HTTP 1.1.
+And unfortunately, Google Chrome right now in version 39
+is kind of dumbing things down and not showing us the actual headers.
+But what was indeed sent is a request for not slash, but /search?q=cats.
+
+>> Now, why is that important?
+Well, I'm going to infer from this that if you Google
+supports queries of this form, why don't I implement my own search
+engine for CS50, but just the front end, just the graphical user interface.
+And we'll outsource the back end, the actual search results to Google.
+>> So how can I do this?
+Well, let me go into gedit over here.
+And let me go ahead and open up, let's say, a new file.
+And I'm going to save this temporarily as search-0.html.
+
+And then eventually, we'll fast forward to the one I pre-prepared.
+>> And I'm going to quickly whip up doc type
+html open bracket html close bracket html.
+Then I'm going to do head close head open title CS50
+Search instead of Google search.
+Down here I'm going to have the body, down here close body.
+And now I need CS50 Search.
+And actually, let's build this incrementally.
+I'm going to go ahead and close this and actually put it in my public directory.
+So give me just one moment.
+search-0.html-- I'm going to temporally call it search.html.
+
+I'm going to chmod it a+r search.html.
+
+And now I'm going to open it.
+
+All right, so that was fast.
+But the goal simply was to get us to the point
+of having this text file called search.html.
+
+So not much to look at yet.
+Indeed, if I go to my browser, and go to search.html, that's all it is.
+But you know what?
+I can be a little fancier.
+I read in a book that there's a heading tag called h1.
+And I'm going to go ahead and use that open h1 and close h1.
+Reload the page.
+And now it's bigger and bolder, not all that interesting,
+but at least it structurally more interesting.
+But now let me introduce another tag.
+It turns out there's a form tag.
+And let me close that tag.
+And it turns out there's an input tag that
+has an attribute called type, which is the data type of the field,
+if you will.
+And is going to be of type text.
+And its value is going to be CS50 Search.
+Close tag.
+And there's going to be no notion of opening and closing with separate tags.
+>> Let me go back over here and see what's going on, reload.
+Getting interesting.
+It looks like it's a text field.
+
+And actually, I didn't want to put a value there yet.
+Let me go back here and actually get rid of this value to keep it simple.
+Instead of a value, what I wanted to give this thing was a name.
+And I don't know what it is, so I'll come back to that.
+>> But below that, I want to do input type=submit.
+
+And this value will be CS50 Search.
+And we'll see why I moved the value to this.
+When I reload, I seem to now have the beginnings of my own search
+engine, super hideous, though frankly, it's
+not a far throw from what Google's default page looks like.
+>> If I go here now, I can type in cats and hopefully click Search.
+But I'm not quite done yet, because I haven't implemented,
+obviously, a database.
+I haven't crawled the web for search results.
+So I need to outsource that to Google.
+So how do I do this?
+>> Well, first of all I need to add and action
+attribute to my form tag that is http://www.google.com/search.
+And I know that only from having inferred by looking closely
+at their URL's.
+And now take a guess.
+What should this text field probably be called, based on where we came
+from before?
+
+>> AUDIENCE: ?q.
+>> DAVID J MALAN: ?q.
+And we don't actually need question mark it turns out, but q is indeed it,
+q for query probably by default, just because that's
+what Larry and Sergey came up with years ago.
+So now let me reload this page.
+It doesn't look all that different.
+But now watch what happens.
+>> If I type in cats and click CS50 Search and let go,
+notice I get whisked away to actual Google.
+Now, Google is being a little annoying in that they're
+appending an additional parameter, if you will, to the URL.
+That's all happening automatically on Google side.
+>> The important part is that I seem to have generated this request here.
+And indeed, that's what happens.
+When you have HTML that looks like this, this
+is sort of web developers notation for saying, go ahead and create a form
+that when it's submitted, it's going to go to this URL.
+And when the URL has provided values for things like q,
+don't go just to this URL.
+Actually, go to question mark and then q=cats.
+
+Append the parameter, the HTTP parameter like that.
+>> And just to be super precise, what's being inferred here--
+but I'll be more explicit-- is that the method I want to use
+is get, instead of something like post, which we'll eventually see.
+So in short, simply by understanding HTML and using some fairly simple tags,
+we can now begin to create our own front end user
+interface with a search engine behind it.
+>> But this of course, is pretty hideous.
+So let me actually open up a slightly better version.
+This is the one I prepared in advance that has some comments.
+But you'll see that I pretty much recreated it.
+So this is already available online.
+And I did happen to preemptively go to https just to keep it simple.
+>> And now let's open up a next iteration of this.
+Is version 1 instead of 0.
+What jumps out at you as slightly different in this example?
+
+>> AUDIENCE: [INAUDIBLE].
+>> Yeah, there's this text align center.
+This is a little weird up here.
+But this is indeed new.
+And maybe guess what's going to happen.
+If I go to my browser now and visit search-1.html,
+it's almost the same thing.
+But it's a step closer to being a little more pretty.
+It's still ugly, but prettier in that at least everything's now centered.
+>> So it turns out that what I'm using is another language altogether called
+CSS, cascading style sheets.
+And CSS, frankly, is kind of, in my personal opinion,
+an atrociously designed language.
+It is very annoying to remember all the various details.
+But it is what stylizes the entire worldwide web today.
+I offended someone.
+All right.
+So let's go back here and see how we're actually using this.
+And it turns out, at least it's actually a pretty simple language.
+It's just key value pairs, properties and values, properties and values.
+Indeed, here is one such property and value.
+>> Simply by using the style attribute on my body tag
+and giving it a value of a word colon and another word,
+or a property and a value, I can affect the aesthetics
+of the web page, not necessarily the structure yet,
+but the aesthetics of it.
+And just by Googling around, I realize that CSS, cascading style sheets,
+supports a property called text-align, whose value can
+be left, right, or center, for instance.
+>> So now when I reload this page, what I did get
+was a centered page, but still pretty ugly.
+Let's go ahead and open up version 2 of Search.
+And now notice I've done a little more.
+Notice that up here inside of the head tag, there can be more than title.
+In fact, there's a style tag.
+And this is where it just gets a little messy seeing CSS sometimes.
+>> Notice that I seem to have something that structurally looks very different.
+But here is the name of the tag I want to stylized.
+Here are our old friends curly braces and closed curly brace.
+And then here is that property and its value.
+>> If I load this file, search2.html, the end result is identical.
+But it's a step toward better design.
+By factoring out this CSS, I've not commingled it with my HTML.
+And indeed, as we'll see, I could reuse these properties and values.
+If I wanted to make bunches of parts of my web page centered,
+I don't have to type style=text-align center all over the place.
+I can put in one place perhaps, like up at the top.
+>> But even this isn't the best design.
+In fact, one of the things you'll learn as you spend more and more time with
+web programming is that the more you can modularize things and factor things out
+like .h files let us factor stuff out, like helpers.c let us factor things out
+a few psets ago.
+Similarly, might we want to achieve this.
+>> So notice in version three of search.html I've
+cleaned up the head of the page and just put
+in this, a link tag, which contrary to the name,
+does not give you a hyperlink.
+It links to another file by way of an href whose value in this case,
+is search-3.css
+So I realize we're going quickly.
+But all I'm doing is kind of moving things around.
+Let me open search-3.css.
+
+There it is, nothing really to it.
+I just copied and pasted it into a new file, much like we factored stuff out
+into other files before.
+And the result-- completely underwhelming--
+is going to be exactly the same.
+But we're moving toward-- no, it's not.
+Oh, I know why.
+>> So it seems to be a bug.
+And it is in some sense.
+But let me open up my Network tab.
+Let me reload the page.
+Ah, why is the CSS not being applied?
+Well, the CSS file, similarly, has to be world readable, so to speak.
+And it too is currently forbidden.
+So let me do a chmod a+r of star dot CSS-- whoops--
+we're dot CSS is just the file extension for CSS files.
+Now let me go back to my browser and reload.
+OK, a little better.
+>> Now let me do one last thing.
+In search-4.html.
+
+I have a version that I just thought was way cooler, albeit way more
+complicated.
+Let's look at the result first.
+Close this to give us more room.
+Change this to search-4, Enter.
+
+>> And now a bunch of things are broken.
+I'm going to go back into my directory here.
+And now I'm just going to do a chmod of a+r on a file--
+because I know it exists-- called logo.gif, which is an image.
+And now reload.
+And wow-- so now I'm pretty close, frankly,
+to like the 1999 version of Google, and frankly, the 2014 version of Google,
+right?
+>> So it's now going to their website, ultimately, if I search for cats.
+And indeed it is.
+But what did I do differently in this version 4?
+So we won't dwell too much on it here.
+You'll see this in problem set seven eventually.
+But notice I did a few things.
+>> I introduced a div tag, which is division,
+similar in spirit to a paragraph tag.
+But a division is just like, here's a rectangular invisible region
+of the screen.
+Let's give it a unique identifier, a footer, just
+so that we can talk about it in our HTML elsewhere.
+Here is another div of the page whose ID is going to be content.
+It's the content of the page.
+And up here is the header of the page.
+>> In other words, I've essentially in HTML am mentally
+viewing this web page as three components, a header
+up here with this invisible rectangle, the content in the middle, and then
+the footer down below, even though we don't see those things.
+Because I want to in my head of page here, or in a .css file,
+I can use this syntax.
+>> Header is not a tag.
+It's an ID so it turns out that by doing #header,
+I can now apply one or more properties to the header.
+I can do the same content, the same for content here.
+>> So for instance, in the footer, notice all of these properties I'm adding.
+And I know they exist just by reading up on the documentation for CSS.
+Font size is going to be smaller-- so some relative font size.
+The weight is going to be bold.
+Margin-- how many pixels around it-- is 20 pixels.
+And it's going to be centered.
+>> But right now, the page looks like this.
+If I'm not pleased with my copy right there,
+I could do something like color red.
+And then I can save this, reload, and now I've stylized the footer.
+So this is just hinting at the power of what you can do in a web page
+to change things around.
+>> And even cooler than this, if you want to poke around with actual websites,
+you can't permanently change them.
+But if I open up Chrome's Inspector again
+and I go not to the left hand side here, which shows Facebook's HTML,
+but shows on the right hand side all of its CSS,
+you can either and change things on the fly.
+So let me go ahead and do this.
+>> Let me go ahead and control click on this random word here,
+sign, and click Inspect Element.
+Chrome very conveniently jumps to the h1 tag that Facebook is using.
+And notice here Facebook has kind of lazily
+hard coded font size as a property here.
+>> So the cool thing though is that if I actually go in here
+and say, oh, Facebook, I don't like that 64 pixels, we can now change Facebook.
+Of course, we're only changing it for me personally at the moment.
+But this is just another tool in our tool kit
+that's going to allow us to tweak and figure out and also diagnose
+issues in our own web pages.
+And we could similarly go over here, which is the same thing.
+If you really want to get fancy, I mean, now you can really mutate the page
+and do crazy things.
+>> So why is this all useful?
+Well, ultimately, we're going to want to be
+able to create web pages that are driven by our own back ends,
+not by just Google and outsourcing the back end there.
+We actually want the value, for instance,
+of our search engine's action attribute to go not to someone else,
+but to something like search.php, where search.php is on our own server,
+not on someone else's.
+>> And so to get there, we actually need to introduce a new language.
+So we've already looked at one new language here, or two really, HTML
+and CSS.
+But they really are just structural and aesthetic languages.
+They're not programming languages per se.
+And that's about as much formal time as we'll spend on them.
+Because we'll begin now to transition to PHP.
+>> So PHP is an actual programming language.
+It's a scripting language in the sense that it's
+meant to be lighter weight than something like C.
+And it's an interpreted language, which means it's not compiled.
+So in a nutshell, what did it mean when we used a language like c
+and we had to compile it?
+What does it mean to compile C source code?
+
+AUDIENCE: [INAUDIBLE].
+DAVID J MALAN: Say it again?
+AUDIENCE: [INAUDIBLE].
+
+DAVID J MALAN: Perfect.
+It turns it into binary.
+It turns it into zeroes and ones from actual English-like source code.
+And then we can actually run those zeroes and ones
+by passing them through the CPU by double clicking an icon
+or running a command.
+>> PHP and Python and Ruby and Perl and JavaScript
+and bunches of other languages are interpreted
+languages, which is to say you do not compile them.
+Rather, you feed them as input to a program called an interpreter.
+And that interpreter, which someone else wrote,
+reads your source code top to bottom, left to right and just interprets
+those lines and does what you say.
+>> So if you encounter a line that says print,
+it doesn't necessarily convert print to the corresponding zeros and ones.
+It just has this interpreter like a big if condition that says,
+if programmer's instruction is print, then do the following.
+So it interprets it just by kind of reasoning
+through what you're telling it to do.
+>> And PHP is one of these languages.
+And PHP years ago was designed precisely for web programming.
+And it was initially a very sloppy messy language.
+And indeed, there's a huge amount of bad PHP code out there.
+But the language itself has matured over the years,
+so much so that now it's actually a wonderful next step
+pedagogically from C because it's so darned familiar to everything
+you've just seen in the past few weeks.
+>> The one initial difference we'll see is there's no main function anymore.
+When you start writing code, it's just going to get executed no matter what,
+as we'll see in a moment.
+Meanwhile, here's what a variable looks like in PHP.
+It's a little different, but only barely.
+>> In PHP, there's not strong typing.
+There's week typing, which just means there
+are data types like strings and numbers and other things.
+But you don't bother specifying what they are anymore.
+PHP figures it out for you.
+The dollar sign is just a decision that the PHP people made years
+ago such that any variable in PHP just starts with a dollar sign.
+It's actually kind of useful in that it jumps out at you a little more.
+>> But after that, this is a condition in PHP.
+
+What's different versus C?
+
+Trick question-- nothing, which is actually really nice.
+Boolean expressions in PHP-- the same.
+Boolean expressions with and versus or, switches, loops, loops, loops-- OK,
+this one is different.
+>> So it turns out there's a couple of other features in PHP.
+One of them is actually this, which is wonderfully convenient.
+If $numbers is an array that you've declared previously in a program,
+you have this fancy for each construct that instead of doing all of that
+annoying I equals 0, I is less than this, [? I++ ?],
+for each numbers as number, where each of those dollar sign values is just
+a variable, and the latter you can think of as I.
+You could call it anything you want.
+I called it number.
+This is going to iterate over the array called numbers.
+And on each iteration, it's going to automatically update
+for you the dollar sign number variable so that you constantly
+have access to the variable you want without having to do any square bracket
+notation or indexing into an array.
+>> Beyond that, we even have things like arrays, which look almost the same,
+except it's very common, as we'll see, both in PHP and JavaScript
+to pre initialize an array using square brackets.
+C uses curly braces.
+So it's slightly different, even though we didn't really use that trick much.
+>> But even more powerfully, PHP has associative arrays,
+which is a fancy way of saying hash tables.
+In fact, if you want to declare a hash table in PHP, unlike in C-- how many
+lines of code did it take to actually implement a hash table in C?
+Or how many lines of code is it taking to implement a hash table in C?
+So it's probably a lot, right?
+It's a few dozen, maybe 100 or 200.
+It's nontrivial.
+Or it's about to be, as you'll soon see, nontrivial
+to implement a hash table [INAUDIBLE] and also a try.
+But in PHP-- and frankly, I probably shouldn't tell you this
+until Monday-- in PHP, if you want a table, done.
+That's a hash table-- so with one line of code.
+And
+>> A lot of languages do that.
+Have fun with pset five.
+So a lot of languages do this.
+
+They give you these abstractions that other people, other programmers,
+have created for you so that you can stand on their shoulders
+and start using ideas that are super compelling, like hash tables and trees
+and tries.
+But you don't necessarily have to implement those things yourself.
+>> And so ultimately, what we're going to use PHP for
+is potentially writing programs of the so-called command line.
+We could recreate every program we've written this semester thus far,
+except maybe Breakout which uses SPL, which is specific to C at the moment.
+But every other problem set, certainly Mario and Caesar
+and Vigenere and [? Crack ?] and onward, we
+could re-implement in PHP, and probably a little more easily.
+>> But what we're ultimately going to use PHP for is web programming.
+And we're going to introduce next week a mental model, a paradigm called
+MVC, model view controller, which if you've done programming
+before in Python or Ruby or elsewhere, you
+might know of this team with Rails and Django and the like.
+But if you're new to this too, you'll see
+that this is actually a very natural extension of the factorization
+and the sort of design of code that we've
+been doing in C. We're going to now apply some of those lessons to PHP
+so that ultimately, we are implementing our own websites.
+And if you're sort of mesmerized or amazed
+that we're going to do all of the so quickly,
+realize that almost every semester, nearly 90%
+of students CS50, including those who have never programmed before,
+end up making final projects that are based on web programming.
+And so you will see that the returns are high in the weeks to come.
+So we will see you then on Monday.
+
+>> SPEAKER 1: And now, Deep Thoughts by Daven Farnham.
+
+Hash tables.
+
+>> [LAUGHTER]

@@ -1,0 +1,879 @@
+
+[MUSIC PLAYING]
+
+>> DAVID MALAN: This is CS50.
+And this is both the start and the end-- like literally-- almost the end
+of week six.
+
+>> I thought I'd share a little bit of a fun fact.
+I've pulled this up from a past semester's data set.
+You may recall that we ask you on every p set form if you've watched online
+or if you've attended in person.
+And here is the data.
+So today was very much predictable.
+But we wanted to spend a bit of time with you nonetheless.
+Would anyone like to conjecture why this graph is so jaggy, up down, up down,
+so consistently?
+
+What do each of the peaks and troughs represent?
+>> AUDIENCE: [INAUDIBLE]
+
+DAVID MALAN: Indeed.
+
+And more amusingly, god forbid, we hold one lecture on a Friday
+at the beginning of the semester, that's what we see happen.
+So today, we partake in a bit more about data structures.
+And to give you more of a solid mental model for problems at five,
+which is now out.
+Misspellings, wherein, we'll hand you a text file some 100,000
+plus English words, and you're going to have
+to figure out how to cleverly load them into memory, into RAM, using some data
+structure of your choice.
+>> Now one such data structure could be, but probably shouldn't be,
+the fairly simplistic linked list, which we introduced last time.
+And a linked list had at least one advantage over an array.
+What's one advantage of a linked list arguably?
+>> AUDIENCE: Insertion.
+>> DAVID MALAN: Insertion.
+
+What do you mean by that?
+>> AUDIENCE: Anywhere along the list [INAUDIBLE].
+>> DAVID MALAN: Good.
+So you can insert an element wherever you want in the middle of the list
+without having to shuffle anything, which we concluded, in our sorting
+discussions, isn't necessarily a good thing,
+because it takes time to actually move all of those humans left or right.
+And so with a linked list, you can just allocate with malloc, a new node,
+and then update a couple of pointers-- two, three operations max--
+and we're able to slot someone in anywhere into a list.
+>> What else was advantageous about a linked list?
+
+Yeah?
+>> AUDIENCE: [INAUDIBLE]
+
+DAVID MALAN: Perfect.
+
+Perfect.
+It's really dynamic.
+And that you're not committing, in advance, to some fixed size
+chunk of memory, like you would have to with an array, the upside of which
+is that you can allocate nodes only on demand thereby using only as much space
+as you actually need.
+By contrast with an array, you might accidentally allocate too little.
+And then it's just going to be a pain in the neck
+to reallocate a new bigger array, copy everything over, free the old array,
+and then move about your business.
+Or worse, you might allocate way more memory than you actually need,
+and so you're going to have a very sparsely-populated array, so to speak.
+>> So a linked list gives you these advantages of dynamism and flexibility
+with insertions and deletions.
+But surely there must be a price paid.
+In fact, one of the themes explored on quiz zero
+was a couple of the trade-offs we've seen thus far.
+So what's a price paid or a downside of a linked list?
+Yeah.
+>> AUDIENCE: No random access.
+>> DAVID MALAN: No random access.
+But who cares?
+Random access doesn't sound compelling.
+>> AUDIENCE: [INAUDIBLE]
+
+DAVID MALAN: Exactly.
+If you want to have a certain algorithm--
+and let me actually propose binary search in particular, which
+is one we've used quite a bit-- if you don't have random access,
+you can't do that simple arithmetic of finding like the middle element
+and jumping right to it.
+You instead have to start at the first element and linearly search from left
+to right if you want to find the middle or any other element.
+>> AUDIENCE: It probably takes more memory.
+>> DAVID MALAN: Takes more memory.
+Where is that additional cost coming from in memory?
+>> AUDIENCE: [INAUDIBLE]
+
+DAVID MALAN: Exactly.
+In this case here, we had a linked list for integers,
+and yet we're doubling the amount of memory
+we need by also storing these pointers.
+Now less of a big deal as your structs get larger
+and you're storing not a number but maybe a student or some other object.
+But the point certainly remains.
+And so a number of the operations on linked lists were called
+were big O of n-- linear.
+Things like insertion or search or deletion in case an element
+happened to be at the very end of the list whether it's sorted or not.
+>> Sometimes you might get lucky and in so lower bounds on these operations
+might also be constant time if you're always looking at the first element,
+for instance.
+But ultimately, we promised to achieve the holy grail
+of data structures, or some approximation thereof,
+by way of constant time.
+Can we find elements or add elements or remove elements from a list?
+We shall see quite soon.
+And it turns out that one of the mechanisms we're
+going to start to use today, annual use in p set five,
+is actually pretty familiar.
+For instance, if this is a bunch of exam books, each of which
+has a student's first name and last name on it,
+and I pick them up from at the end of an exam,
+and they're all pretty much in a random order,
+and we want to go about sorting these exams so that once graded
+it's just a lot easier and faster to hand them back out
+to students alphabetically.
+What would your instincts be for a pile of exams like this?
+>> Well, if you're like me, you might see that this is m,
+so I'm going to sort of put this into, if this is my table or my floor where
+I'm spreading things out-- or my array really--
+I might put all of the Ms in there.
+Oh.
+Here's an A. So I might put the As over here.
+Oh.
+Here's another A. I'm going to put that over here.
+Here's a Z. Here is another M. And so I might start making piles like this.
+And then maybe I'd go in later and sort of very nitpicky-ly sort
+the individual piles.
+But the point is I would look at the input that I'm handed
+and I would make some calculated decision based on that input.
+If it starts with A, put it over there.
+If it starts with Z, put it over there, and everything in between.
+>> So this is a technique that's generally known as hashing-- H-A-S-H--
+which generally means taking as input and using that input to compute
+a value, generally a number, and that number is the index into a storage
+container, like an array.
+So in other words, I might have a hash function, as I do in my head,
+that if I see someone's name who starts with A,
+I'm going to map that to zero in my head.
+And if I see someone with Z, I'm going to map that to 25 in my head
+and then put that into the last most pile.
+>> Now, if you think about not my brain but a C program, what numbers could
+you rely on to achieve that same result?
+In other words, if you had the ASCII character A,
+how do you determine what bucket to put it in?
+You probably don't want to put it into bucket 65, which
+would be like over there for no good reason.
+Where do you want to put A in terms of its ASCII value?
+
+Where do you want to do to its ASCII value to come up with a smarter bucket
+to put it in?
+>> AUDIENCE: Minus A.
+>> DAVID MALAN: Yeah.
+So minus A or minus specifically 65 if it's
+a capital A. Or 98 if it's a lowercase a.
+And so that would allow us to, very simply and very arithmetically,
+put something into a bucket like that.
+So it turns out we actually do this as well even with the quizzes.
+>> So you might recall you circled your teaching fellow's name on the cover.
+And the TF's names were organized into these columns alphabetically,
+well, believe it or not, when all 80 plus of us
+got together the other night to grade, the last step in our grading process
+is to hash the quizzes into a big space of floor at the [INAUDIBLE]
+and to lay everyone's quizzes out in exactly the order of their TF's
+names on the cover, because then it's a lot easier for us
+to search through that using linear search or some kind of cleverness
+for a TF to find his or her students' quizzes.
+>> So this idea of hashing that you'll see is
+quite powerful is actually pretty commonplace and very intuitive,
+much like perhaps divide and conquer was in week zero.
+I fast forward to the hackathon a couple of years ago.
+This was Zamyla and a couple of other staff greeting students
+as they came in.
+And we had a whole bunch of folding tables there with name tags.
+And we had the name tags organized with like the As over there
+and the Zs over there.
+And so one of the TFs very cleverly wrote this as the instructions
+for the day.
+And in week 12 of the semester this all made perfect sense and everyone
+knew what to do.
+But anytime you've queued in the same way,
+you're implementing the same notion of a hash.
+So let's formalize it a little bit.
+Here is an array.
+It's drawn to be a little wide just to depict, visually,
+that we might put strings in something like this.
+And this array is clearly of size 26 total.
+And the thing is called table arbitrarily.
+But this is just an artist's rendition of what a hash table might be.
+>> So a hash table now is going to be a higher level data structure.
+At the end of the day we're about to see that you
+can implement a hash table, which is much like the check-in line
+at a hackathon much like this table used for sorting exam books.
+But a hash table is sort of this high level
+concept that could use an array underneath the hood to implement it,
+or it could use a length list, or even perhaps some other data structures.
+And now that's the theme-- taking some of these fundamental ingredients
+like an array and this building block now of a length list
+and seeing what else we can build on top of those, like ingredients
+into a recipe, making more and more interesting and useful final results.
+>> So with the hash table we might implement it
+in memory pictorially like this, but how might it actually be coded up?
+Well, maybe as simply is this.
+If CAPACITY in all caps, is just some constant-- for instance 26,
+for 26 letters of the alphabet-- I might call my variable table,
+and I might claim that I'm going to put char stars in there, or string.
+So it's as simple as this if you want to implement a hash table.
+And yet, this is really just an array.
+But again, a hash table is now what we'll
+call an abstract data type that's just sort of a conceptual layering on top
+of something more mundane now like an array.
+>> Now, how do we go about solving problems?
+Well, earlier I had the luxury of having enough table space here
+so that I could put the quizzes anywhere I wanted.
+So As might go here.
+Zs might go here.
+Ms might go here.
+And then I had some extra space.
+But this is a bit of a cheat right now because this table, if I really
+thought of it as an array, is just going to be of some fixed size.
+>> So technically, if I pull up another student's quiz
+and see, oh, this person's name starts with an A too,
+I kind of want to put it there.
+But as soon as I put it there, if this table indeed represents an array,
+I'm going to be overriding or clobbering whoever this student's quiz is.
+Right?
+If this is an array, only one thing can go in each of these cells or elements.
+And so I kind of have to pick and choose.
+>> Now earlier I kind of cheated and did this or I
+just kind of stacked them above each other.
+But that's not going to fly in code.
+So where could I put the second student whose name
+is A if all I had is this available table space?
+And I've used three slots and it looks like there's just a few others.
+What could you do?
+AUDIENCE: [INAUDIBLE]
+
+DAVID MALAN: Yeah.
+Maybe let's just keep it simple.
+Right?
+It doesn't fit where I want to put it.
+So I'm going to put it technically where a B would go.
+Now, of course, I'm starting to paint myself into a corner.
+If I get to a student whose name is actually B,
+now B is going to be moved a little forward, as might happen, yep,
+if this is a B, now it has to go here.
+>> And so this very quickly could become problematic,
+but it's a technique that actually is referred to as linear probing,
+whereby you just consider your array to be along the line.
+And you just kind of probe or inspect each available element
+looking for an available spot.
+And as soon as you find one, you drop it in there.
+>> Now, the price being paid now for this solution is what?
+We have a fixed size array, and when I insert names
+into it, at least initially, what's the running time of insertion
+for putting the students' quizzes in the right buckets?
+
+Big O of what?
+>> AUDIENCE: n.
+DAVID MALAN: I heard big O of n.
+
+Not true.
+But we'll tease apart why in just a moment.
+What else might it be?
+>> AUDIENCE: [INAUDIBLE]
+DAVID MALAN: And let me do it visually.
+So suppose this is the letter S.
+>> AUDIENCE: It's one.
+DAVID MALAN: It's one.
+Right?
+This is an array, which means we have random access.
+And if we think of this as zero and this as 25,
+and we realize that, oh, here's my input S,
+I can certainly convert S, an ASCII character,
+to a corresponding number between zero and 25
+and then immediately put it where it belongs.
+>> But of course, as soon as I get to the second person who's name is A or B or C
+eventually, if I've used the linear probing as my solution,
+the running time of insertion in the worst case
+is actually going to devolve into what?
+
+And I did hear it here correctly early on.
+AUDIENCE: [INAUDIBLE]
+DAVID MALAN: So it is n indeed once you have a sufficiently large data set.
+So, on the one hand, if your array is big enough
+and your data is sparse enough, you get this beautiful constant time.
+But as soon as you start getting more and more elements,
+and just statistically you get more people with the letter
+A as their name or the letter B, it could potentially
+devolve into something more linear.
+So not quite perfect.
+So could we do better?
+>> Well, what was our solution before when we
+want to have more dynamism than something like an array allowed?
+
+AUDIENCE: [INAUDIBLE]
+DAVID MALAN: What did we introduce?
+Yeah.
+So a linked list.
+Well, let's see what a linked list might do for us instead.
+Well, let me propose that we draw the picture as follows.
+Now this is a different picture from an example
+from a different text, actually, that is actually using an array of size 31.
+And this author simply decided to hash strings
+not based on the person's names, but based on their birthdates.
+Irrespective of the month, they figured if you're born on the first of a month
+or the 31st of a month, the author will hash based on that value,
+so as to spread the names out a bit more than just 26 spots might allow.
+And perhaps it's a little more uniform than going with alphabetical letters,
+because of course there's probably more people in the world with names
+that start with A than certainly some other letters of the alphabet.
+So maybe this is a little more uniform, assuming
+a uniform distribution of babies across a month.
+>> But, of course, this is still imperfect.
+Right?
+We're having collisions.
+Multiple people in this data structure are still
+having the same birthdate at least you're irrespective of month.
+But what has the author done?
+Well, it looks like we have an array on the left-hand side drawn vertically,
+but that's just an artist's rendition.
+It doesn't matter what direction you draw an array, it's still an array.
+What is this an array of apparently?
+>> AUDIENCE: Linked list.
+>> DAVID MALAN: Yeah.
+It looks like it's an array of linked list.
+So again, to this point of sort of using these data structures now
+as ingredients to more interesting solutions,
+you can absolutely take a fundamental, like an array,
+and then take something more interesting like a linked list
+and even combine them into an even more interesting data structure.
+And indeed, this too would be called a hash table,
+whereby the array is really the hash table,
+but that hash table has chains, so to speak,
+that can grow or shrink based on the number of elements you want to insert.
+>> Now, accordingly, what's the running time now?
+If I want to insert someone whose birthday is October 31,
+where does he or she go?
+
+All right.
+At the very bottom where it says 31.
+And that's perfect.
+That was constant time.
+But what if we find someone else whose birthday is, let's see,
+October, November, December 31?
+Where is he or she going to go?
+Same thing.
+Two step though.
+That's constant though isn't it?
+
+All right.
+At the moment it is.
+But in the general case, the more people we add,
+probabilistically, we're going to get more and more collisions.
+>> Now this is a little better because technically
+now my chains could be in the worst case how long?
+If I insert n people into this more sophisticated data structure, n people,
+in the worst case it's going to be n.
+Why?
+>> AUDIENCE: Because if everybody has the same birthday,
+they're going to be one line.
+DAVID MALAN: Perfect.
+It might be a little contrived, but truly in the worst case,
+if everyone has the same birthday, given the inputs you have,
+you're going to have a massively long chain.
+And so, you could call it a hash table, but really it's
+just a massive linked list with a whole lot of wasted space.
+But in general, if we assume that at least birthdays are uniform--
+and it probably isn't.
+I'm making that up.
+But if we assume, for the sake of discussion
+that they are, then in theory, if this is the vertical representation
+of the array, well then hopefully you're going to get chains that are, you know,
+roughly the same length where each of these represents a day of the month.
+>> Now if there's 31 days in the month, that means my running time really
+is big O of n over 31, which feels better than linear.
+But what was one of our commitments a couple of weeks
+ago whenever it came to expressing the running time of an algorithm?
+
+Just only look at the high order term.
+Right?
+31 is definitely helpful.
+But this is still big O of n.
+But one of the themes of problem set five
+is going to be to acknowledge that absolutely,
+asymptotically, theoretically this data structure
+is no better than just one massive linked list.
+And indeed, in the worst case, this hash table might devolve into that.
+>> But in the real world, with us humans that own Macs or PCs or whatever
+and are running real world software on real world data,
+which algorithm are you going to prefer?
+The one that takes end steps or the one that takes n divided by 31 steps
+to find some piece of data or to look up some information?
+I mean, absolutely the 31 makes a difference in the real world.
+It is 31 times faster.
+And we humans are certainly going to appreciate that.
+>> So realize the dichotomy there between actually
+talking about things theoretically and asymptotically which definitely
+has value as we've seen, but in the real world,
+if you care about just making the human happy for general inputs,
+you might very well want to accept the fact that, yes, this is linear,
+but it's 31 times faster than linear might be.
+And better yet, we don't just have to do something arbitrary like a birthdate,
+we could spend a little more time and cleverness
+and think about what we might do, given a person's name and maybe
+their birthdate to combine those ingredients to figure out something
+that is truly more uniform and less jaggy,
+so to speak than this picture currently suggests it might be.
+How could we implement this in code?
+Well, let me propose that we just borrow some syntax we've
+used a couple times thus far.
+And I'm going to define a node, which again
+is a generic term for just some container for some data structure.
+I'm going to propose that a string is going in there.
+But we're going to start taking those training wheels off now.
+>> No more CS50 library really, unless you want
+to use it for your final project, which is fine,
+but now we're going to pull back the curtain and say it's just a char star.
+So the word there is going to be the person's name in question.
+And now I have a link here to the next node
+so that these represent each of the nodes
+in the chain, potentially, of a linked list.
+>> And now how do I declare the hash table itself?
+How do I declare this whole structure?
+Well, really, much like I used a pointer to just the first element of a list
+before, similarly can I just say I just need a bunch of pointers
+to implement this whole hash table.
+I'm going to have an array called table for hash table.
+It's going to be of size capacity.
+That's how many elements can fit in it.
+And each of those elements in this array is going to be a node star.
+Why?
+Well, per this picture, what I'm implementing the hash table as
+effectively in the beginning is just this array that we've drawn vertically,
+each of whose squares represents a pointer.
+That ones that have slashes through them are just null.
+And the ones that have arrows going to the right
+are actual pointers to actual nodes, ergo the start of a linked list.
+>> So here, then, is how we might implement a hash table that
+implements separate chaining.
+Now can we do better?
+All right I promised last time that we could achieve constant time.
+And I kind of gave you constant time here,
+but then said not really constant time because it's still
+dependent on the total number of elements
+you're inputting into the data structure.
+But suppose we did this.
+Let me go back to the screen over here.
+Let me also project this up here, clear the screen, and suppose I did this.
+Suppose I wanted to insert the name Daven in into my data structure.
+>> So I want to insert a string Daven into the data structure.
+What if I don't use a hash table, but I use
+something that's more tree-like like a family tree, where
+you have some root at the top and then nodes and leaves
+that go downward and outward.
+Suppose then, that I want to insert Daven's
+into what's currently an empty list.
+I'm going to do the following: I'm going to create a node in this family
+tree-like data structure that looks a little like this, each of which
+rectangles has, let's say, for now 26 elements in it.
+And each of the cells in this array is going
+to represent the letter of an alphabet.
+>> Specifically, I'm going to treat this is A, then B, then C, then D,
+this one here.
+So this is going to effectively represent the letter D.
+But to insert all of Daven's name I need to do a bit more.
+So I'm first going to hash, so to speak.
+I'm going to look at the first letter in Daven's which is obviously a D,
+and I'm going to allocate a node that looks
+like this-- a big rectangle big enough to fit the whole alphabet.
+>> Now D is done.
+Now A. D-A-V-E-N is the goal.
+So now what I'm going to do is this.
+As soon as I started D notice there's no pointer there.
+It's garbage values at the moment, or I might initialize it to null.
+But let me keep going with this idea of building a tree.
+Let me allocate another one of these nodes that has 26 elements in it.
+>> And you know what?
+If this is just a node in memory that I created with malloc, using a struct
+as we'll soon see, I'm going to do this--
+I'm going to draw an arrow from the thing that represented D down
+to this new node.
+And now, first the next letter in Daven's name,
+V-- D-A-V-- I'm going to go ahead and draw another node like this,
+whereby, the V elements here, which we'll draw for instance-- whoops.
+We won't draw there.
+It's going to go here.
+
+>> Then we're going to consider this to be V.
+And then down here we're going to index down from V into what we'll consider E.
+And then from here we're going to go have one of these nodes here.
+And now we have a question to answer.
+I need to somehow indicate that we're at the end of the string Daven.
+So I could just leave it null.
+>> But what if we have Daven's full name also, which
+is, as we've said, Davenport?
+So what if Daven is actually a substring,
+a prefix of a much longer string?
+We can't just permanently say nothing is going
+to go there, because we could never insert a word like Davenport
+into this data Structure
+>> So what we could do instead is treat each of these elements
+as maybe having two elements inside of them.
+One is a pointer, indeed, as I've been doing.
+So each of these boxes is not just one cell.
+But what if the top one-- the bottom one's
+going to be null, because there is no Davenport just yet.
+What if the top one is some special value?
+And it's going to be a little hard to draw it this size.
+But suppose it's just a check mark.
+Check.
+D-A-V-E-N is a string in this data structure.
+>> Meanwhile, if I had more space here, I could do P-O-R-T,
+and I could put check in the node that has the letter T at the very end.
+So this is a massively complex-looking data structure.
+And my handwriting certainly doesn't help.
+But if I wanted to insert something else, consider what we would do.
+If we wanted to put David in, we'd follow the same logic, D-A-V,
+but now I would point in the next element not from E, but from I to D.
+So there's going to be more nodes in this tree.
+We're going to have call malloc more.
+But I don't want to make a complete mess of this picture.
+So let's instead look at one that's been pre-formulated
+like this with not dot, dot, dots, but just abbreviated arrays.
+But each of the nodes in this tree up here
+represents the same thing-- an array Ray of size 26.
+>> Or if we want to be really proper now, what
+if someone's name as an apostrophe, let's
+assume that each node actually has like 27 indexes in it, not just 26.
+So this now is going to be a data structure called a trie-- T-R-I-E.
+A trie, which is supposedly historically a clever name for a tree
+that's optimized for retrieval, which of course,
+is spelled with an I-E so it's trie.
+But that is the history of the trie.
+>> So a trie is this tree-like data structure like a family tree
+that ultimately behaves like that.
+And here is just another example of a whole bunch of other people's names.
+But the question now at hand is what have
+we gained by introducing arguably a more complicated data structure, and one,
+frankly, that uses a lot of memory.
+>> Because even though, at the moment, I'm only
+using D's pointer and A and V and Es and Ns,
+I'm wasting a heck of lot of memory.
+
+But where I spend one resource, I tend to do gain back another.
+So if I'm spending more space, what's probably the hope?
+That I'm spending less what?
+AUDIENCE: Less time.
+DAVID MALAN: Time.
+Now why might that be?
+Well, what is the insertion time, in terms of big O now,
+of a name like Daven or Davenport or David?
+Well, Daven was five steps.
+Davenport would be nine steps, so it would be a few more steps.
+David would be five steps as well.
+So those are concrete numbers, but surely there's
+an upper bound on the length of someone's name.
+And indeed, in the problem sets of five specification,
+we're going to propose that it's something
+that's 40-some-odd characters.
+>> Realistically, no one has an infinitely long name,
+which is to say that the length of a name or the length of a string we might
+have certain the state of structure is arguably what?
+
+It's constant.
+Right?
+It might be a big constant like 40-something, but it is constant.
+And it has no dependency on how many other names are in this data structure.
+In other words, if I wanted to now insert
+Colton or Gabriel or Rob or Zamyla or Alison or Belinda or any other names
+from the staff into this data structure, is the running time
+of inserting other names going to be at all impacted
+by how many other elements are in the data structure already?
+It's not.
+Right?
+Because we're effectively using this multi-layer hash table.
+And the running time of any of these operations
+is dependent not on the number of elements that are in the data structure
+or that are eventually going to be in the data structure,
+but on the length of what specifically?
+
+>> The string being inserted, which does make
+this asymptotically constant time-- big O of one.
+And frankly, just in the real world, this
+means inserting Daven's name takes like five steps, or Davenport nine
+steps, or David five steps.
+That's pretty darn small running times.
+And, indeed, that's a very good thing, especially when
+it's not dependent on the total number of elements in there.
+So how might we implement this kind of structure in code?
+It's a little more complex, but still it's
+just an application of basic building blocks.
+I'm going to redefine us node as follows:
+bool called word-- and this could be called anything.
+But the bool represents what I drew as a check mark.
+Yes.
+This is the end of a string in this data structure.
+>> And, of course, the node star there is referring to children.
+And, indeed, just like a family tree, you
+would consider the nodes that are hanging off
+of the bottom of some parent element to be children.
+And so the children is going to be an array of 27, the 27th one
+just being for apostrophe.
+We're going to sort of special case that.
+So you can have certain names with apostrophes.
+Maybe even hyphen should go in there, but you'll
+see in p set 5 we only care about letters and apostrophes.
+>> And then how do you represent the data structure itself?
+How do you represent the root of this trie, so to speak?
+Well, just like with a linked list, you need a pointer to the first element.
+With a trie you just need one pointer to the root of this trie.
+And from there you can hash your way down deeper and deeper
+to every other node in the structure.
+So simply with this can we represent that struct.
+>> Now Meanwhile-- Oh, question.
+>> AUDIENCE: What's bool word?
+>> DAVID MALAN: Bool word is just this C incarnation
+of what I described in this box here, when
+I started splitting each of the array's elements into two pieces.
+One is a pointer to the next node.
+The other has to be something like a check box
+to say yes, there's a word Daven that ends here,
+because we don't want, at the moment, Dave.
+>> Even though Dave is going to be a legitimate word, he's not in the trie
+yet.
+And D is not a word.
+And D-A is not a word or a name.
+So the check mark indicates only once you
+hit this node is the previous path of characters
+actually a string that you've inserted.
+So that's all the bool there is doing for us.
+>> Any other questions on tries?
+Yeah.
+>> AUDIENCE: What is the overlap?
+What if you have a Dave and a Daven?
+DAVID MALAN: Perfect.
+What if you have a Dave and a Daven?
+So if we insert, say a nickname, for David-- Dave-- D-A-V-E?
+
+This is actually super simple.
+So we're only going to take four steps.
+
+D-A-V-E. And what do I have to do once I hit that fourth node?
+Just going to check.
+We're already good to go.
+Done.
+Four steps.
+Constant time asymptotically.
+And now we've indicated that both Dave and Daven are strings in the structure.
+So not a problem.
+And notice how the presence of Daven did not make it
+take any more time or less time for Dave and vice versa.
+>> So what else can we now do?
+We've used this metaphor before of trays representing something.
+But it turns out that a stack of trays is actually
+demonstrative of another abstract data type-- a higher level data structure
+that at the end the day is just like an array or a linked list
+or something more mundane.
+But it's a more interesting conceptual concept.
+A stack, like these trays here in Mather,
+are generally called just that-- a stack.
+>> And in this type of data structure you have two operations--
+you have one called push for adding something to the stack,
+like putting another tray back on the top of the stack.
+And then pop, which means you take the topmost tray off.
+But what's key about a stack is that it's got this curious characteristic.
+As the dining hall staff are rearranging the trays for the next meal,
+what's going to be true about how students
+interact with this data structure?
+AUDIENCE: They're going to pop one off.
+DAVID MALAN: They're going to pop one off, hopefully the top.
+Otherwise it's just kind of stupid to go all the way to the bottom.
+Right?
+The data structure doesn't really allow you to grab the bottom tray at least
+easily.
+So there's this curious property to a stack
+that the last item in is going to be the first one out.
+And computer scientists call this LIFO-- last in, first out.
+And it actually does have interesting applications.
+It's not necessarily as obvious as some others, but it can, indeed, be useful,
+and it can, indeed, be implemented in a couple of different ways.
+>> So one, and actually, let me not to dive into that.
+Let's do this instead.
+Let's look at one that's almost the same idea, but it's a little fairer.
+Right?
+If you're one of these fan boys or girls that really likes Apple products
+and you woke up at 3:00 AM to line up at some store
+to get the very latest iPhone, you might have queued up like this.
+>> Now a queue is very deliberately named.
+It's a line because there's some fairness to it.
+Right?
+It would kind of sucked if you've got there first at the Apple Store
+but you are effectively the bottommost tray because the Apple employees then
+pop the last person who actually got in line.
+So stacks and queues, even though functionally they're kind of the same--
+it's just this collection of resources that's
+going to grow and shrink-- there's this fairness aspect to it,
+at least in the real world, where the operations you exercise
+are fundamentally different.
+A stack-- a queue rather-- is said to have
+two operations: n queue and d queue.
+
+Or you can call them any number of things.
+But you just want to capture the notion that one is adding
+and one is ultimately subtracting.
+>> Now underneath the hood, both the stack and a queue could be implemented how?
+We won't go into the code of it because the higher level
+idea is sort of more obvious.
+I mean, what do humans do?
+If I'm the first person at the Apple Store and this is the front door,
+you know, I'm going to stand here.
+And the next person's going to stand here.
+And the next person's going to stand here.
+So what data structure lends itself to a queue?
+>> AUDIENCE: A queue.
+DAVID MALAN: Well, a queue.
+Sure.
+What else?
+>> AUDIENCE: A linked list.
+>> DAVID MALAN: A linked list you could implement.
+And a linked list is nice because then it can grow arbitrarily long as opposed
+to having some fixed number of people in the store.
+But maybe a fixed number of places is legitimate.
+Because if they only have like 20 iPhones on the first day, maybe
+they only need an array of size 20 to represent that queue, which
+is only to say now once we start talking about these higher level problems,
+you can implement it in any number of ways.
+And there's probably just going to be a trade off in space and time
+or just in your own code complexity.
+>> What about a stack?
+Well, a stack, we've seen too could just be these trays.
+And you could implement this an array.
+But at some point if you use an array, what's going to happen to the trays
+you're trying to put down?
+
+All right.
+You're only going to be able to go so high.
+And I think in Mather they're actually recessed in that opening.
+So indeed, it's almost like Mather is using
+an array of fixed size, because you can only
+fit so many trays in that opening in the wall down below people's knees.
+And so that might be said to be an array,
+but we could certainly implement that more generally with a linked list.
+>> Well, what about another data structure?
+Let me pull up one other visual here.
+Something like how about this one here?
+Why might it be useful to have not something as fancy as a trie, which
+we saw had these very wide nodes, each of which is in an array?
+But what if we do something more simply, like an old school family tree,
+each of whose nodes here is just storing a number.
+Instead of a name or a descendant is just storing a number like this.
+>> Well, the jargon we use in data structures is both tries
+and trees, where a trie, again, is just one whose nodes are arrays,
+is still what you might use from grade school
+when you made a family tree-- leaves and the root
+of the tree and children of the parent and siblings thereof.
+And we might implement a tree, for instance, as simply as this.
+A tree, if it as a node, one of these circles that has a number,
+it's not going to have one pointer, but two.
+And as soon as you add a second pointer, you
+can actually now make sort of two-dimensional data
+structures in memory.
+Much like a two-dimensional array, you can
+have kind of two-dimensional linked lists but ones
+that follow a pattern where there's no cycles.
+It's truly a tree with one grandparent way up here and then
+some parents and children and grandchildren and great-grandchildren.
+and so forth.
+>> But what's really neat about this too, just to tease you with a bit of code,
+recall recursion from awhile back, whereby
+you write a function that calls itself.
+This is a beautiful opportunity to implement something
+like recursion, because consider this.
+>> This is a tree.
+And I've been a little anal with how I put the integers into the street.
+So much so that it has a special name-- a binary search tree.
+Now we've heard of binary search, but can you
+work backwards from this thing's name?
+What is the pattern of how I inserted the integers into this tree?
+It's not arbitrary.
+There's some pattern.
+Yeah.
+>> AUDIENCE: Smaller ones on the left.
+>> DAVID MALAN: Yeah.
+Smaller ones are on the left.
+Bigger ones are on the right.
+Such that a true statement is a parent is greater than its left child,
+but less than its right child.
+And that alone is even a recursive verbal definition
+because you can apply that same logic to every node
+and it only bottoms out, a base case if you
+will, when you hit one of the leaves, so to speak,
+where a leave has no children further.
+>> Now how might you find the number 44?
+You would start at the root and say, hm.
+55 is not 44 So do I want to go right or do I want to go left?
+Well, obviously you want to go left.
+And so it's just like the phone book example in binary search
+more generally.
+But we're implementing it now a little more dynamically
+than an array might allow.
+And in fact, if you want to look at the code, at first glance sure.
+It looks like a whole bunch of lines.
+But it's beautifully simple.
+If you want to implement a function called search whose purpose in life
+is to search for a value like n, an integer,
+and you're passed in a one pointer-- a pointer to the node of the roots,
+rather, of that tree from which you can access everything else,
+notice how straightforwardly you can implement the logic.
+If tree is null, obviously it's not there.
+Let's just return false.
+Right?
+If you hand it nothing, there's nothing there.
+>> Else, if n is less than tree arrow n-- now arrow n,
+recall we introduced super briefly the other day,
+and that just means de-reference the pointer and look at the field called n.
+So it means go there and look at the field called n.
+So if n, the value you're given, is less than the value in the trees integer,
+where do you want to go?
+To the left.
+>> So notice the recursion.
+I'm returning-- not true.
+Not false.
+I'm returning whatever the answer is from a call to myself, passing
+an n again, which is redundant, but what's slightly different now?
+How am I making the problem smaller?
+I'm passing in as the second argument, not the root of the tree,
+but the left child in this case.
+So I'm passing in the left child.
+>> Meanwhile, if n is bigger than the node I'm currently looking at,
+I search the right hand side.
+Else, if the tree is not null, and if the element's not to the left
+and it's not to the right, what is wonderfully the case?
+
+We've actually found the node in question, and so we return true.
+>> So we've just scratched the surface now some of these data structures.
+In problem set five you'll explore these yet further,
+and you'll be given your design choice of how to go about this.
+What I'd like to conclude on is just a 30 second teaser
+of what awaits next week and beyond.
+>> As we begin-- thankfully you might think-- our transition slowly
+from the world of C and lower level implementation details,
+to a world in which we can take for granted that someone else has finally
+implemented these data structures for us,
+and we'll start to understand the real world means of implementing
+web-based programs and websites more generally
+and also the very security implications that we've only
+begun to scratch the surface of.
+Here is what awaits us in the days to come.
+>> [VIDEO PLAYBACK]
+
+>> -He came with a message, with a protocol all his own.
+
+He came to a world of cruel firewalls, uncaring routers,
+and dangers far worse than death.
+
+He's fast.
+He's strong.
+He's TCP/IP, and he's got your address.
+
+"Warriors of the Net."
+[END VIDEO PLAYBACK]
+DAVID MALAN: Coming next week.
+We will see you then.
+
+[VIDEO PLAYBACK]
+-And now, "Deep Thoughts" by Daven Farnham.
+
+-David always starts lectures with, "All right."
+Why not, "Here's the solution to this week's problem set"
+or "We're giving all of you an A?"
+[LAUGHING]
+[END VIDEO PLAYBACK]

@@ -1,0 +1,981 @@
+DAVID MALAN: All right.
+So this is CS50, and this is now the start of week three.
+>> So up until now, we've been writing programs in C
+that look a little something like this here.
+So we've got a couple of sharp includes at the top.
+We've got int, main, void, and then something to do in the middle,
+some bit of code inside of that function.
+But key has been the fact that we've been saying void here.
+So void, all of this time, specifies that this program, when run,
+can only be run via its name.
+You cannot type any other words or numbers after the program's name when
+running it.
+So, for instance, if the program were compiled into a file called hello,
+you could do ./hello, but that is it.
+>> The only way that you could provide input to this program
+is by calling a function.
+For instance, what function have we been using thus far
+to get input from the user?
+>> AUDIENCE: Get string.
+DAVID MALAN: To get string, or get int, or you've seen others,
+even if you haven't used them yet, like get long, long and the like.
+But suppose that we actually want to start
+writing programs that are little more versatile, and, frankly, a little more
+like the commands that you've been getting, hopefully,
+a little bit accustomed to.
+Like cd space Dropbox.
+This, of course, changes your directory, assuming
+you're in John Harvard's home directory, to your Dropbox folder.
+Meanwhile, a command like this creates a new directory called pset2,
+as you might have already or will soon for problem set two.
+Make Hello, of course, is a command that builds a program called hello
+from a file called hello dot c.
+And in each of these cases, now, we've had
+provide an argument on the so-called command line, the blinking prompt,
+so that make knows what to build, and so that mkdir knows what folder to create,
+and so that cd knows where you want to go.
+But up until now, we keep saying that main, your default function,
+has a void expression inside of those parentheses,
+which means that it cannot take any arguments.
+>> So starting today, what we're going to do
+is, we're going to start supporting things like this even.
+In fact, in this case, which you don't typically manually type,
+Make has been doing this for us, there are not
+one but one, two, three additional strings after the program's named
+clang.
+So how do we achieve this?
+>> Well, starting today, in cases where we want
+to provide input via the so-called command line,
+we're going to start adding here what's in yellow--
+replacing void with int argc comma string argv open bracket close bracket.
+Now this is interesting for a couple of reasons.
+One, it's going to let us write programs that are a little more dynamic.
+But, more compellingly, it's going to open up
+now a conversation as to what arrays can really
+be used, for what a string really is underneath the hood,
+until next week when we start diving in even deeper as to how the machine is
+making all of this stuff work.
+But for now, let's draw, perhaps, a picture.
+>> When you write a program with main declared
+in this way, such that main takes two arguments, an int
+and-- what data type is the second argument?
+>> AUDIENCE: Array.
+DAVID MALAN: Array.
+So it looks at first glance like it's a string, but notice the square brackets.
+Recall last time we introduced the notion of an array.
+And arrays use square brackets in a couple of contexts.
+You might use the square brackets to go into an array
+and get a particular element, like bracket 0 or bracket 1 or bracket 2.
+But we saw, if briefly, last week that you also
+use these square brackets to declare the size of an array,
+if you know in advance how many ints or how many strings or whatever you
+actually want.
+So it turns out there's a third context here
+that has no number inside of the square brackets.
+When you specify, as I have here, the name of something like argv,
+which is just a fancy way of saying argument vector, which
+is another fancy way of saying an array of arguments,
+open bracket close bracket just means that you don't necessarily
+know in advance how big the array is going to be,
+but you know it's going to be an array.
+So if you don't know the number don't put it in there,
+for open bracket close bracket means that argv is not a string,
+but an array of strings.
+So syntactically, if you think back last week,
+it's very similar to saying something like int ages open bracket,
+and then something thereafter.
+So what does this look like?
+Let's actually draw a picture.
+So when you run this program with Main having two arguments defined inside
+of those parentheses, you essentially have at least two chunks
+of memory handed to you underneath the hood.
+One, as I'll draws as this rectangle, is going to be called argc.
+And just as a quick recap, what is the data type of argc?
+So it's an int.
+So a number is going to go in argc-- turns
+out that stands for argument count.
+Meanwhile, I've drawn argv as an array.
+And I don't really know how long it's going to be,
+so for today's purposes dot dot dot.
+It might get of some length.
+But I've pictured here at least four rectangles.
+So argv a chunk of memory that stores string string string dot dot dot,
+and argc is just one chunk of memory for an integer.
+>> So now, let's be a little more precise.
+If, when I have strings in this array, called
+argv, I want to get at them individually, just like last week,
+we're going to use notation like argv bracket 0
+to get the first thing an array.
+Argv bracket 1 to get the second thing, and so forth.
+The key here being we're still 0 indexed-- we're still counting from 0.
+So now let's actually put something in this.
+If I were to compile a program called hello from a file called hello dot c,
+and then I run that program with dot slash hello,
+what does my computer, my laptop, look like underneath the hood
+the moment I run dot slash hello and hit Enter?
+Well, this is perhaps what we could describe
+as the content of your computer's memory, or RAM-- Random Access Memory.
+In other words, the computer, somehow for you magically,
+puts the number 1 in argc, AKA argcount, and it puts literally the string
+./hello in argv bracket 0.
+I have no idea, frankly, what's in argv bracket 1 or 2 or 3,
+because if the user has not typed anything besides ./hello,
+we're going to assume that these are most likely garbage values,
+so to speak.
+Those chunks of memory exist, but it's not up to us
+to look at them, because the argcount is only one.
+>> Now, meanwhile, if I write run another program,
+cd, which is more properly a command, in your blinking prompt-- cd space
+Dropbox-- when I run that, effectively, when the cd program is run, argc,
+inside of my computer's memory, is for the most briefest second the number 2.
+And then argv bracket o has cd, argv bracket 1 has Dropbox,
+and then of course the command completes, so all of this memory
+essentially goes away and is used for something else.
+And that's why I say just a split second.
+>> Meanwhile, if we do mkdir pset2, the picture looks almost the same,
+but with different strings inside argv.
+If I do clang dash hello hello dot c, same idea.
+More stuff is filled in for argv, and argc, of course, is 4.
+So in other words, even though this array
+might be dot dot dot, of some variable length, so to speak,
+you always know where the end of it is, because argc is going to tell you
+at what point you have to stop looking at elements in argv.
+You can only look at four in total in this case.
+>> So let's now take a look at, perhaps, a simple program.
+One that just says hello to someone like Zamyla.
+So I claim I'm going to write a program in just a moment via which I could do
+./hello space Zamyla, and then I want my program to print out something
+super-simple like "hello, Zamyla."
+Now in the past we've used getstring.
+So in the past, even if you're new to programming,
+odds are you could whip up a program that uses getstring
+and then uses printf to say hi to Zamyla.
+But let's not use getstring this time.
+Let me instead go into the Appliant and do include standard I O dot h.
+Let me also include CS50 dot h.
+Now int main, and now I'm not going to do void today.
+Instead, I'm going to do int argc string argv open bracket close bracket,
+not specifying a number.
+And now here is my so-called to do.
+What I'm going to do now is, I'm going to do a bit of a leap of faith,
+I'm going to assume that the user's going to use this program correctly,
+and I'm simply going to do printf hello, %sn.
+So nothing new there.
+But I want to now put whatever word the user types after the program's name.
+So if I do ./hello space Zamyla, I want to somehow programmatically access
+quote unquote "Zamyla." so I can go into my argument vector,
+my array of strings, and if the command, again, was ./hello space Zamyla,
+what number do I want to put in argv here?
+AUDIENCE: 1.
+DAVID MALAN: 1, because bracket 0 turns out
+is going to be the program's name, as we saw.
+So bracket 1 is the first word that I, the user, have typed.
+I'm going to go ahead and save this.
+I'm going to go into my folder where I've placed this file.
+I'm going to do make hello 3.
+Comp IO's OK.
+./hello Zamyla Enter.
+What did I do wrong?
+I was caught by surprise myself for just a moment there.
+What did I do wrong?
+>> AUDIENCE: Name.
+>> DAVID MALAN: The file's actually called hello3.c.
+And I did that just for consistency, because we've
+had hello.c's in the past in the online code.
+So let's fix this ./hello bracket dash 3 Zamyla.
+Enter.
+And now we have hello, Zamyla.
+Meanwhile, I can change this to be Rob, or really any other word.
+>> But let's consider a corner case.
+What might you expect will happen if I don't type anyone's name at all?
+>> AUDIENCE: Error.
+>> DAVID MALAN: An error of some sort, perhaps.
+Let's see.
+Enter.
+Null.
+So printf is actually being a little protective of us
+here, and literally printing open paren null, but even worse things can happen.
+And just to demonstrate something you absolutely
+shouldn't do, let's go in here and start poking around.
+Right?
+If I know that the picture in memory is essentially this,
+argv bracket 1 has Zamyla, argv bracket 0 has ./hello, or ./hello-3.
+What is in bracket 2?
+So I can answer that question myself, right?
+I can just change the 1 to a 2.
+I can now recompile hello 3, ./hello3 Let's zoom in and hit Enter.
+Whoops.
+No quote mark.
+Interesting.
+So that's kind of cool to see what else is in here.
+>> So what else is inside of my laptop?
+Let's save it with bracket 3.
+Make hello3, ./hello-3.
+Curious.
+And now let's get really bold-- 50.
+So that's really diving deep into my computer's memory.
+50 indexes in.
+So make hello 3 ./hello-3.
+Curious.
+All right, now I'm just going to get reckless.
+Let's go to 5,000.
+All right.
+So let me recompile.
+Make hello3, ./hello-3.
+OK.
+Now some of you, there might be a light bulb going off.
+How many of you have seen this message before?
+OK.
+So, why?
+>> Odds are-- and there's different things that can cause this,
+and clearly you're in good company-- we have clearly
+caused what's called a segmentation fault.
+And long story short for today, I have touched a segment of memory
+that I shouldn't have.
+Where a segment just means a chunk of memory that I shouldn't have.
+Now the computer guarantees that if I run ./helloZamyla that I can touch argv
+be bracket 0 and argv bracket 1.
+But argc is value 2, that means I am only allowed-- it's sort of the honor
+system-- to touch bracket 0 and bracket 1.
+If I go any farther, there's absolutely going to be memory there.
+My RAM exists physically in the computer.
+But who knows what's there?
+Indeed, I'm running multiple programs at one time.
+I might have seen-- if I weren't doing this on the Appliant
+but on my Mac or PC-- I might have seen the contents of an email.
+I might have seen an instant message I've recently sent.
+Anything that might be lingering around in memory
+could have been accessed by way of this arbitrary square bracket notation.
+Or, worse yet, you might have found one of my passwords
+that I'd recently typed in, that a program had stored in memory so as
+to authenticate me, and then just kind of left it
+in RAM until I quit that program.
+>> And indeed, this is one of the danger and one the powers
+of using a language like C. You have unfettered access
+to the entire contents of a program's memory,
+and what bad guys can even do in those cases--
+especially when we get to web programming
+toward the end of the semester, we'll revisit this topic-- is poke around,
+potentially, someone's computer's memory and find such curious things
+as we saw there.
+Or even worse yet, passwords that he or she can then use to do bad things.
+>> So clearly I shouldn't have done this, because weird things start to happen.
+Indeed, this is a program crashing.
+This would be the equivalent of Mac OS or in Windows
+a program window just disappearing.
+An unexpected error has occurred.
+In the command-line environment we see something like this.
+But that's why, is I'm simply touching memory that doesn't belong to me.
+>> So let's defend against this a little bit in a different way
+by looking at this program here.
+So, again, the skeleton that we saw earlier--
+and I've highlighted this time int.
+And all this time main has indeed returned a value.
+Even though in most of our lecture examples we've never once used
+return anything in main.
+We just write printf close curly brace and that's it.
+But for free, what the compiler been doing for you,
+effectively, is returning 0 for you.
+Turns out-- and it's a little counterintuitive-- that 0 is good.
+It doesn't mean false per se.
+0 is good, and any non-0 value, the world has decided,
+can signify an error.
+So if you've ever messed something up on your computer,
+or a program has just died on you and you've gotten some erroneous window
+on your screen, saying error negative 49 or error 23--
+some seemingly arbitrary value-- that's because a programmer has hard-coded
+a value like negative 49 or positive 23 to represent any number, dare say,
+of 4 billion possible things that might go wrong in a program.
+>> So how might I take advantage of this myself?
+Well, let me open up a program that I wrote in advance,
+and poke around online called hello 4.
+And it's almost identical, except that its got a little bit of error-checking.
+In this case, I've again declared main as taking two arguments,
+but this time, on line 17, notice I'm doing a bit of a sanity check.
+I'm making sure that argc equals equals 2.
+Because if it is, that means I can safely
+touch not only bracket 0, but bracket 1.
+And I go ahead and print out, in this case, Zamyla or Rob
+or whatever word I typed out.
+And now just to get a little more proper,
+I'm going to explicitly return 0 to signify all is well.
+Nothing bad happened.
+>> But by convention, I'm going to return 1, or frankly any non-0 value,
+if something went wrong.
+Now the user is not going to really notice what's going on.
+Indeed if I go into this directory, we zoom in and do make hello 4,
+./hello-4 Zamyla behaves as I expect.
+But if I instead don't type anything, nothing seems to happen,
+but it doesn't crash.
+And if I instead do something like Rob is a proctor
+in Thayer-- sharing arbitrary information.
+But notice, argv 1, 2, 3, 4, and 5 should now exist in memory.
+That, too, is not what my program expects,
+because I've checked whether argc equals equals 2 or not.
+So I'm now defending against this.
+>> Now, as an aside, we the programmer-- or rather we the users--
+never see that 0 or 1 but using a tool called Debugger, or other tools,
+as we'll see before long, you the programmer
+can actually see what might be going wrong inside of your program.
+>> So, any questions on argc?
+Yeah.
+>> AUDIENCE: I've seen where they haven't had the character, [INAUDIBLE]
+just said string star d, like character asterisk comma.
+Are they equivalent here?
+>> DAVID MALAN: They are.
+So the question is, you have occasionally seen programs
+like this that don't say string argv bracket
+but instead say something like char star argv bracket.
+And there's even other variants that you might see.
+They are indeed equivalent.
+For now, we have these sort of training wheels
+on in the form of string in the CS50 library, but in just over a week
+or so we're going to remove that obstruction altogether and actually
+look at what the char and the star are, and how those pertain to memory
+representation more generally.
+So we'll come back to that.
+>> Other questions on our argv or argc?
+Yeah.
+AUDIENCE: Why did it return an error [INAUDIBLE]?
+DAVID MALAN: Why did it return an error only-- oh!
+In the previous case, when we were futzing around with memory,
+why did it only return an error when I really typed a big number?
+Short answer is, we just got lucky.
+Generally speaking, a computer allocates memory in chunks,
+and it gave me a big enough chunk that I got away, without being noticed,
+of touching bracket 2, bracket 3, bracket 50, but as soon as I pushed
+my luck, I went beyond the boundaries of the chunk of memory
+the operating system had given me.
+And that's when it clamped down and said, no.
+Segmentation error.
+Yeah.
+>> AUDIENCE: How does the computer know the value of argc?
+>> DAVID MALAN: How does the computer know the value of argc?
+When you run a program, that program, by nature of the blinking prompt,
+is handed the array of words that were typed
+at the prompt, that was typed at the prompt.
+And so it is your operating system that essentially
+populates main's arguments for you.
+So that's one of the services that you get, sort of secretly
+underneath the hood of an operating system.
+Other questions?
+Yeah.
+>> AUDIENCE: What does core dump mean?
+DAVID MALAN: What does core dump mean?
+So that's a good question.
+And let me go back into this directory here.
+And you'll notice that I have a new file there.
+It's indeed called core, and it's actually typically a decent-sized file.
+That is essentially a snapshot of the contents of my program's memory
+or RAM when it crashed.
+And this will be useful, potentially, diagnostically,
+once we talk in a future lecture and section about debugging,
+because you can actually do the equivalent of a digital autopsy
+on that file to help figure out what you did wrong in your program.
+Yeah.
+>> AUDIENCE: Is argc a command in itself, or can you name it anything?
+>> DAVID MALAN: Good question.
+Is argc a command in itself, or can you name it anything?
+It's definitely not a command.
+It's simply a variable's name or an argument's name,
+and so absolutely we could call this foo,
+we could call this bar, which tend to be the go-to words that a computer
+scientist goes to.
+But by convention, we use argc and argv.
+But that's just a human convention, nothing more.
+All right.
+So turns out, I've been telling a bit of a white lie--
+and frankly, in the future, you'll see we've been telling other white lies.
+But for now, we're going to peel back one of these.
+In this case here when I previously ran a program like ./hello or ./hello-3
+Zamyla, we had the contents of my computer's memory looking roughly like
+this.
+But recall what a string is.
+What did we say a week ago what a string actually is underneath the hood?
+AUDIENCE: Array of chars.
+DAVID MALAN: It's an array of chars, right?
+So we might have an array of strings, but, in turn, a string
+is an array of characters.
+So if I really want to be anal when I draw this picture,
+I should really be drawing it a little more like this,
+whereby in each of these indexes of my argv array,
+there is itself a whole string that itself is in an array.
+And now the white lie we're telling today
+is that the picture doesn't look quite like this.
+In fact, the little squares are typically outside of the big rectangles
+there.
+But we'll come back to that before long.
+But this is ./hello backslash 0, that being the special character that
+demarcates the end of a string, and we've got another one after
+Zamyla's name.
+So what does this mean?
+>> Well, let me go ahead and open up two other examples
+that are available online.
+One is called argv1.c and the other is argv2.
+It's a super-simple program that is different from past programs
+in that now I'm using argc and argv up here.
+And now I'm integrating with a for loop in line 18, from i=0 on up to argc.
+And what am I going to do with this line of code here?
+In English.
+This obviously demonstrates use of argc.
+But in English, what does it do if I run this program?
+Yeah?
+>> AUDIENCE: It's going to print your screen as many times as you want.
+DAVID MALAN: Exactly.
+So whatever words I type at the prompt, it's
+going to regurgitate them at me one per line.
+So let's go ahead and do this.
+Let me go into my directory and do make argv1 ./argv1.
+And now, let's keep it simple.
+Let's do nothing at first.
+It did print out one thing, and that's indeed the name of the program,
+because that's in bracket 0.
+If I now say foo, it's going to do those two, and if I say foo bar,
+it's going to say those three things.
+Now that's somewhat interesting, maybe.
+But recall that argv is an array of strings,
+but a string is an array of chars, so we can take things up a notch
+and apply that basic logic and make code that
+looks a little more cryptic, admittedly.
+But by having a nested loop, something akin
+to what you might recall from Mario, for instance, if you did it this way.
+>> So now notice on line 19, I'm again iterating over my arguments,
+from 0 on up to argc.
+And now in line 21-- I'm borrowing a trick from last week--
+I am checking what is the length of argv bracket i.
+I'm storing that answer in n.
+And then I'm integrating from j on up to n, where j is initialized to 0.
+So, convention for counting.
+Once you've used i, if you have a nested loop, you can't use i again,
+otherwise you'll clobber, potentially, the value outside of the inner loop.
+So I'm using j by convention.
+We might use k.
+If you have more than k, you probably have too much nesting, typically.
+But now, notice my printf line is slightly different.
+I'm not printing %s, I'm printing %c, which, of course,
+is a placeholder for a char.
+>> And now notice this syntax.
+New.
+We haven't seen it before.
+But logically, this just means get the ith string in argv
+and get the jth what?
+AUDIENCE: Character.
+DAVID MALAN: Character in that string.
+So by using square brackets followed by square brackets,
+this is diving first into argv's strings,
+and then the second square brackets with j
+is diving into the characters of that particular string in argv.
+And then, just for good measure, I'm printing a new line here.
+So now let me go ahead and open up a slightly bigger window
+so we can see this in action.
+Let me go into that folder.
+And now do make argv-2-- whoops-- make argv-2, ./argv 2.
+Enter.
+And it's a little hard to read vertically,
+but that's indeed the name of the program, followed by a blank line.
+Now let me go ahead and do foo.
+Similarly hard to read, but it's indeed printing one character per line.
+And if I do bar, it's now printing those line by line.
+So the takeaway here isn't so much that, wow, look at this neat new trick
+where you can get at the contents of an array's specific characters,
+but rather how we're taking these basic ideas like indexing into an array,
+and then indexing into an array that was in that array,
+and just applying the same ideas to slightly more sophisticated examples.
+But the basics really haven't changed, even since last week.
+>> Now this is sort of timely, in that, recall, in week zero
+we played with a phone book like this.
+And even though this is obviously physical pieces of paper,
+you can kind of think of a phone book as an array.
+Certainly, if you were to reimplement this pieces these pieces of paper
+in a computer, probably you would use something
+like an array to store all of those names and numbers from A all the way
+through Z. So this is nice, because it allows us an opportunity,
+perhaps, to consider how you might actually implement something like that.
+As with a series of doors here.
+So if I could-- we need one volunteer to come on up.
+Let's see.
+An unfamiliar face perhaps, unfamiliar face perhaps.
+How about in orange?
+Here.
+Orange shirt, come on up.
+>> Let's go ahead now and move these doors over to the side,
+move these out of the way for a moment.
+What's your name?
+>> AJAY:
+>> DAVID MALAN: Ajay.
+David.
+Nice to meet you.
+All right.
+So we have behind these six doors digitally on the screen--
+or, rather, seven doors on the screen-- a whole bunch of numbers.
+And I've told you nothing in advance-- agreed?
+AJAY: Nothing in advance.
+DAVID MALAN: All I want you to do now is to find for me, and for us,
+really, the number 50, one step at a time.
+>> AJAY: Number 50?
+>> DAVID MALAN: The number 50.
+And you can reveal what's behind each of these doors
+simply by touching it with a finger.
+Damn it. [LAUGHTER]
+>> [APPLAUSE]
+>> Very well done.
+OK.
+We have a lovely gift prize for you here.
+Your pick of movies we discussed last week.
+>> AJAY: Oh, man.
+Oh, I've never seen Spaceballs.
+>> DAVID MALAN: Spaceballs.
+All right.
+So hold on just one moment.
+How-- let's make this a teachable moment--
+how did you go about finding the number 50?
+AJAY: I chose randomly.
+DAVID MALAN: So you chose randomly and got lucky.
+AJAY: Yes.
+DAVID MALAN: OK.
+Excellent.
+So now, had you not gotten lucky, what else
+might have happened behind these doors?
+So if I go ahead and reveal these numbers here,
+they actually are in random order.
+And the best you could have done, frankly, is by, ultimately,
+in the worst case, checking them all.
+So you got super-lucky, which isn't what we'd call an algorithm.
+Yes, congrats.
+But now let's-- humor me, if you could.
+Let's go to this tab here.
+And here are the numbers in clearly what seems to be a random order,
+and they were.
+But now if I instead claim that behind these doors
+are numbers that are sorted.
+The goal now is to also find us the number 50.
+But do it algorithmically, and tell us how you're going about it.
+And if you find it, you keep the movie.
+You don't find it, you give it back.
+AJAY: So I'm going to check the ends first, to determine if there's--
+[LAUGHTER AND APPLAUSE]
+DAVID MALAN: Here you go.
+Let's take a look at one of Ajay's predecessors,
+Sean, who wasn't quite as lucky.
+OK, so your task here, Sean, is the following.
+I have hidden behind these doors the number seven,
+but tucked away in some of these doors as well are other non-negative numbers.
+And your goal is to think of this top row of numbers as just an array.
+We're just a sequence of pieces of paper with numbers behind them.
+And your goal is, only using the top array here, find me the number seven.
+And we are then going to critique how you go about doing it.
+Find us the number seven, please.
+No.
+5, 19, 13.
+It's not a trick question.
+1.
+At this point your score is not very good, so you might as well keep going.
+3.
+Go on.
+Frankly, I can't help but wonder what you're even thinking about.
+>> SEAN: I can take from only the top row.
+DAVID MALAN: Only the top row.
+So you've got three left.
+So find me 7.
+>> [AUDIENCE  SHOUTS SUGGESTIONS]
+So both of those were amazing for very different reasons.
+So this is where we left off a moment ago,
+and the key insight here was these doors had numbers
+behind them that were sorted, the ideal takeaway for which is that you could do
+fundamentally better in this second example--
+and, indeed, that was Sean's first attempt with random numbers
+just as before-- but as soon as these numbers are sorted,
+much like the phone book, what can you obviously do?
+Or how can you leverage that knowledge?
+Yeah.
+>> AUDIENCE: You go halfway [INAUDIBLE].
+DAVID MALAN: Yeah.
+Exactly.
+So Ajay's initial instinct was to check the ends, as I recall,
+and then we sort of finished the example quickly.
+But if we started to do this more methodically along those lines,
+but starting perhaps in the middle, because they're sorted,
+as soon as we reveal the number 16, we therefore know--
+and let's do exactly that-- we therefore know that 50, in today's case,
+has got to be to the right.
+So just like in week zero when we tore the phone book in half
+and threw half of the problem away, same idea here.
+We can throw this half of the problem away.
+And probably what you might do algorithmically,
+once you know that 50 must be to the right, if it's anywhere,
+is try there, in the middle of the remaining doors.
+Of course, 50 is higher than 42, so we can
+throw this remaining quarter of the problem away,
+and, finally, identify something like 50.
+But just as with the phone book, these numbers
+were given to us already in sorted order, which leaves us
+with the question, how do you get things into sorted order?
+And, frankly, at what cost?
+It's one thing to be handed the phone book
+and then impress your friends by finding a phone number really quickly, right?
+Tearing 32 pages out to find a person out of 4 billion pages,
+we said was one extreme example.
+But how much time did it take Verizon to sort that phone book?
+How much time did it take us to sort these seven numbers?
+That's a question that we've thus far completely ignored.
+>> So let's answer this question now.
+And we're all out of movies now, but we do have some stress balls.
+If, say, eight volunteers wouldn't mind joining us up here?
+Let's go ahead and do, how about the four of you, three of you here?
+Get some new faces.
+And the four of you there?
+And now-- let's not bias here-- and number eight over here on the end.
+Come on up.
+All right.
+So what we have here for each of you is a number.
+If you'd like to go ahead, take this number.
+What's your name?
+>> ARTIE:Artie.
+>> DAVID MALAN: Artie, okay.
+You're number 1.
+>> AMIN: Amin.
+DAVID MALAN: Amin.
+David.
+You're number 2.
+And go ahead, as I hand you the sheets of paper,
+line yourselves up in front of the music stands in the same order as up there.
+>> ANDY: Hi, Andy.
+>> DAVID MALAN: Andy, it's nice to see you.
+Number 3.
+>> JACOB: Jacob.
+>> DAVID MALAN: Jacob, number 4.
+Welcome aboard.
+GRANT: Grant.
+DAVID MALAN: Grant.
+Number 5.
+>> ALANNA: Alanna.
+>> DAVID MALAN: Alanna, number 6.
+>> FRANCES: Frances.
+DAVID MALAN: Frances, number 7.
+And?
+>> RACHEL: Rachel.
+>> DAVID MALAN: Rachel, number 8.
+All right.
+Go ahead and get yourself in this order.
+Let me put one remaining music stand in place.
+Where do you need a stand?
+OK.
+Go ahead and just put your numbers where the audience can see them on,
+the music stand facing outward.
+And hopefully, our first sanity check here-- 4, 2, 6.
+Oh-oh.
+Wait a minute.
+We don't have an 8.
+I need to evict you from the example somehow.
+No.
+No, that's OK.
+Let's see.
+We can do this.
+Stand by.
+There we go.
+Correct.
+All right.
+So, now we have 8, 1, 3 7, 5.
+OK.
+Excellent.
+>> So the question at hand is, at what cost, and via what method,
+can we actually sort these numbers here so that we can kind of work backwards,
+ultimately, and decide-- is it really impressive, is it really efficient,
+that I can divide and conquer a phone book?
+Is it really efficient that I can divide and conquer
+those digital pieces of paper on the board,
+if maybe it's going to cost us a fortune in time or energy or CPU cycles
+to actually get our data into some sorted order?
+So let's ask that question.
+>> So first off, these numbers are in pretty much random order,
+and I'm going to propose one algorithm, or process
+by which we can sort these folks.
+I'm going to approach this pretty naively.
+And I'm going to recognize that it's kind of a lot for me
+to wrap my mind around the whole data set at once.
+But you know what?
+I'm going to make some very simple marginal fixes.
+4 and 2 are out of order, if the goal is to go from 1 on up to 8.
+So you know what?
+I'm going to have you guys swap, if you switch
+physically positions and your pieces of paper.
+Now 4 and 6, these are in order.
+I'm going to leave those be.
+6 and 8, those are in order.
+Going to leave them be.
+8 and1, out of order.
+If you two wouldn't mind swapping.
+Now 8 and 3, if you guys could swap.
+8 and 7, if you guys could swap.
+And 8 and 5, if you guys could swap.
+>> Now, am I done?
+No, obviously not.
+But I have made the situation better, right?
+What was your name again, number 8?
+>> RACHEL: Rachel.
+DAVID MALAN: So Rachel has effectively bubbled up pretty far,
+all the way to the end of my array of numbers here.
+And so that problem is kind of solved.
+Now, clearly, 2 still needs to move a bit, and 4 and 6 and 1.
+But I seem to have gotten a little closer to the solution.
+So let's apply this same naive heuristic again.
+2 and 4, OK.
+4 and 6, OK.
+6 and 1, mm-mm.
+Let's swap.
+6 and 3, mm-mm.
+Let's swap.
+6 and 7 is OK.
+7 and 5, nope.
+Let's swap.
+And now 7 and 8.
+And what's your name again?
+FRANCES: Frances.
+DAVID MALAN: Frances.
+So now Frances is in even a better position, because now 7 and 8
+are correctly bubbled up to the top.
+So 2 and 4, OK.
+4 and 1, let's swap.
+4 and 3, let's swap.
+4 and 6, you're OK.
+6 and 5, let's swap.
+And now those guys are good.
+We're almost there.
+2 and 1, out of order, so swap.
+And now let me do a sanity check.
+2 and 3, 3 and 4, 4 and 5, 5 and 6, 6 and 7, 8.
+OK, so we're done.
+>> But at what cost did I sort these numbers here?
+Well, how many steps did I potentially take when sorting these folks?
+Well, we'll come back to that question.
+But, frankly, if you got a little bored, that's
+kind of revealing in that this wasn't maybe the most efficient algorithm.
+And indeed, frankly, I'm sweating all the more walking back and forth.
+That didn't feel particularly efficient.
+So let's try something else.
+If you guys could reset yourselves to these eight values.
+Good job.
+>> Let's take a look digitally, for just a moment before we try something else,
+at what just happened.
+Up here, you're about to see a visualization of these eight humans
+whereby blue and red bars represent numbers.
+The taller the bar, the bigger the number.
+The shorter the bar, the smaller the number.
+And what you're going to see is in random order more than eight of them.
+You're going to see these bars getting sorted by that same algorithm,
+or set of instructions, which we'll call henceforth bubble sort.
+So notice, every second or so, two bars are lighting up in red,
+are being compared by the computer.
+And then if the big bar and the little bar are out of order,
+they are being swapped for me.
+>> Now this is incredibly tedious to watch this, certainly,
+for very long, but notice the takeaway-- big bars moving to the right,
+little bars moving to the left.
+Let's abort this process and speed this up
+to be much faster, so we can get a high-level sense of what,
+indeed, bubble sort is doing.
+Indeed, it's bubbling up to the right hand side of the list,
+or the array, the bigger bars.
+And conversely, the little bars are bubbling their way down to the left,
+albeit at a faster pace than we previously did.
+So, harder to see with humans, but visually that's indeed what
+was happening.
+>> But let's try a fundamentally different approach now.
+Let's try a different algorithm whereby we have you
+guys start in these original positions, which was this order here.
+And let's go ahead now.
+And I'm going to do something even simpler, right?
+In retrospect, swapping pairwise again and again, almost a little clever.
+Let's do things even more naively, where if I want to sort these folks,
+let me just keep looking for the smallest element.
+So right now, 4 is the smallest number I've seen.
+I'm going to remember that.
+No, 2 is better, and remember that.
+1 is even smaller.
+3, 7, 5.
+OK.
+One-- what's your name again?
+>> ARTIE: Artie.
+>> DAVID MALAN: Artie.
+So, Artie, go ahead.
+I'm going to pull you out of the line.
+If you could come back here.
+And I need to make room for him.
+We have a decision point here.
+How might we make room for Artie here at the beginning where number 1 belongs?
+>> AUDIENCE: Shift.
+>> DAVID MALAN: OK, we could shift everyone.
+But propose an optimization.
+That feels a little annoying for me to ask four people
+to move all the way down.
+What else could I do?
+>> AUDIENCE: Switch them.
+>> DAVID MALAN: Switch them.
+And what's your name again?
+>> JACOB: Jacob.
+DAVID MALAN: Jacob, move.
+Much more efficient just to have Jacob swap locations with Artie,
+as opposed to forcing all four of these folks,
+thank you very much, to their correct position.
+What's nice about Artie now, he's in his correct position.
+Let's do this again.
+2, that's the smallest number I've seen.
+3, 7, 5.
+OK.
+2 is definitely the smallest.
+Don't have to do any work.
+Let's do it again.
+6.
+Smallest?
+8.
+Nope.
+4?
+Ooh.
+Let me remember 4.
+3.
+Let me remember 3.
+7, 5.
+Smallest number I've seen on this pass is 3.
+If you'd come on out.
+Where are we going to put you?
+And what's your name?
+>> ALANNA: Alanna.
+>> DAVID MALAN: Alanna, we're going to have to evict you.
+But that is more efficient, to just swap two people,
+than to have multiple people actually sidestep over.
+Now let's do this again.
+I'm going to select 4, so come on out.
+And who's going to move?
+Number 8, of course.
+If I now find number 5, come on out.
+Number 8's going to get evicted again.
+I'm now going to find number 6 in place.
+7 in place.
+8 in place.
+>> What we just did now is something called selection sort,
+and if we visualize this, it's going to feel a little different.
+Let's go ahead and from this menu here, this visualization--
+let's change this to-- come on, Firefox.
+Let's change this to selection sort.
+And let's speed it up as before, and start the visualization now.
+And this algorithm has a different feel to it.
+On each iteration, frankly, it's even more straightforward.
+I'm just selecting the smallest element.
+Now, frankly, I got a little lucky that time, in that it sorted super-fast.
+The elements were random.
+It's not, as we'll eventually see, fundamentally faster.
+But let's see a third and final approach here as to what's going on.
+So let's go ahead and reset you guys one final time to be in this order here.
+>> And now, I'm going to be a little more clever,
+just to round out our algorithms.
+I'm going to do this.
+I'm going to not go back and forth so much.
+Frankly, I'm tired of all this traversing.
+I'm just going to take what I'm given at the beginning of the list,
+and I'm going to sort that then and there.
+So here we are.
+Number 4.
+I'm going to insert number 4 into a sorted list.
+Done.
+I claim now, and just to make this more clear, this part of my list is sorted.
+It's kind of a stupid claim, but indeed 4 is sorted in a list of size one.
+Now, I'm going to take on number 2.
+Number 2 I'm now going to insert into the right place.
+So where does 2 belong?
+Obviously, over here.
+So go ahead and move back, if you could.
+And why don't you guys just take your music stands with you this time.
+And let's forcibly insert you into the beginning of the list.
+So a little more work.
+I had to move Jacob around, and what's your name?
+>> AMIN: Amin.
+>> DAVID MALAN: Amin.
+But at least I didn't go back and forth.
+I'm just taking things as I go.
+I'm just inserting them in the right place.
+6, this is actually pretty easy.
+Let's insert you over there, if you just wanted to move over slightly.
+Number 8, also pretty easy.
+Right over there.
+Damn it.
+Number 1 we can't just swap with Amin here,
+because that's going to mess up the order.
+So we have to be a little more clever.
+So, Artie, if you could back up for a moment.
+Let's go ahead and shift now, unlike our previous algorithms,
+to make room for Artie right here at the beginning.
+So at the end of the day, I'm kind of doing what I wanted to avoid before.
+And so my algorithm is sort of reversed, intellectually,
+from what it originally was.
+I'm just doing the shifting at a different point.
+Now I'm at 3.
+Oh, damn.
+We have to do more work again.
+So let's push you out.
+Let's move 8, 6, 4-- oh oh-- and 3 is going to go right there.
+So at least slight savings this time.
+7, not too much work to be done.
+So if you want to pop back, let's insert you.
+And lastly, 5, if you want to pop back, we
+need to shift you, you, you, until five is in place.
+>> So now to see this at a high level graphically,
+let's do this algorithm visualization one additional time.
+So this we shall call insertion sort.
+We'll run it just as fast, and start it here.
+And it, too, has a different feel.
+It's sort of getting better and better, but it's never perfect
+until I go in and smooth in those gaps.
+Because, again, I'm only taking what I'm being given from left to right.
+So I didn't get so lucky that everything was perfect.
+That's why we had these little mispositions that we fixed over time.
+>> So all of these algorithms seem to run at slightly different paces.
+In fact, which would you say is the best or the fastest so far?
+Bubble sort, the first?
+Selection sort, the second?
+Insertion sort, the third?
+I hear some selection sorts.
+Other thoughts?
+>> So it turns out that all of these algorithms
+are fundamentally just as efficient as each other-- or, conversely, just as
+inefficient as each other, because we can do fundamentally
+better than all three of these algorithms.
+And that's a bit of a white lie, too.
+when I say as efficient or as inefficient,
+that's at least for super-large values of n.
+When we have just eight people here, or maybe 50 or so bars on the screen,
+you'll absolutely notice differences among these three algorithms.
+But as n, the number of people, or the number of numbers,
+or the number of people in the phone book, or the number of web pages
+in Google's database gets bigger and bigger,
+we'll see that all three of these algorithms are actually pretty poor.
+And we can do fundamentally better than that.
+>> Let's take a look, finally, at what these algorithms might
+sound like in the context of a few others
+as well by way of this visualization here
+that will introduce us to a number of algorithms.
+Let's go ahead and congratulate our participants here, all of whom
+sorted themselves very well.
+If you'd like to take a parting gift.
+You can keep your numbers as well.
+And what you'll see, or rather hear, now,
+is that as we put sounds to each of these bars
+and associate it with the software, different frequency of sound,
+you can wrap your mind more audioly around what each of these things
+look like.
+The first of which is insertion sort
+>> [TONES]
+>> This is bubble sort.
+>> [TONES]
+>> Selection sort.
+>> [TONES]
+>> Something called merge sort.
+>> [TONES]
+>> Gnome sort.
+>> [TONES]
+>> That's it for CS50.
+We will see you on Wednesday.
+>> NARRATOR: And now, "Deep Thoughts," by Daven Farnham.
+Why is it a for loop?
+Why not make it better?
+I'd make a five loop.
+>> [LAUGHTER]

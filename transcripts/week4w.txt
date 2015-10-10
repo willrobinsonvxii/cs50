@@ -1,0 +1,1127 @@
+>> [MUSIC PLAYING]
+DAVID J. MALAN: All right.
+This is CS50, and this is the end of Week Four.
+And one of the topics today is that of digital forensics,
+the art of recovering information.
+And indeed, even though you're in the midst
+right now of Peace at Three and Breakout, next week,
+the focus will be on precisely this domain.
+>> So one of the coolest jobs I ever had was back in graduate school,
+when I was working for the local Middlesex County District Attorney's
+office, doing forensics work.
+So essentially, the Massachusetts State Police, on occasion,
+when working on cases would bring in things like hard drives
+and floppy disks and memory cards and the like.
+And they would hand them to me and my mentor,
+and our goal was to find evidence, if there was any, on these media.
+Now, you might have seen glimpses of this world of forensics
+in the media, TV and movies.
+But the job I had, and daresay that world,
+is not quite like you would see it.
+Let's take a look at what you've probably seen.
+[VIDEO PLAYBACK]
+-OK.
+Now, let's get a good look at you.
+>> [MUSIC PLAYING]
+>> -Hold it.
+Run that back.
+>> -Wait a minute.
+Go right.
+-There.
+Freeze that.
+-Full-screen.
+>> -OK.
+Freeze that.
+-Tighten up on that, will you?
+>> -Vector in on that guy by the back wheel.
+>> -Zoom in right here on this spot.
+>> -With the right equipment, the image can be enlarged and sharpened.
+>> -What's that?
+>> -It's an enhancement program.
+>> -Can you clear that up any?
+>> -I don't know.
+Let's enhance it.
+>> -Enhance Section A6.
+I enhanced the detail, and--
+-I think there's enough to enhance.
+Release it to my screen.
+>> -I enhanced the reflection in her eye.
+-Let's run this through video enhancement.
+>> -Edgar, can you enhance this?
+>> -Hang on.
+>> -I've been working on this reflection.
+>> -There's someone's reflection.
+>> -Reflection.
+-There's a reflection of the man's face.
+>> -The reflection!
+-There's a reflection.
+-Zoom in on the mirror.
+You can see a reflection.
+>> -Can you enhance the image from here?
+-Can you enhance it?
+-Can you enhance it?
+-Can we enhance this?
+-Can you enhance it?
+-Hold on a second.
+I'll enhance.
+-Zoom in on the door.
+-Times 10.
+-Zoom.
+-Move in.
+-More.
+-Wait, stop.
+-Stop.
+-Pause it.
+-Rotate us 75 degrees around the vertical, please.
+>> -Stop.
+Go back to the part about the door again.
+>> -Got an image enhancer that can bitmap?
+>> -Maybe we can use the Pradeep Singh method to see into the windows.
+>> -The software is state of the art.
+>> -The eigenvalue is off.
+>> -With the right combination of algorithms--
+>> -He's taken illumination algorithms to the next level,
+and I can use them to enhance this photograph.
+>> -Lock on and enlarge the z-axis.
+>> -Enhance.
+Enhance.
+-Enhance.
+-Freeze and enhance.
+[END VIDEO PLAYBACK]
+DAVID J. MALAN: So those are all words, but they were not
+used in sentences correctly.
+And indeed in the future, any time, please, you hear someone say the word,
+"enhance," chuckle just a little bit.
+Because when you try to enhance, for instance, this is what happens.
+>> So here's a gorgeous photo.
+This is CS50's own Daven.
+And suppose that we wanted to focus in on the twinkle in his eye,
+or the reflection of the bad guy that was clearly
+captured by the security camera.
+This is what happens when you zoom in on an image that
+has only a finite number of bits associated with it.
+>> That is what you would get.
+And indeed, in Daven's eye is but four, maybe six pixels
+that compose exactly what was glimmering there.
+So Problem Set Four will ultimately have you explore this world, particularly
+by nature of something we call file i/o, where
+i/o is just a fancy way of saying input and output.
+>> So thus far, all of the interactions we've had with a computer
+have been largely with your keyboard and the screen,
+but not so much with the hard disk, or saving of files beyond the ones you
+yourself write.
+Your programs thus far have not been creating, and saving,
+and updating their own files.
+>> Well, what's a file?
+Well, something like a JPEG.
+This is an image you might have or upload to Facebook,
+or see anywhere on the web.
+Indeed, that photo we just saw of Daven was a JPEG.
+And what's interesting about files like JPEGs
+is that they can be identified, typically, by certain patterns of bits.
+>> In other words, what is it that distinguishes a JPEG from a GIF
+from a PING from a Word document from an Excel file?
+Well, it's just different patterns of bits.
+And those different patterns are usually at the start of those files.
+>> So that when your computer opens a Word doc, or when a computer opens a JPEG,
+it looks typically at the first several bits in the file.
+And if it recognizes a pattern, it says, oh, this is an image.
+Let me display it to the user as a graphic.
+Or, oh, this looks like a Word doc.
+Let me show it to the user as an essay.
+>> So for instance, JPEGs, it turns out, are
+fairly sophisticated underneath the hood.
+But the first three bytes in most every JPEG start with these three numbers.
+So byte zero, one, and two are, in most every JPEG, 255, then the number
+216, then the number 255.
+>> And what you'll be able to start doing next week
+is actually poking underneath the hood of files like JPEGs
+and like bitmap files, and seeing what's always been there for as long
+as you've been using a computer.
+>> But what's there is not typically written like decimal numbers like this.
+Computer scientists don't tend to speak in decimal.
+They don't really speak in binary.
+Typically, when we want to express numbers,
+we actually use hexadecimal, which you may recall
+from, say, Problem Set One, which challenged
+you to think about a different system.
+>> We, of course, are familiar with decimal, zero through nine.
+We talked about binary.
+And we don't really have to use that much here
+on out, because computers will use that.
+But programmers will very often, but not always,
+use hexadecimal, which just means you have 16 letters in your alphabet,
+as opposed to two or 10.
+>> So how do you count to higher than nine in hexadecimal?
+You go 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, just by convention.
+But what's key is that each of these is a single symbol.
+There is no 10.
+There is no 11, per se, because each of your digits, just like in decimal
+and just like in binary, should just be a single character, by convention.
+>> So that then is the alphabet we have at our disposal for hexadecimal.
+So what does a JPEG look like if you were to write out those first three
+bytes not as decimal but, for instance, as hexadecimal?
+And why is hex even all that useful?
+>> Well, a quick look at an example.
+So if I write out the bits that represent these decimal numbers--
+this might be a little rusty now from a few weeks back,
+but the left one and the right one are pretty easy.
+255 was the biggest number we could represent with eight bits.
+It was all ones.
+So the only one that's mildly interesting is the middle one.
+And if you kind of do out the math, you will deduce that, indeed,
+that pattern of one and zeros represents 216.
+So let's just stipulate for now that these are correct.
+But why is this interesting?
+>> Well, a byte, of course, is eight bits.
+And it turns out that if you think of a byte as two chunks of four bits,
+like this.
+Let me just add some space.
+So before, after.
+I've just added some white space for visualization's sake here.
+How might we now represent in, say, hexadecimal each quad of bits,
+each set of four bits?
+>> So for instance, on the left now, we have 1111 in binary.
+What is that number in decimal, if you do out the math?
+You have the ones place, the twos place, the fours place, and the eights place.
+>> AUDIENCE: 15.
+DAVID J. MALAN: It's 15.
+So if we do eight plus four plus two plus one, we get 15.
+So I could write down 15 below 1111, but the whole point here
+is hexadecimal, not decimal.
+So instead of writing down 15, 1-5, I'm going to write that in hex,
+which if you think back, if you have zero through f, what is 15 going to be?
+AUDIENCE: f.
+DAVID J. MALAN: So it turns out it's f.
+And you can work that out by saying, well, if a is 10, then OK, f is 15.
+So indeed, we could rewrite this same set of numbers as f f.
+And then if we do a bit of math, we'll deduce that that's d.
+Eight is pretty easy, because we have a one in the eights place.
+And then, we have a couple more f f's.
+>> So what humans tend to do by convention when they use hexadecimal is they just
+write this a little more succinctly, get rid of most of that white space.
+And just to be super clear to readers that this is hexadecimal,
+the simple convention among humans is you write zero
+x, which has no meaning other than a visual identifier of,
+here comes a hex number.
+>> And then, you put the two digits, f f in this case, then d a, then f f.
+So long story short, hexadecimal just tends
+to be useful because each of its digits, zero through f, perfectly lines
+up with a pattern of four bits.
+>> So if you have two hexadecimal digits, zero through F, again and again,
+that gives you perfectly eight bits or one byte.
+So that's why it tends to be conventionally useful.
+There's no intellectual content really beyond that,
+other than its actual utility.
+>> Now JPEGs aren't the only file formats for graphics.
+You might recall that there are files like this in the world,
+at least from a few years back.
+>> So this was actually installed in Windows XP
+on millions of PCs around the world.
+And this was a bitmap file, BMP.
+And a bitmap file, as you'll see next week, just means a pattern of dots,
+pixels as they're called, a map on bits, really.
+>> So what's interesting, though, about this file format, BMP, is
+that underneath the hood, it has more than just three bytes
+that compose its header, so to speak, the first few bites.
+It actually looks a little complicated at first glance.
+And you'll see this in the P set.
+And getting something particular out of this now
+isn't so important, as just the fact that at the beginning of every bitmap
+file, a graphical format, there's a whole bunch of numbers.
+>> Now Microsoft, the author of this format,
+tends to call those things not ints and chars
+and floats but words and d words and longs and bytes.
+So they're just different data types.
+They're different names for the same thing.
+But you'll see that in P Set Four.
+>> But this is only to say that if a human double-clicks some .BMP file on his
+or her hard drive, and a window opens up showing him or her that image,
+that happened because the operating system presumably noticed not only
+the .BMP file extension in the file name,
+but also the fact that there's some convention to the pattern of bits
+at the very beginning of that bitmap file.
+>> But let's now focus on such a complicated file,
+but instead on something like this.
+Suppose here in GEdit, I just have the beginnings
+of a program that's pretty simple.
+I've got some includes up top.
+Now I've got #include "structs.h" but I'll come back to that in a moment.
+But this is useful for now.
+So this is a program that's going to implement
+like the registrar's database.
+So a database of students, and every student in the world
+has a name and a house and probably some other stuff, but we'll keep it simple.
+Every student has a name and a house.
+>> So if I wanted to write a program whose purpose in life
+was just to iterate from zero on up to three,
+if there's three students at Harvard University.
+And I just want to get, using GetString, each student's name and house,
+and then just print those out.
+>> This is sort of like Week One, Week Two stuff now,
+where I just want a for loop or something like that.
+And I want to call GetString a few times, and then print f a few times.
+So how might I do this, though, when both a name and a house
+are involved for each student?
+>> So my first instinct might be to do something like this.
+I might first say, well, give me, say, an array of strings called names.
+And I don't want a hardcode three here.
+What do I want to put there?
+So STUDENTS, because that's just a constant declared at the top,
+just so I don't have to hardcode three in multiple places.
+This way, I can change it one place, and it affects a change everywhere.
+And then, I might do string houses STUDENTS.
+>> And now, I might do something like for (int i = 0; i < STUDENTS; i++.
+So I'm typing fast, but this is probably familiar syntax now.
+>> And now, this was more recent.
+If I want to put in the i-th student's name, I think I do this.
+And then, not names but houses bracket i.
+I do this, GetString, and let me go back and fix this line.
+Agree?
+Disagree?
+It's not very user-friendly.
+I haven't told the user what to do.
+>> But now, if I also wanted to later, let's
+say, print these things out-- so TODO later.
+I'm going to do more with this-- this arguably is
+a correct implementation of getting names and houses, three
+of them total of each, from a user.
+>> But this is not very good design, right?
+What if a student has not just a name and a house, but also an ID number,
+and a telephone number, and an email address,
+and maybe a home page, and maybe a Twitter handle,
+and any number of other details associated with a student or a person,
+more generally.
+How would we begin to add functionality to this program?
+>> Well, I feel like the simplest way might be to do something like, let's say,
+int ids STUDENTS.
+So I can put all their IDs in there.
+And then, for something like phone numbers,
+I'm not sure how to represent that just yet.
+So let's go ahead and just call this twitters STUDENTS, which
+is a little strange, but-- and a bunch more fields.
+>> I've started to effectively copy and paste here.
+And this is going to grow pretty unwieldy pretty quickly, right?
+Wouldn't it be nice if there were in the world a data structure known
+not as an int or a string, but something higher level, an abstraction, so
+to speak, known as a student?
+C did not come with built-in functionality for students,
+but what if I wanted to give it such?
+>> Well, it turns out, I'm going to open a file called structs.h here,
+and you can do exactly that.
+And we're going to start doing this now.
+And underneath the hood of P Set Three, you've already been doing this now.
+There is no such thing as a g rect or a g oval in the programming language C.
+>> Folks at Stanford implemented those data types by using this approach here,
+declaring their own new data types using a new keyword
+called struct and another one called typedef.
+And indeed, even though the syntax looks a little different from stuff
+we've seen before, in principle, it's super simple.
+>> This just means "define a type."
+That's going to be a structure, and a structure
+is just like a container for multiple things.
+And that structure is going to have a string called name,
+and a string called house.
+And let's call, just for convenience, this whole data structure student.
+>> So the moment you get to the semicolon, you have now
+created your own data type called student
+that now stands alongside int, and float, and char, and string,
+and g rect, and g oval, and any number of other things people have invented.
+>> So what's useful about this now is that if I go back
+to struct 0 and finish this implementation, which I wrote
+in advance here, notice that all of the inevitable messiness that
+was about to start happening as I added phone numbers and twitters and all
+these other things to a student's definition,
+now it's succinctly wrapped up as just one array of students.
+>> And each of those students now has multiple things inside of it.
+So that just leaves one question.
+How do you get at the name, and the house, and the ID,
+and whatever else is inside of the student?
+Super simple, as well.
+New syntax, but a simple idea.
+>> You simply index into the array, as we did last week and this.
+And what's clearly the new piece of syntax?
+Just ., which means "go inside the structure and get the field called
+name, get the field called house, get the field called student."
+>> So in P Set Three, if you're still working on that,
+and most folks still are, realize that as you
+start using things like g rects and g ovals
+and other things that don't seem to come from Week Zero, One, or Two,
+realize that that's because Stanford declared some new data types.
+>> And indeed, that's exactly what we'll do, as well, in P Set Four, when
+we start to deal with things like images, bitmaps, and more.
+So that's just a teaser and a mental model for what is to come.
+Now, I procrastinated a bit this morning.
+I was kind of curious to see what the Microsoft wallpaper actually
+looks like today.
+And it turns out someone in 2006 actually went to almost precisely
+the same spot to photograph in reality what looks like that these days.
+The field is now a little overgrown.
+>> So speaking now of images, let's bring back Daven here
+on the screen and Nicholas, and just remind you
+that if you'd like to join us for lunch this Friday, head to our usual URL
+here.
+>> So where did we leave off on Monday?
+We introduced this problem, right?
+This was seemingly a correct implementation of swap,
+whereby you taking two ints, one called a, one called b,
+swap them, just like Laura did here on stage with the milk and the water,
+by using a temporary variable, or an empty cup,
+so that we could put b in a and a in b without making a mess of things.
+We used a variable.
+It's called temp.
+>> But what was the fundamental problem with this code on Monday?
+What was the problem here?
+Yeah.
+>> AUDIENCE: It takes up more space.
+>> DAVID J. MALAN: Takes up more space, because I'm using a variable,
+and that's OK.
+That is true, but I'm going to say that's OK.
+It's only 32 bits in the grand scheme of things, so not a big deal.
+Other thoughts?
+AUDIENCE: It only swaps the variables locally.
+DAVID J. MALAN: Exactly.
+It only swaps the variables locally.
+Because any time you call a function-- when I had the trays from Annenberg
+last time, you have main on the bottom.
+As soon as you call a function called swap, swap does not get x and y,
+the original values.
+What does swap get, did we claim?
+AUDIENCE: Copies.
+DAVID J. MALAN: So copies of them.
+So it gets one and two, if you recall the example from last time,
+but a copy of one and two that are successfully swapped.
+But unfortunately in the end, those values are still the same.
+So we can see this with our new friend, hopefully GDB,
+that you or the TFs and Ca's have been guiding you toward as follows.
+>> So no swap recall looks like-- let's open up this-- looks like this.
+We initialized x to one, y to two.
+Had a bunch of print f's.
+But then, the key call here was to swap, which
+is exactly the code we just saw a moment ago.
+Which is correct at first glance, but functionally,
+this program does not work, because it doesn't permanently swap x and y.
+>> So let's see this, a quick warm up here with GDB, a ./noswap.
+A bunch of overwhelming information that I'll get rid of with Control L for now.
+And now, I'm going to go ahead and run it.
+And unfortunately, that was not that useful.
+It ran the program inside of this program called GDB, a debugger,
+but it didn't let me poke around.
+>> So how can I actually pause execution inside this program?
+So break.
+And I could break on any line number, one, 10, 15.
+But I can also break symbolically by saying break main.
+And that's going to set a break point, apparently at line 16 in main.
+And where is line 16?
+Let's go up to the code and go up to noswap.
+And indeed, line 16 is the very first in the program.
+>> So now, if I go ahead and type run this time, Enter, it paused.
+So let's poke around.
+Print x-- why is x zero?
+And ignore the dollar sign.
+That's just for fancier usage of the program.
+Why is x zero at the moment?
+Yeah.
+>> AUDIENCE: It paused right before line 16, not actually on line 16.
+DAVID J. MALAN: Exactly.
+GDB, by default, has paused execution just before line 16.
+So it hasn't executed, which means x is of some unknown value.
+And we got lucky that it's something clean like zero.
+So now if I type next, now it executed 16.
+It's waiting for me to execute 17.
+Let me go ahead and print x.
+It's one.
+Let me go ahead and print y.
+What should I see now?
+>> AUDIENCE: [INAUDIBLE]
+>> DAVID J. MALAN: A little louder.
+>> AUDIENCE: [INAUDIBLE]
+DAVID J. MALAN: Not quite a consensus.
+So yes, we see some garbage value.
+Now, y is 134514064 there.
+Well, it's just some garbage value.
+My program uses RAM for different purposes.
+There's other functions.
+Other people wrote inside my computer.
+So those bits have been used for other values, and what I'm seeing
+is the remnants of some prior use of that memory.
+>> So no big deal, because as soon as I type next and then print y,
+it's initialized to the value that I want.
+So now, let's go ahead a little faster.
+N for next.
+Let's do it again.
+Let's do it again.
+But I don't want to hit it here, because if I
+want to see what's going on inside of swap, what's the command?
+>> AUDIENCE: steps.
+>> DAVID J. MALAN: steps.
+So this steps me into a function, rather than over it.
+And now, it's a little cryptic honestly, but this is just
+telling me I'm in line 33 now.
+And let's do this again.
+Print temp.
+Garbage value, negative this time, but that's just still a garbage value.
+So let's do next, print temp.
+It's initialized to 1, which was the value of x, aka a.
+>> Now, where are our a and x coming from?
+Well, notice in main, we called these values x and y.
+We then passed them to swap as follows.
+X came first, comma y.
+And then, swap could call them x and y.
+But for clarity, it's calling them a and b.
+But a and b are now going to be copies of x and y, respectively.
+>> So if I go back to GDB, temp is now one and a is now one.
+But if I do next and now do print a, a has already been moved over.
+The milk has been poured into the former orange juice's glass, or vice versa.
+>> And if I do next again, and now if I print out as a sanity check,
+a is still two, but b is now one.
+Frankly, it's still there.
+I don't care what temp is.
+But as soon as I now type, let's say, continue to go back, now I'm at the end
+the program.
+And unfortunately, x is still one and y is still two.
+>> So what was the utility of GDB there?
+It didn't help me fix the problem per se,
+but it hopefully help me understand it by realizing
+that yes, my logic is right, but my code is not ultimately having
+a permanent impact.
+So that's a problem we're going to now solve today.
+>> But let's get there by way of this.
+String is a lie.
+It, too, not a data type that exists in C. It's
+been a synonym for some time for something else,
+and we can reveal that as follows.
+>> Let me go ahead and open up a program called compare-0.
+And rather than type this one out, we'll start to walk through the code
+I already wrote, but it's only a few lines.
+So this is compare-0.
+And the first thing I'm doing is getting a line of text.
+>> But notice what I'm doing for the first time.
+What is different clearly about line 21?
+Actually, wait a minute.
+This is copy two.
+That is not even the right program.
+All right, spoiler alert.
+All right, so never mind that.
+That's the answer to a future question.
+>> Here is compare-0, and I'm about to get a line of text.
+Program's much simpler.
+So this is straightforward.
+This is like Week One, Week Two stuff at the moment. string s = GetString.
+Now, I say it again down here.
+string t = GetString.
+And then, the last thing in this program, as its name suggests,
+is I'm going to try to compare them.
+>> So if s, the first string, equals = t, then I'm
+going to say you type the same thing.
+Else, I'm going to say you type different things.
+So let's compile and run this program.
+So make compare zero.
+Looks good.
+No compilation errors.
+>> Let me go ahead now and type ./compare-0.
+Let me go ahead and say something :Daven and something :Rob.
+And I type different things.
+So far, so good.
+Program seems to be correct.
+>> But let's run it again.
+Say something: Gabe.
+Say something: Gabe.
+All right.
+Maybe I hit space bar or something funky.
+Let's do it again.
+So Zamyla.
+Zamyla.
+Different things.
+So what is going on?
+>> So we have these two lines of code, GetString being called twice.
+And then, I'm simply trying to compare s and t.
+But what really then is going on?
+Well, my handwriting's about to butcher this example somewhat.
+And let's actually throw this up over here, as well.
+>> So we have a line like string s = GetString.
+So that's simply the first interesting line from that program.
+But what all this time has been going on underneath the hood?
+Well, on the left-hand side is string, which is some type of variable,
+and it's called s.
+So I know that this is using memory, or RAM, in my computer somehow.
+So I'm going to abstractly draw that as a square.
+32 bits, it turns out, but more on that in the future.
+And then, what's going on over here?
+>> Well, GetString obviously gets a string from the user.
+And GetString got Zamyla or Gabe or Daven.
+So let's choose the first of those, which was Daven.
+So effectively, what GetString got me in that first case was D-a-v-e-n.
+And then, what else did it give me secretly?
+AUDIENCE: [INAUDIBLE]
+DAVID J. MALAN: Yeah, the /0 or null character.
+So it effectively gave me a string.
+But we already know from previous looks that a string is just an array
+of characters, and it's terminated by this special sentinel character, /0.
+>> But if this is true and this is a square,
+this is clearly a much bigger rectangle.
+And indeed, this is, I claim, only 32 bits.
+And this is clearly more than 32 bits, because this is probably
+eight plus eight plus eight plus eight plus eight,
+just because of bytes in ASCII.
+How the heck are we going to fit Daven into this little box here?
+>> Well, what is GetString actually doing?
+Well, this grid here represents my computer's memory or RAM.
+So let's arbitrarily say that if each of these represents a byte,
+then we can think of each byte as having an address,
+like 33 Oxford Street, or 34 Oxford Street, or 35 Oxford Street.
+>> So just like homes have addresses and buildings have addresses,
+so do individual bytes of memory have addresses or numbers
+that uniquely identify them.
+Now, this is arbitrary.
+But to keep it simple, I'm going to use hexadecimal just by convention,
+but the 0x means nothing other than "this is hexadecimal."
+and I'm going to claim that the "D" ends up at Byte One in memory.
+>> I got nothing else going on in memory, so Daven got the first spot
+at Byte One.
+This, then, is going to be 0x2.
+This is going to 0x3.
+This is going to be 0x4.
+This is going to 0x5.
+This is going to be 0x6.
+>> But once you start thinking about what the computer's doing
+underneath the hood, you can start to infer
+how you, some years ago, would have implemented C itself.
+What is GetString probably returning-- because it
+feels like it's not returning Daven, per se,
+because he's surely not going to fit in this little box--
+so what is GetString probably returning?
+>> AUDIENCE: [INAUDIBLE]
+>> DAVID J. MALAN: The location of Daven.
+And it's been doing this ever since Week One.
+What GetString is really returning is not a string, per se.
+That's one of the little white lies.
+It's returning the address of the string in memory, the unique address.
+Daven lives at 33 Oxford Street.
+But more succinctly, Gavin lives at 0x1, Address Number One.
+>> So what gets put in this little box then, to be clear,
+is just the address of that string.
+So all this time, this has been going on.
+But what this hints at now is that if all s has
+is a number inside of it, who's to stop you, the programmer,
+from putting any number in any variable and just jumping
+to that chunk of memory?
+And indeed, we'll see that's a threat next time.
+>> But for now, this feels insufficient.
+If I say, get me a string, you give me Daven.
+But you don't really give me Daven.
+All you give me is Daven's address.
+How do I then know for sure where Daven begins and ends--
+the story's getting weird-- where Daven begins and ends,
+and then, the next string in memory starts?
+>> Well, if you're handing me the beginning of Daven,
+essentially, how do I know where the end of his name is?
+That special null character, which is all the more important now
+if strings underneath the hood are simply identified
+uniquely by their location in memory.
+So all this time, that's what's been going on.
+>> So when we look now at the code here, explain
+if you would the bug in line 26.
+Why is Zamyla and Zamyla different?
+Why is Gabe and Gabe different?
+Yeah, in back.
+>> AUDIENCE: They have different addresses.
+>> DAVID J. MALAN: Simply because they have different addresses.
+Because when you call GetString again, which I'll do quickly here,
+if this is the second line, string t, as I did in that program,
+equals another call to GetString.
+The next time I call GetString, I'm going
+to get a different chunk of memory.
+>> GetString is allowed to ask the operating
+system for more and more memory.
+It's not going to reuse the same six bytes every single time.
+It's going to get a new chunk of memory, which
+means t is going to get some other value over here.
+>> So when I do s equals = t, you're not comparing
+D against this and A against this and V against this.
+You're comparing this against this, which
+frankly is pretty useful-- useless-- is pretty useless, because who really
+cares where the strings are in memory?
+>> And indeed, we haven't.
+And we're not going to start particularly caring.
+Only to the extent that bugs can arise and security threats can arise will
+we actually start to care about this.
+So let's fix this problem.
+Turns out, you fix it super simply.
+>> And let's actually, before I reveal that again, what would
+you do if in a CS50 class, and you had to implement
+a comparison against two strings.
+You clearly can't just use s equals = t.
+But just logically, how would you compare this string
+against this string using C code?
+Yeah.
+>> AUDIENCE: Just do the for loop [INAUDIBLE]
+DAVID J. MALAN: Perfect.
+AUDIENCE: [INAUDIBLE]
+DAVID J. MALAN: Yeah.
+Just use a for loop or a while loop or whatever.
+But just apply the basic idea that if this is a chunk of memory or an array
+and this is, iterate over both at the same time.
+And just compare the letters.
+>> And you've got to be a little careful, because you
+don't want one finger to go past the other
+because one string is longer than the other.
+So you're going to want to check for this special value at the end, null.
+But it really is, in the end, as simple as that.
+And frankly, we don't need to reinvent that wheel.
+Here is Version Two.
+And what I'm going to say here is that instead of comparing s equals = t,
+I'm instead going to say, if string comparison of s comma t equals = 0.
+Now, what is string compare?
+>> It turns out, it's a function that comes with C, whose purpose in life
+is to compare two strings.
+And stir compare, if we read its man page or documentation or CS50
+reference, it will simply tell you that stir
+compare returns either a negative number or a positive number or zero,
+where zero means they're equal.
+>> So just conjecture.
+What might it mean if stir compare returns
+negative value or positive value?
+AUDIENCE: Greater than or less than.
+DAVID J. MALAN: Yeah, greater than or less than.
+So if you wanted to sort a whole bunch of strings in a dictionary--
+as we will eventually down the road-- perfect function to use potentially,
+because it's going to do that comparison of strings for you, and tell
+you does a comes before b, or does b come before a alphabetically.
+We can do exactly that.
+>> And notice I did one other thing in this example.
+What else has changed higher up in this main function?
+Char*.
+And this is that other white lie.
+All this time, when you've been writing string,
+we have been secretly rewriting string as char* so that clang actually
+understands you.
+>> In other words, in CS50.h and as we'll eventually see,
+we made a synonym called string that's the same thing as char*.
+And for now, know only that the *, in this context, at least,
+means the address.
+>> The address of what?
+Well, the fact that I said char*, and not int* or float*,
+means that char* is the address of a char.
+So this little box here, aka string, is really of type char*,
+which is simply a fancy way of saying, in this box will go an address.
+And what does that address refer to?
+Apparently, a char.
+>> But we could absolutely have int* and other things.
+But for now, char* is really the most straightforward and one of interest.
+So this problem is going to rise, though, again.
+>> Suppose I open up this program.
+Let's see if now we can predict what's wrong with this code.
+So in this program, copy-0, I'm going to go ahead and again call
+GetString and store the value in s.
+>> And then, why am I doing this, just as a reminder from weeks past?
+We did say that GetString sometimes returns null.
+What does it mean if GetString returns null?
+Something went wrong.
+It probably means the string is too big, the computer's out of memory.
+It happens super, super, super rarely, but it could happen.
+We want to check for it, and that's all we're doing.
+>> Because we'll see now, if you don't start checking habitually for things
+like null, you might actually start to go
+to addresses in memory that are invalid.
+And you're going to start inducing more and more segmentation faults.
+Or in a Mac or a PC, just causing a computer to hang
+or a program to freeze, potentially.
+>> So now, I claim in copy-0.c, that I am going to copy these strings by way
+of line 28.
+And then, I'm going to claim at the bottom
+here that I'm going to change one of them.
+>> So notice this.
+I'm calling our old friend strlen.
+And just explain in English what this line 34 is doing?
+What does t bracket 0 represent on the left.
+Yeah.
+>> AUDIENCE: First character of t?
+DAVID J. MALAN: First character of t.
+That's it.
+First character of t, I want to assign the uppercase version
+of the first character in t.
+So this is capitalizing the first letter.
+And then, the very last thing I do in this program is I claim here's
+the original, s, and here's the copy, t.
+>> But based on the story we just told about what strings really are,
+what is line 28 really doing, and what is
+the resulting bug going to be on the screen?
+>> So first, the first question, 28.
+What is string t = s really doing?
+If we have on the left-hand side here string t = s;
+that gives me one box here and one box here.
+And suppose this address is 0x, let's say, 50 this time, arbitrarily.
+What does string t = s do underneath the hood?
+>> AUDIENCE: [INAUDIBLE]
+>> DAVID J. MALAN: It stores the memory address there, so 0x50 goes there.
+So if now, I go to the first character in t and uppercase it,
+what am I effectively doing to s?
+I'm really doing the same thing, right?
+Because if Address 0x50-- and just, I don't have much room on the board here,
+but assume that this is 0x50 down here, somewhere in my computer's memory.
+>> And I have, for instance, gabe in lowercase here, like this.
+And I have said t bracket 0 gets capitalized.
+Well, t bracket 0 is the first letter in t.
+So little g is going to become big G. But the problem
+is, what does s also point to?
+>> AUDIENCE: The same.
+>> DAVID J. MALAN: The same exact thing.
+So a simple explanation perhaps, even if the syntax is a little weird.
+So let's do this.
+Make copy-0 and then ./copy-0.
+Say something: Gabe.
+And unfortunately, both of them have now been capitalized,
+but for that underlying reason that we're simply
+now dealing with addresses.
+>> So how do we begin to address-- no pun intended--
+how do we begin to address this particular problem?
+Well, in copy1.c, things are going to get a little more complicated.
+But I would claim a conceptually simple solution.
+>> So hard to get at first glance.
+Not going to be easy for the first time you type it out, perhaps,
+but if the problem is that simply doing t = s just
+copies the address, what, again if I can pick on you,
+is going to be the solution for actually copying a string?
+>> AUDIENCE: We'll probably use a loop again.
+>> DAVID J. MALAN: Yeah.
+So we're going to need a loop again.
+And because if we want to copy a string s into another string,
+we probably want to do it character by character.
+But the problem is, if this is originally s,
+now we need to start explicitly allocating memory for t.
+>> In other words, let's redraw this one last time.
+If this is string s = GetString.
+And let's put this up here, as well.
+This is GetString.
+And then, the picture for something like that is going to be as before,
+g-a-b-e-/0.
+That looks a little something like this.
+And s therefore, we call this 0x50, and that's going to be 51, 52.
+>> So this is 0x50.
+And then, I do string t.
+In memory, that's just going to give me a little square like this.
+So what's the key step now?
+If I want to copy s into t, what blank do we need to fill in here?
+Or what do we need to do at a high level?
+Yeah?
+Someone?
+Yeah.
+>> AUDIENCE: We need to [INAUDIBLE].
+DAVID J. MALAN: Yeah, we need to fill in this blank.
+I can't copy and then capitalize Gabe's name
+until I ask the operating system for another chunk of memory
+that's at least as big as the original.
+So that leaves us with a question.
+>> How do I ask the operating system not just for a simple little pointer--
+as this is called, an address, a pointer-- not
+for a simple little box like this called a string?
+How do I ask the operating system for a big chunk of memory?
+Thus far, I've only gotten that back indirectly by calling GetString.
+So how is GetString even getting its memory?
+>> Well, it turns out that there's this other function here
+that we'll now start to use.
+Now, this looks way more cryptic than-- and I am the only one who can see it--
+this line looks way more cryptic then it should at first glance.
+But let's tease it apart.
+>> On the left-hand side, I have char* t.
+So in English, let's start to formulate proper sentences in technical jargon.
+So this is allocating a variable of type char* called t.
+Now, what does that really mean?
+>> Well, that means, what am I going to put in this variable called t?
+An address of a char.
+So that's just the simpler, more reasonable way
+of describing the left-hand side.
+So that creates this box here only.
+So the right-hand side, presumably, is going
+to allocate that bigger chunk of memory how?
+So let's tease this apart.
+>> It's overwhelming at first glance, but what's going on inside here?
+First, there's malloc, which is apparently our new friend,
+"memory allocate."
+So this is the argument being passed into it, so it's a pretty big argument.
+So let's tease this apart.
+>> strlen of s, of course, represents the--
+AUDIENCE: The number of characters.
+DAVID J. MALAN: Just the number of characters in s.
+So the length of s, the original string.
+So G-a-b-e.
+So it's probably four in this case.
+Why am I doing +1 after calling strlen of s?
+AUDIENCE: [INAUDIBLE]
+DAVID J. MALAN: For that special null character.
+If you ask me what's the length of Gabe's name, I am going to say four.
+Underneath the hood, though, I need that fifth byte for the null character.
+So that's why I'm doing the +1.
+>> Now just in case you are running this program on a computer other than, say,
+the CS50 appliance, where the size of a char
+might be different from my own computer--
+turns out that I can call this operator sizeof, just ask the computer,
+what is the size of a char on this computer?
+>> And by multiplying five in this example by the size of a char, which
+on most computers will just be one, malloc
+is going to allocate for me this big chunk of memory over here on the right.
+And it's going to return-- it is a function-- so it's
+going to return to me what?
+AUDIENCE: The address?
+DAVID J. MALAN: The address of what?
+AUDIENCE: Of the memory it allocated?
+DAVID J. MALAN: Of the memory it allocated.
+So I have no idea, frankly, where this is going to end up.
+I'm going to propose that it's going to end up at 0x88.
+Completely arbitrary, but somewhere other than 0x50,
+because the operating system, what Windows and Mac OS do for me, is
+make sure that it's giving me different chunks of RAM.
+>> So this is the value where this chunk of memory might end up.
+So this is what ends up in here, 0x88.
+So now clearly, I can understand that this is not the same as this,
+because they're pointing at different chunks of memory.
+So if I now actually want to copy this in, let's do your proposed solution.
+>> Let's just go, create a for loop, and do t bracket i gets s bracket i.
+Because now I can use this array-like notation,
+because even though malloc very generically allocates me memory,
+memory is just contiguous bytes.
+Byte, byte, byte, back to back to back.
+>> I can surely as a programmer treat it as an array, which
+means I can use this finally familiar notation of just some square brackets.
+>> So let me pause there, because this is a lot all at once, even
+though the basic idea to recap is that string, all this time,
+is not a new data type per se.
+It's just a so-called pointer, an address of a character,
+which just means it's a number that by human convention
+we tend to write as 0x something.
+>> But it's just a number, like 33 Oxford Street,
+which happens to be the CS building's address.
+Any questions on these details?
+Yeah?
+>> AUDIENCE: Why do we check for t equal to null?
+>> DAVID J. MALAN: Why do we check for t equal to null?
+If we read the documentation-- great question-- for malloc,
+it's going to say in fine print, sometimes malloc might return null,
+just like GetString.
+And indeed, GetString returns null if, in turn, malloc returns null,
+because GetString uses malloc.
+>> And that might happen if the OS, Mac OS, Windows, whatever, is simply
+out of memory for you.
+So that's what happened there.
+>> And let me reveal one other thing that might just blow your mind
+or completely be too far over the line.
+But let me pull up the same for loop for copying,
+which a moment ago, recall was this. t bracket i gets s bracket i.
+>> Nice and user-friendly.
+Feels like Week Two again.
+But this version actually can be rewritten as this, which looks cryptic.
+It's a technique called pointer arithmetic, address arithmetic.
+But why does this work?
+>> Now annoyingly, the authors of C decided to use
+the * symbol for different purposes.
+We've seen it used once already, char*, which means "give me a variable
+that's going to contain the address of a char."
+So char* in that context means "give me a variable."
+>> Unfortunately, if you use the * without a word in front of it, like char,
+it's now called the dereference operator.
+And we'll see more of this before long.
+But it just means "go there."
+It's like saying, if someone handed me on a piece of paper "33 Oxford Street,"
+if I do "*33 Oxford Street," that means "go down the road to the CS building."
+>> So * just means go there if there's no word in front of it.
+So what is t, to be clear?
+t is the address of the chunk of memory that was given back to me.
+s is the address of what, to be clear, in the example we've been discussing,
+of lowercase gabe?
+s is the address of--
+AUDIENCE: The string.
+DAVID J. MALAN: Of Gabe's original name.
+So it's the address of this chunk of memory.
+So if I say t + i-- i, notice, is just our old friend.
+It's just an index variable that's iterating from zero on up
+to the length of the string s.
+So it's going to be zero, then one, then two, then three, then four.
+So let's assemble these new Scratch-like puzzle pieces, if you will,
+even though, again, the syntax is far more arcane than Scratch.
+So t is an address + i is going to give me
+a number, because these are all numbers that we've been drawing as hex.
+But they're just numbers.
+>> So if the address of t we said was 0x88, what's 0x88 plus zero.
+Even if you're not comfortable with hex yet, take a guess.
+>> AUDIENCE: The original.
+>> DAVID J. MALAN: Still 0x88.
+So what does * 0x88 mean?
+It means, "go there" which means effectively, "put your finger here."
+And now on the right-hand side of this expression, * and then in parens,
+s + i means s, which is the address up here of the little g.
+s + 0 is, of course, s, whatever s is.
+>> So now, it's *s, which just like *33 Oxford Street means go to the address
+s.
+So here's this finger, right hand.
+So what am I going to copy into what?
+The thing on the right, which is gabe, little g here, into here.
+>> And so the effect of that first iteration of the loop,
+as you proposed, even though it looks crazy more complicated than anything
+we've seen before, is simply saying go here and copy that character here.
+It's giving you a map to both locations.
+>> And we'll see far more of this.
+But for now, the hope is just to introduce some of these basic ideas.
+And indeed, let's look at one final program here,
+and then the promised claymation, which will make everything all right.
+All right.
+So let me open up-- there we go.
+So let me-- we'll come back to this picture before long.
+Let me open up this final example here.
+>> So here is a super, super program that accomplishes
+nothing in life that does the following.
+It first declares two variables, x and y, that are not numbers this time,
+per se.
+They're not integers, per se.
+They are apparently int*.
+So just anyone, what does it mean if your data type, your variable,
+is of type int* star?
+That's the address of an int.
+>> So I've no idea where it is yet.
+It just means "put, eventually, the address of an int here."
+0x50, 0x88, wherever it is in memory, an address is going there.
+And that's what y is going to be, as well.
+>> If I now say x = malloc(sizeof(int)), this is a fancy way of saying,
+hey operating system, via malloc, give me enough memory for the size
+of an int, which is probably going to be 32 bits or four bytes.
+>> So what does malloc return?
+Malloc returns an address.
+So what's going to get stored in x?
+The address of the chunk of memory, the four bytes, that malloc
+just found for me by asking the operating system.
+>> Now meanwhile, line four here, the *x = 42.
+Just to be clear, what's going down there?
+On the left-hand side, *x.
+that's like *33 Oxford Street.
+So *x means what?
+>> AUDIENCE: Go to.
+>> DAVID J. MALAN: Go to that address.
+Wherever that chunk of memory is, go to it.
+And put what there, obviously?
+AUDIENCE: 42.
+DAVID J. MALAN: 42.
+All right, *y, same idea.
+Go to the address in y.
+Put the number 13 there, but what is y at the moment?
+AUDIENCE: There is no memory for y.
+DAVID J. MALAN: There is no memory for y.
+So what does y probably contain, as we've been saying?
+>> AUDIENCE: Garbage.
+>> DAVID J. MALAN: Some garbage value.
+Now, garbage value is still a number.
+It can still be mistaken for an address.
+It's as though someone scribbled something down,
+and I misinterpreted it as meaning some building down the street.
+And if you just try to go into some building you don't own,
+or some chunk of memory you haven't been given, bad things might happen.
+Computer might crash, or some other undetermined behavior might happen.
+>> So the intro, then, to Binky is this.
+I still remember, 20 some odd years later,
+where I was when I finally understood pointers.
+>> Which is to say, if you leave here in three minutes
+and think I don't understand pointers, realize
+I have remembered for 20 years for some crazy reason
+when and why it finally sunk in, sitting with my teaching
+fellow, Nishat Mehta in the back of Eliot Dining Hall.
+Now, I've remembered this because this was
+one of the topics I, in particular, struggled with.
+And then, it finally clicked, like I dare say a lot of topics
+eventually will.
+And now, to make that feel all the happier and all the more convincing,
+let's take a final look in our last three minutes here at Binky,
+from our friend, Nick Parlante from Stanford.
+>> [VIDEO PLAYBACK]
+>> -Hey, Binky.
+Wake up!
+It's time for pointer fun.
+>> -What's that?
+Learn about pointers?
+Oh, goody!
+>> -Well, to get started, I guess we're going to need a couple pointers.
+>> -OK.
+This code allocates two pointers, which can point to integers.
+-OK.
+Well, I see the two pointers, but they don't seem to be pointing to anything.
+>> -That's right.
+Initially, pointers don't point to anything.
+The things they point to are called pointees, and setting them up's
+a separate step.
+>> -Oh, right, right.
+I knew that.
+The pointees are separate.
+Er, so how do you allocate a pointee?
+>> -OK.
+Well, this code allocates a new integer pointee,
+and this part sets x to point to it.
+>> -Hey, that looks better.
+So make it do something.
+>> -OK.
+I'll dereference the pointer x to store the number 42 into its pointee.
+For this trick, I'll need my Magic Wand of Dereferencing.
+>> -Your Magic Wand of Dereferencing?
+That-- that's great.
+>> -This is what the code looks like.
+I'll just set up the number, and [POP]
+>> -Hey, look.
+There it goes.
+>> -So doing a dereference on x follows the arrow to access its pointee.
+In this case, a store 42 in there.
+Hey try using it to store the number 13 through the other pointer, y.
+>> -OK.
+I'll just go over here to y, and get the number 13 set up.
+And then, take the Wand of Dereferencing and just [BUZZ]
+>> -Oh!
+>> -Oh, hey!
+That didn't work.
+Say, Binky, I don't think dereferencing y is a good idea, because you know,
+setting up the pointee is a separate step.
+And I don't think we ever did it.
+>> -Good point.
+-Yeah.
+We allocated the pointer y, but we never set it to point to a pointee.
+>> -Very observant.
+-Hey, you're looking good there, Binky.
+Can you fix it so that y points to the same pointee as x?
+>> -Sure.
+I'll use my Magic Wand of Pointer Assignment.
+>> -Is that going to be a problem like before?
+-No.
+This doesn't touch the pointees.
+It just changes one pointer to point to the same thing as another.
+>> -Oh, I see.
+Now y points to the same place as x.
+So wait.
+Now, y is fixed.
+It has a pointee.
+So you can try the Wand of Dereferencing again to send the 13 over.
+>> -Uh, OK.
+Here it goes. [POP]
+>> -Hey, look at that.
+Now dereferencing works on y.
+And because the pointers are sharing that one pointee, they both see the 13.
+-Yeah.
+Sharing, whatever.
+So are we going to switch places now?
+>> Oh, look.
+We're out of time.
+>> -But--
+>> -Just remember the three pointer rules.
+Number One, the basic structure is that you have a pointer,
+and it points over to a pointee.
+But the pointer and pointee are separate,
+and the common error is to set up a pointer,
+but to forget to give it a pointee.
+>> Number Two, pointer dereferencing starts at the pointer
+and follows its arrow over to access its pointee.
+As we all know, this only works if there is
+a pointee, which kind of gets back to Rule Number One.
+>> Number Three, pointer assignment takes one pointer
+and changes it to point to the same pointee as another pointer.
+So after the assignment, the two pointers
+will point to the same pointee.
+Sometimes, that's called sharing.
+And that's all there is to it, really.
+Bye-bye now.
+[END VIDEO PLAYBACK]
+DAVID J. MALAN: That's it for CS50.
+We will see you next week.

@@ -1,0 +1,1057 @@
+[MUSIC PLAYING]
+>> DAVID J. MALAN: All right.
+This is CS50.
+And this is the start of week 5.
+And as you may have noticed, some of the material
+is getting a little more complex, the little denser.
+>> And it's very easy, especially if you've been in the habit for some time,
+to be trying to scribble down most anything we do, we're saying in class.
+But realize, that is not perhaps the ideal pedagogical approach
+to learning this kind of material, and material more generally.
+And so we are pleased to announce that CS50's own Gheng
+Gong has begun to prepare a canonical set of notes
+for the course, the hope of which is that, one, these
+not only serve as a reference and a resource
+for reviewing material and going back through material that might have
+escaped you the first time around, but also so that your heads can be more
+up than down, when it comes time to lecture,
+so that you might engage more thoughtfully, as
+opposed to more scribbly.
+>> With that said, what you'll find on the website is such documents as this.
+And notice, at top left, there's not only a table of contents,
+but also time codes that will immediately jump you
+to the appropriate part in the video online.
+And what Chang here has done is, essentially, documented
+what happened in this particular lecture.
+And many of the lectures are already online now with this URL.
+And we'll continue to post the remainder of those by the end of this week,
+so do take advantage of that resource.
+>> So without further ado, we started to peel back
+the layer that has been string for some time.
+And what did we say a string actually is last week?
+So char star.
+And char star, well, what did that really mean?
+Well, all this time, if we've been calling a function,
+like getString, and storing the so-called return
+value of getString in a variable-- it's called
+s type string-- we've been writing the line of code up there above.
+And it's only when I see my handwriting magnified here
+do I realize just how atrocious this is.
+>> However, let's assume that, on the right-hand side
+is, nonetheless, a reasonable depiction of what's
+been going on all this time with getString.
+getString, of course, gets a string.
+But what does that really mean?
+It means it gets a chunk of memory from the operating system
+by calling a function, called malloc.
+But more on that later.
+And then it populates that chunk of memory
+with the letters the user has typed in, followed by, of course,
+a null character, or backslash zero at the very end.
+>> Meanwhile, on the left-hand side of this story, all this time,
+we've been declaring a variable, like s.
+And that variable is what now will start calling a pointer.
+It's not a box inside of which we put the string, Daven, per se,
+but rather we put in that square box on the left what exactly?
+Yeah?
+>> AUDIENCE: The address of where it's located in memory.
+>> DAVID J. MALAN: Exactly.
+The address of where Daven is located in memory.
+And not where all of Daven is located, per se, but specifically the address
+of what?
+Yeah?
+>> AUDIENCE: First character.
+>> DAVID J. MALAN: The first character in Daven, which, in this case,
+I proposed was arbitrarily and unrealistically 1, Ox1,
+which just means the hexadecimal number of 1.
+But it's probably going to be a much bigger number
+that we might draw with a 0x as a prefix,
+representing a hexadecimal character.
+And because we don't need to know where the rest of the characters of Daven
+are, because of what simple design decision that was made many years ago?
+Yeah?
+>> AUDIENCE: Backslash 0.
+DAVID J. MALAN: Yeah, exactly.
+The backslash 0 allows you, albeit in linear time, to traverse the string,
+walk from left to right, with a for loop, or a while
+loop, or something like that, and determine, oh, here
+is the end of this particular string.
+So with just the address at the beginning of a string,
+we can access the entirety of it, because all this while,
+a string has just been a char star.
+>> So it's certainly fine to continue using the CS50 library and this abstraction,
+so to speak, but we'll begin to see exactly
+what's been going on underneath this whole time.
+So you may recall this example, too, from last time, compare 0,
+which didn't actually compare.
+But we began to solve this.
+>> But as perhaps a refresher, might I interest someone
+in a pink elephant today, also made by Chang?
+How about you in front? [INAUDIBLE].
+Come on up.
+>> And in the meantime, as you come up, let's
+consider for just a moment what this code was actually doing.
+It's declaring two variables up top, s and t, and calling getString.
+This isn't a very user-friendly program, because it doesn't tell you what to do.
+But let's just assume we're focusing on the juicy part.
+And then we do, if s equals equals t, it should say printf,
+you typed the same thing.
+Hello.
+What's your name?
+>> JANELLE: Janelle.
+DAVID J. MALAN: Janelle, nice to meet you.
+So your challenge at hand for this elephant
+is to first draw us a picture of what's being represented in those first two
+lines.
+So s and t might be represented how on the screen?
+And you can just draw it with your finger on this big screen.
+>> So there's two halves to each side of that equation.
+So there's s on the left, and then getString on the right.
+And then there's t on the left, and then getString on the right.
+So how might we begin drawing a picture that
+represents what's going on here in memory, would you say?
+And let me let you explain what you're doing as you go.
+>> JANELLE: OK.
+Well, first, it would be asking you to get the input string.
+And it would store-- oh, sorry.
+DAVID J. MALAN: OK.
+Good.
+And this is called what?
+Oh, OK.
+Keep going.
+I didn't mean to interrupt.
+JANELLE: Sorry.
+So it would input it into the address of-- not sure.
+I can't exactly remember the number, but I believe it was starting with 0.
+>> DAVID J. MALAN: That's all right, because I made the numbers up,
+so there's no right answer.
+>> JANELLE: Starting with the 0 arc.
+>> DAVID J. MALAN: OK, so element 0.
+Sure.
+>> JANELLE: And then if was like just a two-letter--
+>> DAVID J. MALAN: OK, back to you.
+>> JANELLE: So element 0, and then element 1 or element 2.
+DAVID J. MALAN: And which piece of the picture are you drawing right now?
+The call to getString?
+Or the declaration of s?
+>> JANELLE: The declaration of s, I believe.
+Oh, the getString, because it would be inputted into each [? area. ?]
+>> DAVID J. MALAN: Good.
+Exactly.
+Even though this effectively returns an array, recall,
+when we get back a string, we can index into that string using 01 and 2.
+Technically, these are probably represented by individual addresses,
+but that's fine.
+>> So suppose, if I can just fast forward to where we left off
+last time, if one of the strings was g a b e,
+backslash 0, thereby representing gabe's input, how might we represent s now?
+If this is the memory that's been returned by getString?
+>> JANELLE: Would it be represented by an arc?
+>> DAVID J. MALAN: By an arc?
+Well, no.
+Let's just say, pictorially, let me just go ahead
+and propose that, if this is s, this is the return value of getString.
+And you've drawn this as 0, 1, 2, which is perfectly reasonable, because we
+can index into the string, as such.
+But just to be consistent with last time, let me go ahead
+and arbitrarily propose that this is address 1, this is address 2,
+this is address 3, and so forth.
+And so, just to be super clear, what's going
+to go in s as a result of that first line of code, would you say?
+>> JANELLE: Address 1?
+>> DAVID J. MALAN: Exactly.
+So address 0x1.
+And meanwhile, let me go ahead and duplicate much of what you've done
+and add my own t here.
+If I were to type in gabe again, a second time,
+when prompted with getString, where, of course, is gabe going to go?
+Well, presumably--
+>> JANELLE: Like on here?
+DAVID J. MALAN: Yeah.
+JANELLE: Or it's also in the same boxes?
+DAVID J. MALAN: Let me propose, yeah, exactly, so in these additional boxes.
+But what's key now is that, even though I've drawn these pretty close
+together-- 0x1, this is 0x2-- in reality,
+this now might be address 0x10, for instance, and 0x11, and 0x12,
+and so forth.
+And so, if that's the case, what's going to end up here in t?
+>> JANELLE: 0x10?
+DAVID J. MALAN: Exactly.
+So 0x10.
+And so now, final question.
+You have, by far, had to work the hardest for an elephant thus far.
+By now, if I pull up the code again, when I do, in line three,
+if s equals equals t, what am I actually comparing that we've drawn here?
+>> JANELLE: The two addresses?
+DAVID J. MALAN: Exactly.
+So I'm saying is s equal equal to t?
+In other words, is 1 equal equal to 10?
+And of course, the obvious answer now is, no.
+And so this program is ultimately going to print what, would you say?
+>> JANELLE: Would it be, you typed the same thing?
+>> DAVID J. MALAN: So if s is 1 and t is 10?
+>> JANELLE: You typed different things.
+>> DAVID J. MALAN: Exactly.
+You typed different things.
+All right.
+So a round of applause, if we could, here.
+[APPLAUSE]
+That was painful.
+I know.
+Nicely done.
+So now let's see if we can't tease apart what the fix was.
+And of course, when we fixed this-- which I'll now represent in green--
+we did a couple of enhancements here.
+First, just as a sanity check, I'm first checking
+if s equals null and t equals null.
+And just to be clear, when might s or t be null in code like this?
+When might s or t be null.
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: Exactly.
+If the string that the user typed in is way too long
+to fit into memory, or some weird corner case like that,
+getString, as we'll see, literally today, in its documentation,
+says it will return null as a special sentinel value,
+or just sort of a special symbol that means something went wrong.
+So we want to check for that, because it turns out
+that null is a very dangerous value.
+>> Often, if you try to do something with null involving a function-- passing it
+as input, for instance-- that function might very will crash and, with it,
+take down your whole program.
+So this third line now is just a sanity check, error checking, if you will.
+That's a good habit now for us to get into any time we
+try to use a value that could, potentially, be null.
+>> Now, in the fourth line here, "if strcmp(s, t)," well,
+what's that referring to?
+Well, we said this was a very succinctly named function for string comparison.
+And its purpose in life is to compare its first argument against it second,
+but not in terms of their addresses, as we did unintentionally a moment
+ago with the red code, but rather to compare those two
+strings in the humanly intuitive way by comparing this, against this,
+against this, against this, and then stopping if and when one
+or both of my fingers hits a backslash 0.
+So someone years ago implemented strcmp to implement for us the functionality
+that we hoped we would have gotten by just comparing two simple values.
+>> Now frankly, I keep drawing all of these various numbers.
+But the reality is, I've been making these up the whole time.
+And so let me just go ahead and scribble these out
+to make a point that, at the end of the day and moving forward,
+we're not really going to care about what addresses things are actually
+in memory.
+So I'm not going to draw these kinds of numbers so much anymore,
+I'm just an abstract this away a little more friendly with just arrows.
+>> In other words, if s is a pointer, well, let's just draw it, literally,
+as a pointer, an arrow pointing from itself to something else,
+and not worry too much more about the minutia of these addresses
+which, again, I made up anyway.
+But we'll see those addresses, sometimes, when debugging code.
+>> Now meanwhile, this program up here fixes, of course,
+that problem by comparing those two strings.
+But we ran into another problem.
+This was from the copy program last time,
+whereby, I was trying to capitalize just the first character in a string.
+But what was the symptom we saw last time when
+a user typed in a value, like gabe in lowercase, for s,
+then we assigned s into t, as in the third line there,
+and then I tried to capitalize t bracket 0?
+What was the effect of changing t bracket 0 here?
+>> AUDIENCE: It changed s.
+>> DAVID J. MALAN: Yeah, I changed s, as well.
+Because what was really going on?
+Well, let me see if I can clean up this picture, as follows.
+>> If s is, again, the word g, a, b, e, backslash, 0, and s
+we'll continue drawing as a box here, but no more addresses.
+Let's stop making things up.
+Let's just draw a picture to simplify the world.
+>> When I declare t with string t, that creates that chunk of memory.
+Square happens to be 32 bits in most computers.
+In fact, if you've ever heard of a computer having a 32-bit architecture,
+really fancy-speak, that just means it uses 32-bit addresses.
+And as a technical aside, if you've ever wondered
+why older computers, if you actually tried to soup them up with lots of RAM,
+could only have a maximum of four gigabytes of RAM,
+well that's because, literally, your old computer could only
+count as high as 4 billion, 4 billion bytes,
+because it was using 32-bit numbers for addresses.
+>> But in any case, in this example, story's much simpler.
+t is just another pointer, or really a char star, aka string.
+And how do I want to update this picture now with that second line of code,
+after the dot, dot, dot?
+When I do string t equals s semicolon, how does this picture change?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: Yeah.
+Exactly.
+I just put an arrow from the t box to the same address,
+the same first letter in gave.
+Or technically, if this guy were still at 0x1,
+it's as though I had 0x1 here and 0x1 here.
+But again, who cares about the addresses?
+It's just the idea that now matters.
+So this is what's happening here.
+So of course, if you do t bracket 0, which is array notation,
+of course-- and frankly, it looks like there's an array over here,
+but now there's this weird thing.
+Know that the programming language, C, offers you this feature,
+whereby, even if t is a pointer, or s is a pointer,
+you can still use that familiar, comfortable square bracket
+notation to go to the first element, or the second element, or any element
+that that pointer is pointing to because, presumably, it
+is, as in this case, pointing at some array.
+>> So how do we fix this?
+Frankly, this is where it got a little overwhelming at first glance.
+But here is a new and improved version.
+>> So first, I'm getting rid of the CS50 library,
+just to expose that s is indeed a char star, just a synonym.
+And t is also a char star.
+But what is going on on the right-hand side of that line
+where t is assigned a value?
+>> What is malloc?
+What it's strlen?
+What is sizeof(char)?
+Why the heck does this line look so complex?
+What's it doing at a high level?
+What's it storing in t?
+Yeah?
+AUDIENCE: It's allocating a certain amount of memory space.
+It's to store, I guess, letters [INAUDIBLE].
+>> DAVID J. MALAN: Perfect.
+Perfect.
+It's allocating a certain amount of memory space
+to store, presumably, future letters.
+And in particular, malloc is therefore returning what?
+>> AUDIENCE: Returning the [INAUDIBLE]?
+DAVID J. MALAN: Exactly.
+Returning the address of that memory, which is a fancy way of saying,
+returns the address of the first byte of that memory.
+The onus is on me to remember how much memory I actually
+allocated or asked malloc for.
+>> Now how much is that?
+Well, even though there's a lot of parentheses here,
+malloc takes just a single argument.
+And I'm specifying strlen of s, so give me as many bytes as there are in s,
+but add one.
+Why?
+Yeah?
+>> AUDIENCE: The backslash 0.
+DAVID J. MALAN: Exactly.
+We've got to do a little housekeeping.
+So because there's a backslash 0, we'd better remember that.
+Otherwise, we're going to create a string that
+doesn't have that special terminator.
+>> Meanwhile, just to be super anal, I have sizeof(char),
+just in case someone runs my code not on the CS50 appliance,
+but maybe a different computer altogether where chars
+are one byte, by convention, but two bytes, or something bigger than that.
+It's just to be super, super averse to errors.
+Even though, in reality, it's most likely going to be a 1.
+>> Now, meanwhile, I go ahead and copy the string, t bracket i equals t bracket s.
+And I will defer to last week's source code to see what's going on.
+But the key takeaway, and the reason I put the code now in green,
+is because that very last line, t bracket 0 equals toupper,
+has the effect of capitalizing which string?
+t and/or s?
+That last line of code.
+>> Just t, because what's happened this time,
+if I slightly undo that last step, what's happened is, when I call malloc,
+I essentially get a chunk of memory that is the same size as the original,
+because that's the arithmetic I did.
+I'm storing in t the address of that chunk of memory.
+Even though this looks nice and pretty, nice and blank,
+the reality is there's, what we'll keep calling, garbage values in here.
+That chunk of memory might very well have been used before,
+a few seconds, a few minutes ago.
+So there could absolutely be numbers or letters there, just by accident.
+But they're not valid, until I myself populate this chunk of memory
+with actual chars, as I do in that for loop there.
+All right?
+>> So now, the climax of these three examples
+that were seemingly broken last time, this Swap example, this function
+worked in the sense that it swapped a and b.
+But it didn't work in what other sense?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: Exactly.
+If I were to call this function from another-- for instance,
+from a function like main, where I have a variable, x and y, as I
+did last week, same code, and I pass in x and y
+to Swap, and then call Swap-- this, of course, is the correct version
+is what we're about to see-- it did not work.
+So what is the fix?
+>> Well, so just to be clear, let me go ahead
+and-- give me one second here, and see if I can show you the last one, which
+will be in-- let's see if I can find this real fast-- OK, [INAUDIBLE].
+OK, there it is.
+So ignore the commands I'm just typing.
+I want it to retrieve at the last minute an example
+from last time, which is now called no Swap.
+>> So no Swap is where we left off last time,
+whereby, I initialized x to 1 and y to 2.
+I then call Swap, passing in 1 and 2.
+And then this function worked in some sense,
+but it had no permanent effect on x and y.
+So the question at hand is, how now do we actually fix this problem?
+What is the solution at hand?
+>> Well, in swap.c, which is new today, notice a couple of differences.
+x and y are the same.
+But what is clearly different about line 25?
+What's new there, if you remember what it looked like a second ago?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: Yeah.
+So the ampersands are a new piece of syntax not only in this program,
+but also more generally in CS50.
+To date, I don't think we've seen any examples
+or really talked about them in any detail, other than, maybe, preemptively
+in section, an ampersand like this.
+Well, it turns out ampersand is one of the last pieces of new syntax
+we're going to learn.
+All it means is the address of some variable.
+At what address does x live?
+But what address does y live?
+Because if the fundamental problem before
+was that x and y were being passed as copies, what we really want to do
+is provide Swap with like a treasure map that leads to where x and y actually
+are in RAM, so that Swap can follow that map
+and go to wherever x or y marks the spot and change the actual values 1 and 2
+there.
+>> So Swap needs to change slightly too.
+And at first glance, this might seem a little similar to char star.
+And indeed it is.
+So a is a pointer to what type of data, based on this highlighted portion?
+So it's an int.
+>> So a is no longer an int, it's the address of an int.
+And similarly, b is now going to be the address of an int.
+So when I now call Swap from Main, I'm not going to give Swap 1 and 2.
+I'm going to give it like Ox-something and Ox-something,
+two addresses that will lead Swap to their actual locations
+in my computer's memory.
+>> So now, my remaining implementation needs to change a tad.
+What's obviously different now in these three lines of code?
+There's these damn stars all over the place, all right?
+So what's going on here?
+Yeah?
+>> AUDIENCE: It's obviously [INAUDIBLE].
+>> DAVID J. MALAN: Exactly.
+So in this context-- and this was not the best design decision, admittedly,
+years ago.
+In this context, where you just have a star,
+and you don't have a data type, like int, immediately to the left,
+instead you have an equal sign, clearly, in this context, when you say star a,
+that means go to the address that's in a.
+Follow the treasure map, so to speak.
+>> And meanwhile, in line 37, it means the same thing.
+Go to the address a, and put what there?
+Whatever is at the location that b specifies.
+In other words, go to b.
+Get that value.
+Go to a and, per the equal sign, the assignment operator,
+put that value there.
+>> Similarly, int temp is just an int.
+Nothing needs to change about temp.
+It's just a spare glass from Annenberg for some milk or orange juice.
+But I do need to say, go to b.
+Go to that destination and put the value in temp there.
+So what's happening then?
+When I actually call Swap this time, if this first tray here represents Main,
+this second tray represents Swap, when I pass ampersand x and ampersand y
+from Main to Swap, just to be clear, what is this stack frame receiving?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+DAVID J. MALAN: Exactly.
+The address of x and the address of y.
+And you can think of these like postal addresses.
+33 Oxford Street and 35 Oxford Street, and you
+want to move the two buildings that are at those locations.
+>> It's sort of a ridiculous idea, but that's all we mean by address.
+Where in the world can you find those two ints?
+Where in the world can you find those two buildings?
+So if finally, after all this time I go into today's source code and compile
+Swap and run ./swap, finally, for the first time do we actually see that
+my values have indeed been swapped successfully.
+And now, we can even take note of this in, say, gdb.
+>> So let me go into the same file.
+Let me go ahead and run gdb of ./swap.
+And now, in Swap, I'm going to go ahead and set a break point in Main.
+And now I'm going to go ahead and run the program.
+And now we see my code paused at that line.
+>> If I go ahead and print x, what should I see here?
+It's a question.
+Say again?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: So random numbers, maybe.
+Maybe I get lucky, and it's nice and simple, like 0.
+But maybe it's some random number.
+In this case, I got lucky.
+It just happens to be 0.
+But it is indeed luck, because not until I
+type next and then print x has that line of code, line 19, been executed.
+>> Meanwhile, if I type next again, and now print out y, I'm going to see 2.
+Now, if I type next, it's going to get a little confusing, because now,
+the printf is going to appear on the screen, as it did. x is 1.
+>> Let's do this again.
+And now, here's where things get interesting.
+Before I call Swap or even step into it, let's take a little peek.
+x is, again, 1.
+Y is, of course, quick sanity check, 2, so not hard there.
+But what is ampersand x?
+Answer, it's kind of funky looking.
+But the int star in parentheses is just gdp's way of saying this is an address.
+It's not an int, it's a pointer to an int, or otherwise known as an address.
+>> What is this crazy thing?
+We've never seen something quite like that before.
+So this is the address in my computer's memory of where x happens to live.
+It's Ox-something.
+And this is, frankly, why I've started drawing arrows,
+instead of numbers, because who really cares
+that your int is at a particular address that's that big.
+But bffff0c4, these are all indeed hexadecimal digits,
+which are 0 through f.
+>> So we're not going to dwell too long on what those things are.
+But if I print out y, of course, I see 2.
+But ampersand y, I see this address.
+And notice, for the curious, how far apart are x and y?
+You can ignore most of the address.
+Four bytes.
+And that's consistent with our earlier claim that how big is an int?
+Four bytes.
+So it looks like everything's lining up nicely, as you might hope, in memory.
+>> So now, let's just fast forward to the end of this story.
+Let's go ahead and type step, to dive into the Swap function.
+Now notice, if I type a, it's identical to the address of x.
+If I type b, it's identical to the address of y.
+So what should I see if I say, go to the address a?
+So print star a.
+So star means go there, in this context.
+Ampersand means what's the address of.
+So star a means 1.
+And print star b gives me 2.
+>> And let me assume, for the moment, that at least the code that
+proceeds to execute now can be reasoned through in that way.
+But we'll revisit this idea before long.
+So this version of Swap is now correct and allows
+us to swap this particular data type.
+>> So any questions then on Swap?
+On star?
+On address of?
+And you'll see, with problem set 4, sort of,
+but problem set 5, definitely, how these things are useful and get much more
+comfortable with them, as a result.
+Anything at all?
+All right.
+So malloc is, again, this function that just allocates memory, memory
+allocation.
+And why is this useful?
+Well, all this time, you've been using malloc.
+If you consider now how getString works, presumably, it's
+been asking someone for a chunk of memory, anytime the user types a string
+in, because we certainly didn't know, as CS50 staff,
+how big those strings that humans are going to type might be.
+>> So let's, for the first time, start to peel back how the CS50 library works,
+by way of a couple of examples that will lead us there.
+So if I open up gedit and open up scanf 0,
+we're going to see the following code.
+Scanf 0, available on the website for today, has relatively few lines of code
+here, 14 through 20.
+And let's see what it's doing.
+It declares an int, called x.
+It says something like, number please.
+And now it says, scanf %i, &x.
+So there's a bunch of new stuff there.
+>> But scanf, you can kind of think of as the opposite of printf.
+printf, of course, prints to the screen.
+scanf sort of scans from the user's keyboard something he or she has typed.
+>> %i is just like printf.
+This means expect the user to type an int.
+And now, why do you think I might be passing scanf &x?
+If the purpose in life of scanf is to get something from the user,
+what is the meaning of passing it, &x, now?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+DAVID J. MALAN: Exactly.
+Whatever I, the human, type in, my input is going to be saved at that location.
+It's not sufficient, recall, to just pass in x, because we've seen already,
+any time you pass just a raw variable, like an int, to some other function,
+sure, it can change that variable, but not permanently.
+It can't have an effect on Main.
+It can only change its own local copy.
+But if, instead, you don't give me the actual int,
+but you give me directions to that int, I now, being scanf,
+surely, I can follow that address and put a number there
+so you have access to it as well.
+>> So when I run this program, let's see.
+Make scanf 0 dot slash, scanf 0.
+And if I now type a number like 50, thanks for the 50.
+If I now type a number like negative 1, for the negative 1.
+I now type a number like 1.5, hm.
+Why did my program ignore me?
+Well, because simply, I told it to expect an int only.
+All right.
+So that's one version of this.
+Let's take things up a notch and propose that this is not good.
+And herein lies a very simple example of how we can start writing code
+that other people can exploit or compromise by doing bad things.
+So line 16, so similar in spirit to before,
+but I'm not declaring it int this time.
+I'm declaring it char star, aka string.
+>> But what does that really mean?
+So if I don't specify an address-- and I'm calling it arbitrarily, buffer,
+but I could call it s, to be simple-- and then I do this, explain to me,
+if you could, based on the previous logic, what is scanf doing in line 18,
+if pass %s and buffer, which is an address?
+What is scanf, if you apply the exact same logic as version 0,
+going to try to do here, when the user types something in?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: Exactly.
+Scanf, by the logic earlier, is going to take the string
+that the human typed in-- it's now a string,
+it's not a number, presumably, if he or she cooperates--
+and it's going to try to put that string in memory at whatever address
+buffer specifies.
+And this is great, because buffer is indeed meant to be an address.
+>> But I claim this program is buggy in a very serious way, because what value is
+buffer by default?
+What have I initialized into?
+What chunk of memory?
+I haven't, right?
+>> So even though I've allocated a char star that's no longer called s,
+it's instead called, buffer-- so let's draw the variable's name
+now as buffer-- if I haven't called getString or malloc here,
+that effectively means that buffer is just some garbage value.
+>> Now what does that mean?
+It means that I have told scanf to expect a string from the user.
+And you know what?
+Whatever this thing is pointing to-- and I draw question mark,
+but in reality, it's going to be something like Ox1, 2, 3, right?
+It's some bogus value that just happens to be there from before.
+So put another way, it's as though buffer is just
+pointing to something in memory.
+I have no idea what.
+>> So if I type in gabe now, it's going to try to put g-a-b-e /0 there.
+But who knows what that is?
+And in the past, any time we've tried to touch
+memory that doesn't belong to us, what has happened?
+Or almost every time.
+Segmentation fault, right?
+>> This arrow, I have no idea where it's pointing. it's just some random value.
+And of course, if you interpret a random value as an address,
+you're going to go to some random destination.
+So gabe might indeed crash my program in this case here.
+>> So what can we do that's almost as bad?
+Consider this third and final example of scanf.
+This version is better in what sense?
+If you are comfortable with the previous problem, this is better.
+Why?
+>> AUDIENCE: [INAUDIBLE].
+DAVID J. MALAN: Good.
+So this case of line 16 is better, in the sense
+that we're explicitly allocating some memory.
+We're not using malloc, we're using the week 2
+approach of just declaring an array.
+And we've said before that a string is just an array of characters,
+so this is totally legitimate.
+But it's, of course, as you note, fixed size, 16.
+>> So this program is totally safe, if I type
+in one character strings, two character strings, 15 character strings.
+But as soon as I start typing 16, 17, 18, 1,000 character strings,
+where is that string going to end up?
+It's going to end up partly here.
+But then who knows what else is beyond the boundaries
+of this particular array?
+>> It's as though I've declared 16 boxes here.
+So rather than draw out all 16, we'll just pretend that I've drawn 16.
+But if I then try to read a string that's much longer, like 50 characters,
+I'm going to start putting a, b, c, d, x, y, z.
+And this is presumably some other memory segment
+that, again, might cause my program to crash,
+because I've not asked for anything more than just 16 bytes.
+>> So who cares?
+Well, here's the CS50 library.
+And most of this is just like instructions up top.
+The CS50 library, all this time, has had this line in line 52.
+We've seen typedef, or you will see typedef
+in pset 4, which just creates a synonym whereby char star can be more
+simply referred to as string.
+So this is one of the few training wheels
+we've used secretly underneath the hood.
+>> Meanwhile, here's the function, getchar.
+Now apparently, there's no body to it.
+And in fact, if I keep scrolling, I don't actually
+see any implementations of these functions.
+As a sanity check, why is that?
+>> AUDIENCE: [INAUDIBLE].
+DAVID J. MALAN: Yeah.
+So this is the header file.
+And header files contain prototypes, plus some other stuff, it seems,
+like typedefs.
+But in CS50.c, which we've never given you outright,
+but has been in the CS50 appliance all this time, deep inside of its folders,
+notice that there's a whole bunch of functions in here.
+>> In fact, let's scroll down.
+Let's ignore most of them, for now.
+But scroll down to getInt and see how getInt works.
+So here is getInt.
+And if you ever really cared how get int works, here is its documentation.
+And among the things it says is it tells you
+what the ranges of values it can return.
+It's essentially negative 2 billion to positive 2 billion, give or take.
+>> And it turns out, all this time, even though we've never
+had you check for it, if something goes wrong,
+it turns out that all this time, getInt has
+been returning a special constant, not null,
+but rather int_max, which is just a programmer's convention.
+It means here is a special value.
+Make sure to check for this, just in case something goes wrong.
+But we've never bothered with that to date,
+because again, this is meant to simplify.
+>> But how does getInt get implemented?
+Well, one, it takes no arguments.
+We know that.
+It returns an int.
+We know that.
+So how does it work underneath the hood?
+>> So there's apparently an infinite loop, at least the appearance of one.
+Notice that we're using getString.
+So that's interesting. getInt calls our own function, getString.
+And now why might this be the case?
+Why am I being defensive here in line 165?
+What could happen in line 164, just to be clear?
+It's the same answer as before.
+Might just be out of memory.
+Something goes wrong with getString, we've got to be able to handle that.
+And the reason I don't return null is that, technically, null is a pointer.
+getInt has to return an int.
+So I've arbitrarily decided, essentially,
+that 2 billion, give or take, is going to be a special value that I can never
+actually get from the user.
+It's just the one value I'm going to waste to represent an error code.
+>> So now, things get a little fancy.
+And it's not quite the same function as before, but it's very similar.
+So notice, I declare here, in line 172, both an int n and a char c.
+And then I use this funky line, sscanf, which it turns out
+doesn't scan a string from the keyboard.
+It stands an existing string that the user has already typed in.
+So I already called getString, which means I have a string in memory.
+sscanf is what you'd call a parsing function.
+It looks at the string I've typed in, character by character,
+and does something useful.
+That string is stored in line.
+And I know that only by going back up here and saying, oh, OK,
+I called it not s this time, but line.
+>> And now this is a little different.
+But this effectively means, for reasons we'll somewhat wave our hands at today,
+that we are checking to see if the user typed in
+and int and maybe another character.
+If the user typed in an int, it's going to be stored in n, because I'm
+passing this by address, the new trick we've seen today.
+If the user also typed in like 123x, that x
+is going to end up a letter in character c.
+>> Now it turns out that sscanf will tell me, intelligently,
+how many variables was sscanf successfully able to fill.
+So by this logic, if the function I'm implementing is getInt,
+but I'm checking, potentially, for the user
+to have typed in an int followed by something else,
+what do I want sscanf's return value truly to be?
+If the purpose is to get just an int from the user?
+>> So if sscanf returns 2, what does that mean?
+The user typed in something like, literally,
+123x, which is just nonsense.
+It's an error condition, and I want to check for that.
+>> So if the user types this in, by this logic, what does sscanf return,
+would you say?
+So it's going to return 2, because the 123 is going to go in here,
+and the x is going to end up in here.
+But I don't want the x to get filled.
+I want to sscanf to only succeed in filling the first of its variables.
+And so that's why I want sscanf to return 1.
+>> And if this is a bit over the head for the moment, that's totally fine.
+Realize though, that one of the values of getInt and getString
+is that we're doing a heck of a lot of error checking like this so
+that, to date, you can pretty much type anything at your keyboard,
+and we will catch it.
+And we certainly, the staff, will definitely not
+be the source of a bug in your program, because we're defensively
+checking for all of the stupid things that a user might do,
+like typing a string, when you really wanted int.
+So for now-- we'll come back to this before long--
+but all this time, getString and getInt have
+been underneath the hood using this basic idea of addresses of memory.
+>> So now, let's make things a little more user-friendly.
+As you may recall, from Binky last time-- if my mouse will cooperate-- so
+we had this code, which frankly, is fairly nonsensical.
+This code achieves nothing useful, but it was the example
+that professor Parlante used in order to represent
+what was going on in a program involving memory.
+>> So let's retell this story super briefly.
+These first two lines, in English, do what, would you say?
+Just in reasonably human, but slightly technical terms, take a stab.
+AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: OK, you're establishing addresses for your x and y variables.
+Not quite, because x and y are not variables in the traditional sense.
+x and y are addresses or will store address.
+So let's try this once more.
+Not a bad start, though.
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+DAVID J. MALAN: Good.
+I think that's a little cleaner.
+Declaring two pointers, two integers.
+And we're calling them x and y.
+Or if we were to draw this as a picture, again,
+recall quite simply that all we're doing with that first line
+is drawing a box like this, with some garbage value in it,
+and calling it x, and then another box like this,
+with some garbage value in it, calling it y.
+We've declared two pointers that ultimately
+will store the address of an int.
+So that's all there.
+>> So when Binky did this, the clay just looked like this.
+And Nick just kind of wrapped up the arrows,
+as though they're not pointing anywhere in particular, because they're just
+garbage values.
+They're not explicitly initialized anywhere in particular.
+>> Now the next line of code, recall, was this.
+So in reasonably user-friendly, but somewhat technical English,
+what is this line of code doing?
+Yeah?
+>> AUDIENCE: [INAUDIBLE].
+>> DAVID J. MALAN: Perfect.
+It's allocating the chunk of the memory that's the size of an int.
+And that's half the answer.
+You answered the right half of the expression.
+What is happening on the left-hand side of the equal sign?
+Yeah?
+AUDIENCE: And assigns it to the variable x?
+>> DAVID J. MALAN: And assigns it to the variable x.
+So to recap, right-hand side allocates enough memory to store an int.
+But malloc specifically returns the address
+of that chunk of memory, which you've just proposed gets stored in x.
+>> So what Nick did last time with Binky is he dragged that pointer out, the clay,
+to point now at a white chunk of memory that is equal to the size of an int.
+And indeed, that's meant to represent four bytes.
+>> Now, the next line of code did this, star x gets 42.
+So 42 is straightforward on the right-hand side, meaning of life.
+Left-hand side, star x means what?
+That too might have gone-- that's OK.
+OK.
+>> AUDIENCE: Basically, go to the [INAUDIBLE]
+DAVID J. MALAN: Good.
+AUDIENCE: [INAUDIBLE].
+DAVID J. MALAN: Exactly.
+Left-hand side means go to x.
+x is address.
+It's like 33 Oxford Street, or Ox1.
+And star x means go to that address and put what there?
+42.
+>> So indeed, that's exactly what Nick did.
+He started with by, essentially, mentally
+pointing a finger at x, following the arrow
+to the white box on the right-hand side, and putting the number 42 there.
+But then things got a little dangerous, right?
+Binky's about to lose his head.
+>> Star y equals 13, bad luck, means what?
+So star y means go to the address in y.
+But what is the address in y?
+All right, it's garbage value, right?
+I drew it as a question mark.
+Nick drew it as a curled up arrow.
+And as soon as you try to do star y, saying go there,
+but there is not a legitimate address, it's some bogus location,
+the program's going to crash.
+And Binky's head is going to fly off here, as it did.
+>> So in the end, this program was just flat out flaw.
+It was a buggy program.
+And it needed to be fixed.
+And the only way, really, to fix it would be, for instance, this line,
+which we didn't even get to, because the program crashed too soon.
+But if we were to fix this, what effect does doing y equal x have?
+Well, it essentially points y at whatever value x is pointing at.
+>> So in Nick's story, or Binky's story, both
+x and y were pointing at the white chunk of memory,
+so that, finally, when you do star y equals 13 again,
+you end up putting 13 in the appropriate location.
+So all of these lines are perfectly legitimate, except for this one,
+when it happened before you actually assigned y some value.
+>> Now thankfully, you don't have to reason through all
+of these kinds of issues on your own.
+Let me go ahead and open up a terminal window here
+and open up, for just a moment, a super short program that
+also is sort of pointless.
+It's ugly.
+It doesn't achieve anything useful.
+But it does demonstrate issues of memory, so let's take a look.
+>> Main, super simple.
+It apparently calls a function, f, and then returns 0.
+It's kind of hard to mess this up.
+So Main is pretty good, so far.
+>> So f is problematic.
+And just didn't put much effort into naming it
+here, to keep the focus on the code.
+f has two lines.
+And let's see what's now going on.
+So on the one hand here-- and let me make
+this consistent with the previous example-- on the one hand,
+the left-hand side is doing what, in English?
+It is--
+AUDIENCE: Creating a pointer.
+DAVID J. MALAN: Creating a pointer to an int and calling it x.
+So it's creating one of those boxes I keep drawing on the touch screen.
+And now, on the right-hand side, malloc, of course,
+is allocating a chunk of memory.
+And just to be clear, how much memory is it apparently
+allocating, if you just kind of do the math here?
+>> So it's 40 bytes.
+And I know that only because I know an int, on the CS50 appliance, at least,
+is four bytes.
+So 10 times 4 is 40.
+So this is storing an x, the address of the first out of 40 ints that
+have been allocated space back, to back, to back, to back.
+>> And that's what's key about malloc.
+It doesn't take a little memory here, a little here, a little here.
+It gives you one chunk of memory, contiguously, from the operating
+system.
+>> Now what about this, x bracket 10 equals 0?
+Arbitrary line of code.
+It doesn't achieve anything useful.
+But it is interesting, because x bracket 10--?
+Yeah?
+>> AUDIENCE: [INAUDIBLE]?
+>> DAVID J. MALAN: x bracket 10 doesn't have to be null.
+The null detail only comes into play with strings, at the end of a string.
+But a good thought.
+>> How big is this array, even though I've allocated 40 bytes?
+It's 0 through nine, right?
+It's 10 ints, total.
+40 bytes, but 10 ints, indexed 0 through 0.
+>> So what is that x bracket 10?
+It's actually some unknown garbage value.
+It's memory that doesn't belong to me.
+I should not be touching that byte number 41, 42, 43, 44.
+I'm going slightly too far.
+>> And indeed, if I run this program, it might very well crash.
+But sometimes, we'll get lucky.
+And so just to demonstrate this-- and frankly,
+you never know before you do it-- let's run this.
+It didn't actually crash.
+>> But if I change this, for instance, to be like 1,000,
+to make this really deliberate, let's see
+if we can get it to crash this time.
+OK, it didn't crash.
+How about 100,000?
+Let's remake it, and now rerun it.
+OK.
+Phew.
+All right.
+So apparently, again, these segments of memory, so to speak,
+are reasonably big, so we can get lucky again and again.
+But eventually, once you get ridiculous and really go far out on the screen,
+you touch memory that really, really doesn't belong to you.
+>> But frankly, these kinds of bugs are going
+to be harder and harder to figure out on your own.
+But thankfully, as programmers, we have tools that allow us to do this for us.
+So this is, perhaps, one of the ugliest programs,
+even uglier than gdb's output.
+But it always has a line or two that are super useful.
+>> Valgrind is a program that helps you not debug a program, per se,
+but find memory-related problems, specifically.
+It will automatically run your code for you and look for at least two things.
+One, did you do something accidental like touch memory
+that didn't belong to you?
+It will help you find those cases.
+>> And two, it will help you find something called
+memory leaks, which we have completely ignored, naively,
+for some time and blissfully.
+But it turns out, all this time, whenever
+you've called getString in so many of our programs,
+you're asking the operating system for memory,
+but you have any recollection of ever giving it
+back, doing unalloc, or free, as it's called.
+No, because we've never asked you to do so.
+>> But all this time, the programs you've been writing in C
+have been leaking memory, asking the operating
+system for more and more memory for strings and whatnot,
+but never handing it back.
+And now this is a bit of a oversimplification,
+but if you've ever run your Mac or your PC for quite some time, opening
+lots of programs, maybe closing programs,
+and even though your computer hasn't crashed,
+it's getting so much slower, as though it's really
+using a lot of memory or resources, even though,
+if you're not even touching the keyboard,
+that could be-- but not always-- could be that the programs you're running
+have themselves memory leaks.
+And they keep asking the OS for more and more memory, but forgetting about it,
+not actually using it, but therefore taking memory away
+from other programs that might want it.
+So that's a common explanation.
+Now here's where Valgrind's output is completely
+atrocious to those less and more comfortable alike.
+But the interesting stuff is right up here.
+It is telling me an invalid write of size four happens in this program,
+in particular, at line 21 of memory.c.
+>> If I go to line 21, hm, there indeed is an invalid write of size four.
+Why size four?
+Well, this number-- and it could be anything-- is an int.
+So it's four bytes.
+So I'm putting four bytes where they don't belong.
+That's what Valgrind is actually telling me.
+Moreover, it will also tell me, as we'll see,
+as you run this in a future pset, if and when you've leaked memory, which indeed
+I have, because I've called malloc, but I haven't actually
+called, in this case, free, which we'll eventually see
+is the opposite of malloc.
+>> So now, I think, a final example.
+So this one's a little more arcane, but it's perhaps
+the biggest reason to be careful with memory,
+and the reason that many programs and/or web servers, even to this day,
+are taken over by bad guys somewhere on the internet who are somehow
+sending bogus packets to your server trying to compromise your accounts,
+or take your data, or just generally take over a machine.
+Buffer overflow, as the name suggests, means
+overflowing not an int, but a buffer.
+And a buffer is just a fancy way of saying it's a bunch of memory.
+>> And indeed, I called a string before buffer, instead of s.
+Because if it's a buffer, like in the YouTube sense,
+or any time you're watching a video, you might have seen the word buffering,
+dot, dot, dot.
+It's incredibly annoying.
+And that just means that your video player
+is trying to download lots of bytes, lots of bytes
+from a video from the internet.
+But it's slow, so it's trying to download a bunch of them
+to fill a buffer, a container, so that you have enough bytes that it can then
+show you the video, without pausing constantly.
+But it turns out, you can have a buffer to this big.
+But try to put this much data in it, and very bad things can happen.
+So for instance, let's look at this final teaser of an example.
+This is another program that, at first glance,
+doesn't do anything super useful.
+It's got a Main function that calls that function, f.
+And that function, f, up here, has a char array, called c, of size 12.
+And then it's using this new function called strncpy.
+>> It turns out that, with this simple, simple line of code, just two lines,
+we have made my entire program, and therefore, my entire computer,
+and my user account, and my hard drive potentially vulnerable to anyone
+who knows and is good enough to run this program with a certain command line
+argument.
+In other words, if this bad guy puts inside of argvargv[1] by typing
+at the keyboard a very specially crafted string, not abc, 123, but essentially,
+binary symbols that represent executable code, a program that he or she wrote,
+with this simple program, which is representative of thousands of programs
+that are similarly vulnerable, daresay, he or she can ultimately delete all
+the files on my hard drive, get a blinking prompt so that he or she can
+type commands on their own, email all files to myself.
+Anything that I can do, he or she can do with this code.
+>> We won't quite solve this yet.
+And in fact, it's going to involve a little picture
+like this, which we'll soon come to understand all the better.
+But for today, let's end on what's, hopefully, a slightly more
+understandable XKCD joke, until we resume next time.
+All right.
+See you on Wednesday.
+>> [MUSIC PLAYING]
+>> SPEAKER: And now, deep thoughts, by Daven Farnham.
+Memory is like jumping into a pile of golden leaves on a Sunday afternoon.
+Wind blowing, tossing your hair-- oh, I miss the days when--
+>> [LAUGHTER]
